@@ -1,0 +1,353 @@
+{
+  "python_minimum": "3.11",
+  "chapters": [
+    {
+      "track": "dsa",
+      "directory": "dsa/01-first-manifest",
+      "title": "The first manifest",
+      "concept": "array scans and loop invariants",
+      "cases": 22
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/02-label-shortages",
+      "title": "Letters become inventory",
+      "concept": "strings, frequency maps and hashing",
+      "cases": 20
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/03-radio-patterns",
+      "title": "The radio repeats itself",
+      "concept": "string search and KMP failure links",
+      "cases": 24
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/04-shift-totals",
+      "title": "One manifest, many shift reports",
+      "concept": "prefix sums and half-open ranges",
+      "cases": 24
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/05-mixed-load-window",
+      "title": "A truck can carry only so many cargo kinds",
+      "concept": "sliding windows with frequency counts",
+      "cases": 48
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/06-balanced-pallets",
+      "title": "Two crates, one exact pallet",
+      "concept": "sorting and two pointers",
+      "cases": 30
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/07-fleet-capacity",
+      "title": "Buying the smallest workable truck",
+      "concept": "binary search over a monotone answer",
+      "cases": 23
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/08-rerouting-linked-stops",
+      "title": "Detaching closed depots",
+      "concept": "linked-list pointer surgery",
+      "cases": 19
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/09-loading-stack",
+      "title": "The pallet at the back blocks the door",
+      "concept": "stacks and nested obligations",
+      "cases": 8
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/10-conveyor-peaks",
+      "title": "The busiest recent loading window",
+      "concept": "monotone deques",
+      "cases": 38
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/11-arrival-heap",
+      "title": "One arrival board from many depots",
+      "concept": "heaps and k-way merging",
+      "cases": 20
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/12-dock-greedy",
+      "title": "Serve the most ships with one dock",
+      "concept": "greedy interval scheduling and exchange arguments",
+      "cases": 18
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/13-relief-pack-dp",
+      "title": "When the largest pack is the wrong choice",
+      "concept": "dynamic programming: optimal substructure and reusable states",
+      "cases": 27
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/14-medical-knapsack",
+      "title": "One copy of each medical kit",
+      "concept": "0/1 knapsack and dependency-safe DP updates",
+      "cases": 18
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/15-manifest-reconciliation",
+      "title": "Two depots disagree about a manifest",
+      "concept": "two-dimensional DP and edit distance",
+      "cases": 17
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/16-berth-backtracking",
+      "title": "An early choice can strand the next ship",
+      "concept": "backtracking, rollback and search pruning",
+      "cases": 11
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/17-inspection-tree",
+      "title": "Inspect the depot hierarchy by distance",
+      "concept": "binary trees, traversals and queues",
+      "cases": 4
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/18-bst-depot-index",
+      "title": "Find the nearest lower storage code",
+      "concept": "binary search trees, deletion and ordering invariants",
+      "cases": 16
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/19-trie-radio-directory",
+      "title": "Complete a depot name before the radio drops",
+      "concept": "tries and prefix indexes",
+      "cases": 17
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/20-road-bfs",
+      "title": "The depot map is no longer a tree",
+      "concept": "graph representation and breadth-first search",
+      "cases": 14
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/21-repair-dependencies",
+      "title": "Road repairs must happen in the right order",
+      "concept": "directed graphs, cycles and topological sorting",
+      "cases": 18
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/22-ambulance-dijkstra",
+      "title": "The fewest roads is not the fastest ambulance",
+      "concept": "Dijkstra and nonnegative shortest paths",
+      "cases": 16
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/23-rebate-bellman-ford",
+      "title": "Subsidies invalidate the greedy frontier",
+      "concept": "Bellman-Ford, relaxation and negative cycles",
+      "cases": 14
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/24-city-floyd-warshall",
+      "title": "Every depot asks about every other depot",
+      "concept": "Floyd-Warshall and DP over allowed intermediate vertices",
+      "cases": 13
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/25-fiber-kruskal",
+      "title": "Connect the city without buying redundant cable",
+      "concept": "disjoint sets, Kruskal and the cut property",
+      "cases": 14
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/26-dense-network-prim",
+      "title": "The cable supplier quotes every pair",
+      "concept": "Prim and representation-dependent algorithm choice",
+      "cases": 6
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/27-live-ledger-fenwick",
+      "title": "Yesterday\u2019s prefix sums cannot absorb today\u2019s corrections",
+      "concept": "Fenwick trees and dynamic prefix aggregates",
+      "cases": 17
+    },
+    {
+      "track": "dsa",
+      "directory": "dsa/28-cold-chain-segment-tree",
+      "title": "An increase can erase the old minimum",
+      "concept": "segment trees and associative summaries",
+      "cases": 17
+    },
+    {
+      "track": "python",
+      "directory": "python/01-exact-prices",
+      "title": "The first shipping quote",
+      "concept": "values, types, Decimal and rounding",
+      "cases": 2,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/02-dispatch-decisions",
+      "title": "Allocate stock in arrival order",
+      "concept": "branches, loops, dictionaries, copies and comprehensions",
+      "cases": 2,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/03-function-boundaries",
+      "title": "The second call inherits the first call\u2019s seals",
+      "concept": "function binding, keyword-only arguments and mutable defaults",
+      "cases": 2,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/04-strict-radio-parser",
+      "title": "Reject a malformed radio record before it changes stock",
+      "concept": "Unicode text, unpacking, exceptions and precise validation",
+      "cases": 2,
+      "final_test_methods": 2
+    },
+    {
+      "track": "python",
+      "directory": "python/05-atomic-manifest-files",
+      "title": "A crash must not erase the previous manifest",
+      "concept": "modules, JSON, filesystem I/O and exception-safe replacement",
+      "cases": 1,
+      "final_test_methods": 4
+    },
+    {
+      "track": "python",
+      "directory": "python/06-typed-shipment-model",
+      "title": "A dictionary typo reaches the loading bay",
+      "concept": "annotations, dataclasses and runtime invariants",
+      "cases": 1,
+      "final_test_methods": 4
+    },
+    {
+      "track": "python",
+      "directory": "python/07-inventory-object",
+      "title": "Make invalid inventory states unreachable",
+      "concept": "classes, encapsulation and instance ownership",
+      "cases": 1,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/08-carrier-polymorphism",
+      "title": "Add drones without rewriting the dispatcher",
+      "concept": "abstract classes, inheritance and substitutability",
+      "cases": 2,
+      "final_test_methods": 4
+    },
+    {
+      "track": "python",
+      "directory": "python/09-composed-dispatch",
+      "title": "Change carrier and audit policy independently",
+      "concept": "composition, structural protocols and dependency injection",
+      "cases": 1,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/10-lazy-manifest-batches",
+      "title": "A million records must not become a million objects",
+      "concept": "iterators, generators and single-pass ownership",
+      "cases": 2,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/11-retry-decorator",
+      "title": "Retry a transient outage without hiding a bad request",
+      "concept": "closures, decorators and exception selection",
+      "cases": 2,
+      "final_test_methods": 4
+    },
+    {
+      "track": "python",
+      "directory": "python/12-reservation-context",
+      "title": "Rollback a reservation if dispatch fails",
+      "concept": "context managers, generators and exception propagation",
+      "cases": 1,
+      "final_test_methods": 4
+    },
+    {
+      "track": "python",
+      "directory": "python/13-identity-data-model",
+      "title": "The same shipment appears twice in a set",
+      "concept": "dunder methods, immutability, equality, hashing and ordering",
+      "cases": 1,
+      "final_test_methods": 4
+    },
+    {
+      "track": "python",
+      "directory": "python/14-validated-descriptors",
+      "title": "Reuse field validation without sharing field values",
+      "concept": "descriptors, __set_name__ and instance storage",
+      "cases": 3,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/15-atomic-threaded-stock",
+      "title": "Two dispatchers reserve the last crate",
+      "concept": "threads, locks and atomic invariants",
+      "cases": 1,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/16-bounded-worker-queue",
+      "title": "The input desk must not outrun the workers",
+      "concept": "bounded queues, task accounting and graceful shutdown",
+      "cases": 1,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/17-ordered-futures",
+      "title": "Finish out of order, report in request order",
+      "concept": "ThreadPoolExecutor, futures and exception ownership",
+      "cases": 1,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/18-spawned-process-workers",
+      "title": "CPU work needs a different boundary",
+      "concept": "multiprocessing spawn, pickling and import safety",
+      "cases": 2,
+      "final_test_methods": 3
+    },
+    {
+      "track": "python",
+      "directory": "python/19-structured-async-dispatch",
+      "title": "Cancel the shipment group without orphaning work",
+      "concept": "async/await, semaphores, TaskGroup and cancellation",
+      "cases": 0,
+      "final_test_methods": 5
+    }
+  ]
+}
