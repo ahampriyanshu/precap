@@ -1,0 +1,11 @@
+node_modules/
+.next/
+*.tsbuildinfo
+out/
+public/runtime/
+playwright-report/
+test-results/
+__pycache__/
+*.py[cod]
+.DS_Store
+public/excalidraw/

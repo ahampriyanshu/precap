@@ -1,0 +1,292 @@
+{
+  "guides": [
+    {
+      "slug": "engineering",
+      "title": "Engineering",
+      "description": "Revisit how frontend, backend, and production systems work\u2014from their foundations to the tradeoffs behind modern architectures.",
+      "parts": [
+        {
+          "slug": "frontend",
+          "title": "Frontend Engineering",
+          "description": "HTML, CSS, JavaScript, and browser rendering\u2014then components, SPA navigation, SSR, SSG, ISR, delivery, and website auditing.",
+          "keywords": [
+            "frontend",
+            "HTML",
+            "DOM",
+            "CSS",
+            "cascade",
+            "layout",
+            "JavaScript",
+            "event loop",
+            "TypeScript",
+            "modules",
+            "components",
+            "React",
+            "Next.js",
+            "forms",
+            "accessibility",
+            "state",
+            "HTTP",
+            "fetch",
+            "routing",
+            "MPA",
+            "SPA",
+            "CSR",
+            "SSR",
+            "hydration",
+            "streaming",
+            "SSG",
+            "ISR",
+            "static generation",
+            "server components",
+            "caching",
+            "CDN",
+            "bundles",
+            "Lighthouse",
+            "DevTools",
+            "Web Vitals",
+            "LCP",
+            "INP",
+            "CLS",
+            "SEO",
+            "CSP",
+            "XSS",
+            "testing"
+          ],
+          "cheatsheet": "frontend"
+        },
+        {
+          "slug": "backend",
+          "title": "Backend Engineering",
+          "description": "The request lifecycle, servers, concurrency, APIs, and databases\u2014then transactions, caches, queues, scaling, and production diagnosis.",
+          "keywords": [
+            "backend",
+            "network",
+            "HTTP",
+            "API",
+            "REST",
+            "RPC",
+            "GraphQL",
+            "Python",
+            "WSGI",
+            "ASGI",
+            "server",
+            "processes",
+            "threads",
+            "event loop",
+            "concurrency",
+            "business logic",
+            "validation",
+            "authentication",
+            "authorization",
+            "tenant",
+            "SQL",
+            "PostgreSQL",
+            "database",
+            "persistence",
+            "connection pool",
+            "transactions",
+            "isolation",
+            "indexes",
+            "EXPLAIN",
+            "pagination",
+            "timeouts",
+            "idempotency",
+            "retries",
+            "cache",
+            "outbox",
+            "queues",
+            "workers",
+            "scaling",
+            "replication",
+            "sharding",
+            "microservices",
+            "monolith",
+            "schema evolution",
+            "observability",
+            "testing"
+          ],
+          "cheatsheet": "backend"
+        },
+        {
+          "slug": "devops",
+          "title": "From first deploy to production",
+          "description": "A connected DevOps recap: what each layer solves, how it works, and what remains yours to operate.",
+          "keywords": [
+            "EC2",
+            "DNS",
+            "TLS",
+            "Nginx",
+            "Docker",
+            "Jenkins",
+            "Terraform",
+            "CI/CD",
+            "deployment",
+            "secrets",
+            "migrations",
+            "state",
+            "rollback",
+            "scaling",
+            "load balancer",
+            "database",
+            "queue",
+            "ECS",
+            "PaaS",
+            "Kubernetes",
+            "Helm",
+            "HPA",
+            "probes",
+            "SLO",
+            "on-call",
+            "backup",
+            "cost",
+            "systemd",
+            "GitOps",
+            "Argo CD",
+            "cheatsheet"
+          ],
+          "cheatsheet": "devops",
+          "aliases": [
+            {
+              "guide": "devops",
+              "slug": "production"
+            },
+            {
+              "slug": "deploying",
+              "section": "start-with-a-deployment-contract",
+              "guide": "devops"
+            },
+            {
+              "slug": "scaling",
+              "section": "scale-the-constrained-resource",
+              "guide": "devops"
+            }
+          ],
+          "label": "DevOps"
+        }
+      ],
+      "sequential": false
+    },
+    {
+      "slug": "observability",
+      "title": "Telemetry & observability",
+      "description": "Follow a customer failure across services and turn telemetry into reliability decisions.",
+      "parts": [
+        {
+          "slug": "signals",
+          "title": "Follow a failure across the system",
+          "description": "Connect journey symptoms to service boundaries, asynchronous work, and useful telemetry.",
+          "keywords": [
+            "OpenTelemetry",
+            "context propagation",
+            "distributed tracing",
+            "sampling",
+            "cardinality",
+            "logs",
+            "metrics"
+          ]
+        },
+        {
+          "slug": "reliability",
+          "title": "Turn telemetry into reliability decisions",
+          "description": "Set experience-based targets, page on impact, and invest in recovery and prevention.",
+          "keywords": [
+            "SLI",
+            "SLO",
+            "error budget",
+            "burn rate",
+            "incident response",
+            "capacity",
+            "telemetry health"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "product-management",
+      "title": "Product management",
+      "description": "Choose a worthwhile problem, test the bet, and decide what to do after launch.",
+      "parts": [
+        {
+          "slug": "discovery",
+          "title": "Choose the problem before the solution",
+          "description": "Frame customer needs, compare investments, and align decisions under uncertainty.",
+          "keywords": [
+            "discovery",
+            "segmentation",
+            "baseline",
+            "RICE",
+            "build versus buy",
+            "opportunity cost",
+            "decision ownership"
+          ]
+        },
+        {
+          "slug": "delivery",
+          "title": "Ship, measure, and make the next call",
+          "description": "Deliver bounded outcome bets, evaluate credible evidence, and decide what happens next.",
+          "keywords": [
+            "vertical slice",
+            "rollout",
+            "experimentation",
+            "causal inference",
+            "guardrails",
+            "activation",
+            "platform value"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "llms-and-ai",
+      "title": "LLMs & AI",
+      "description": "Find where a model earns its place, then bound, evaluate, and operate its behavior.",
+      "parts": [
+        {
+          "slug": "designing",
+          "title": "Put the model in the right place",
+          "description": "Choose model responsibilities, evidence sources, workflow control, and action authority.",
+          "keywords": [
+            "LLMs",
+            "traditional ML",
+            "workflows",
+            "agents",
+            "prompting",
+            "structured outputs",
+            "RAG",
+            "retrieval",
+            "fine-tuning",
+            "embeddings",
+            "document ACLs",
+            "prompt injection",
+            "tool permissions",
+            "idempotency"
+          ]
+        },
+        {
+          "slug": "operating",
+          "title": "Evaluate, launch, and operate it",
+          "description": "Measure task quality, control cost and latency, and release a traceable production system.",
+          "keywords": [
+            "evaluation",
+            "datasets",
+            "holdout",
+            "model judges",
+            "quality drift",
+            "latency",
+            "p95",
+            "cost",
+            "caching",
+            "quotas",
+            "rollout",
+            "fallback",
+            "circuit breakers",
+            "PII",
+            "retention",
+            "residency"
+          ]
+        }
+      ]
+    }
+  ]
+}

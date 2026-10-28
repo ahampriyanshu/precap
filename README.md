@@ -1,94 +1,163 @@
-# Harborline: Python Engineering Journeys
+# precap
 
-Two connected learning paths about a relief-logistics operation, from its first handwritten manifest to a city-wide dispatch service. Each directory introduces a distinct design pressure. The curriculum is organized by prerequisites and changed requirements, not by a target question count.
+A compact refresher for senior and staff engineers before interviews. Revisit the reasoning behind deploying, operating, and evolving software, alongside coding and system design practice.
 
-Mira runs dispatch; Ishan builds its software. They face recurring concerns—stock, manifests, depots, roads, carriers and failures—so later chapters extend earlier decisions instead of replacing them with unrelated interview puzzles. The tracks share the setting but are independently runnable. These are learning directories, not Git repositories.
+## Field guides
 
-## Start here
+Engineering groups independent one-page recaps for Frontend Engineering, Backend Engineering, and DevOps. Frontend and Backend follow the fundamentals in dependency order: explain the mechanism, show a focused example, then connect its limits to the next approach. Frontend moves from HTML/CSS/JavaScript and browser rendering to navigation, SSR/SSG/ISR, delivery, and auditing. Backend moves from the request lifecycle and execution to APIs, storage, concurrency, and production operation. The other guide areas have two connected reads. Guides are reading-only.
 
-Use **Python 3.11 or later** and the standard library. There are no packages to install, external services, credentials or network calls. In this workspace a Python 3.12 interpreter is available at `/Users/priyanshu/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3`; use it if your default `python3` is older.
+| Area | Reading |
+| --- | --- |
+| Engineering | [Frontend Engineering](guides/engineering/frontend.md) · [Backend Engineering](guides/engineering/backend.md) · [DevOps](guides/engineering/devops.md) |
+| Telemetry & observability | [Follow a failure across the system](guides/observability/signals.md) · [Turn telemetry into reliability decisions](guides/observability/reliability.md) |
+| Product management | [Choose the problem before the solution](guides/product-management/discovery.md) · [Ship, measure, and make the next call](guides/product-management/delivery.md) |
+| LLMs & AI | [Put the model in the right place](guides/llms-and-ai/designing.md) · [Evaluate, launch, and operate it](guides/llms-and-ai/operating.md) |
 
-1. Read one chapter's `README.md`. It contains the complete story and contract.
-2. Complete the small `prototype` in `exercise.py`, then run its tests.
-3. Explain the failure/cost of that approach before implementing the final function or classes.
-4. Complete the final API and run its tests. Read the next handoff after you can explain the invariant, not only after tests pass.
+`guides.json` defines the catalog; `sequential: false` groups independent recaps without part numbering or next-part navigation. Optional part labels keep navigation concise, and aliases can preserve old guide paths. Content lives in `guides/<area>/<part>.md`. The site exports these at `/guides/<area>/<part>/`. Coding and design lessons retain their `/learn/` routes and `curriculum.json` manifest.
+
+## Cheatsheets
+
+[Frontend patterns and debugging](cheatsheets/frontend.md), [Backend patterns and debugging](cheatsheets/backend.md), and [DevOps commands and workflows](cheatsheets/devops.md) provide focused patterns, diagnostics, and operational flows for their corresponding recap. Every workflow links to its matching recap section, and every recap section links back to its commands. The homepage and reference sidebar expose this section; topic search includes its tool and workflow keywords.
+
+`cheatsheets.json` defines the reference catalog; Markdown lives in `cheatsheets/<slug>.md` and exports at `/cheatsheets/<slug>/`. Legacy DevOps URLs redirect to the relevant section of the DevOps recap under Engineering. Long pages have a collapsible section index.
+
+## Website
+
+```bash
+npm ci
+npm run dev             # http://localhost:3000
+npm run build           # static export in out/
+npm start               # serve the production export
+```
+
+Use Node.js 20.9 or later. Read a lesson first, then select **Open practice** for coding or **Open design canvas** for HLD. The practice page places the brief on the left and the editor or canvas on the right, separated by a vertical divider. On narrow screens, they stack. Drag the divider to resize the panes, or use its arrow controls to collapse either pane. Drag to an edge to collapse it; double-click the divider to reset the split. The header controls also hide or restore either pane. Your split width is remembered in this browser. There is no editor beside the reading material.
+
+Coding drafts and progress save in this browser. HLD opens an Excalidraw canvas with a design brief and notes; diagrams (including embedded images), notes, and explicit self-review status save per lesson in IndexedDB on this device. Export a `.excalidraw` file to keep an editable copy; Excalidraw’s menu imports drawings and exports images. HLD has no Python execution or automated grading. Diagram progress is marked **Reviewed** by the learner and clears when the design or notes change.
+
+Download a coding exercise to keep a copy of its README, your code and its tests. Python runs on your device in a fresh Pyodide WebAssembly worker for every attempt. Runtime assets and fonts are hosted with the site. Stop terminates the worker; execution is bounded to 15 seconds after loading. Native thread/process exercises offer a download for local Python; asyncio and garbage collection exercises run in the browser.
+
+## Local Python practice
+
+Use Python 3.11 or later; exercises need only the standard library.
 
 ```bash
 python3 run.py --list
-python3 run.py dsa/01-first-manifest --stage prototype
-python3 run.py dsa/01-first-manifest --stage final
 python3 run.py --check
+python3 run.py python/01-primitive-types --stage prototype
+python3 run.py python/01-primitive-types --stage final
 ```
 
-You can also run `python3 main.py --stage final` from any chapter directory. `run.py --all` runs every chapter, but unfinished exercises will fail; that is expected. The runner applies a safety timeout to each child process so a broken concurrency exercise cannot hang the entire course indefinitely.
+Each coding directory has one README.md, an unfinished exercise.py, and tests in main.py. HLD directories contain a design lesson and Excalidraw brief in README.md; use the website’s design canvas for those. Read the Practice section for the exact API. Complete the prototype first, then the final implementation. Tests check behavior and edge cases; they do not prove an algorithm's complexity. No answer keys are included. From a lesson directory, run `python3 main.py --stage prototype` or `python3 main.py --stage final`.
 
-## What is inside each chapter
+## Development checks
 
-- **README.md:** connected incident, historical/design context, small starting task, concrete failure, final contract, reasoning prompts and next handoff.
-- **exercise.py:** imports, public shapes and implementation stubs. Complete these; no answer keys are included.
-- **main.py:** executable standard-library tests, named counterexamples and edge cases. DSA chapters also contain deterministic generated examples and input-preservation checks; concurrency chapters test shutdown, propagation and resource ownership.
+```bash
+npm run typecheck
+npm run format:check
+npm test
+npm run test:browser     # after npm run build
+```
 
-Tests establish the observable contract, not a mathematical complexity proof. An inefficient algorithm may pass small functional cases; explain the target complexity and inspect the structure you used. There are no machine-speed assertions. DSA prototypes intentionally use tiny inputs; some final-only inputs exercise additional scale. Python prototype tests isolate the smaller starting task rather than pretending that the final API has no new requirements.
+Browser tests use installed Chrome on macOS; set CHROME_PATH elsewhere. Set PORT to choose the preview port. Any static host with directory-index support can serve out/; serve .wasm files as application/wasm.
 
-The linked-list chapter also provides Node/detach and identity tests: a list-shaped output is not a substitute for preserving real linked nodes. Concurrency failure tests use barriers/events and bounded safety waits. Implementations that deadlock may still hit a safety timeout, which is a test failure, not a benchmark result.
+## Python
 
-## History without invented biographies
+- [Primitive data types](python/01-primitive-types/README.md) — Numbers, text, booleans, and explicit conversion.
+- [Collections and mutability](python/02-collections-and-mutability/README.md) — Lists, tuples, sets, dictionaries, and shared references.
+- [Control flow](python/03-control-flow/README.md) — Conditions, loops, and comprehensions.
+- [Functions](python/04-functions/README.md) — Parameters, return values, scope, and reusable behavior.
+- [Errors and exceptions](python/05-errors-and-exceptions/README.md) — Raise clear errors and catch failures at useful boundaries.
+- [Modules, files, and JSON](python/06-modules-files-and-json/README.md) — Import reusable code and exchange structured data.
+- [Classes and objects](python/07-classes-and-objects/README.md) — Keep related state and behavior together.
+- [Inheritance and composition](python/08-inheritance-and-composition/README.md) — Substitute compatible objects and assemble behavior.
+- [Dataclasses and type hints](python/09-dataclasses-and-type-hints/README.md) — Describe records and communicate expected types.
+- [Iterators and generators](python/10-iterators-and-generators/README.md) — Produce values lazily instead of storing every result.
+- [Closures and decorators](python/11-closures-and-decorators/README.md) — Capture configuration and wrap function calls.
+- [Context managers](python/12-context-managers/README.md) — Restore state and release resources reliably.
+- [Equality and hashing](python/13-equality-and-hashing/README.md) — Design stable value objects for dictionaries and sets.
+- [Properties and descriptors](python/14-properties-and-descriptors/README.md) — Control attribute access without changing the public syntax.
+- [Threads and locks](python/15-threads-and-locks/README.md) — Share memory safely and wait for work to finish.
+- [Thread-safe queues](python/16-thread-safe-queues/README.md) — Pass work between producers and consumers.
+- [Futures and executors](python/17-futures-and-executors/README.md) — Submit work, retrieve results, and propagate failures.
+- [Processes and isolation](python/18-processes-and-isolation/README.md) — Use independent interpreters for parallel work.
+- [Asyncio and cooperative concurrency](python/19-asyncio-and-cooperative-concurrency/README.md) — Await nonblocking work and bound concurrent tasks.
+- [Memory and garbage collection](python/20-memory-and-garbage-collection/README.md) — References, cyclic garbage, weak caches, and memory diagnosis.
 
-Harborline is fictional. Dijkstra, Kruskal, Floyd, Bellman and Prim chapters distinguish their documented mathematical/design problems from our adapted story and link primary sources. Foundational operations and general structures do not have fabricated single-inventor anecdotes. Python chapters link the official mechanism documentation. No claim is made that a historical inventor literally encountered this fictional logistics platform.
+## Data structures and algorithms
 
-## Algorithms: the relief network grows
+- [Arrays and linear scans](dsa/01-arrays-and-linear-scans/README.md) — Accumulators, indices, and loop invariants.
+- [Strings and frequency maps](dsa/02-strings-and-frequency-maps/README.md) — Counting repeated values with dictionaries.
+- [KMP string search](dsa/03-kmp-string-search/README.md) — Reuse matched prefixes instead of repeating comparisons.
+- [Prefix sums](dsa/04-prefix-sums/README.md) — Answer repeated range totals after one preprocessing pass.
+- [Sliding windows with counts](dsa/05-sliding-window/README.md) — Maintain the longest contiguous range with at most k distinct values.
+- [Sorting and two pointers](dsa/06-sorting-and-two-pointers/README.md) — Discard impossible pairs using sorted order.
+- [Binary search on the answer](dsa/07-binary-search-on-the-answer/README.md) — Find the first feasible value of a monotone predicate.
+- [Linked lists and node identity](dsa/08-linked-lists/README.md) — Remove nodes by changing links while retaining surviving objects.
+- [Stacks and nested operations](dsa/09-stacks-and-nested-operations/README.md) — Validate last-in-first-out order with a stack.
+- [Monotonic deques](dsa/10-monotonic-deques/README.md) — Keep only useful candidates for sliding-window maxima.
+- [Heaps and k-way merge](dsa/11-heaps-and-k-way-merge/README.md) — Merge sorted sequences through a small priority frontier.
+- [Greedy interval scheduling](dsa/12-greedy-interval-scheduling/README.md) — Maximize the number of compatible intervals by earliest finish time.
+- [Dynamic programming: minimum coins](dsa/13-dynamic-programming-minimum-coins/README.md) — Reuse answers to smaller amounts when greedy choices fail.
+- [0/1 knapsack](dsa/14-zero-one-knapsack/README.md) — Choose each item at most once under a capacity bound.
+- [Edit distance](dsa/15-edit-distance/README.md) — Compare string prefixes with a two-dimensional recurrence.
+- [Backtracking and pruning](dsa/16-backtracking-and-pruning/README.md) — Explore partial assignments and undo choices that lead to failure.
+- [Binary trees and level-order traversal](dsa/17-binary-trees-and-level-order/README.md) — Use a queue to visit nodes by depth.
+- [Binary search trees](dsa/18-binary-search-trees/README.md) — Maintain ordered keys and find floor values.
+- [Tries and prefix search](dsa/19-tries-and-prefix-search/README.md) — Index shared prefixes for exact completion queries.
+- [Graphs and breadth-first search](dsa/20-graphs-and-breadth-first-search/README.md) — Find shortest hop counts by exploring one layer at a time.
+- [Topological sorting](dsa/21-topological-sorting/README.md) — Order directed dependencies and detect cycles.
+- [Dijkstra shortest paths](dsa/22-dijkstra-shortest-paths/README.md) — Settle the cheapest frontier distance when all edge weights are nonnegative.
+- [Bellman–Ford shortest paths](dsa/23-bellman-ford-shortest-paths/README.md) — Relax all edges and detect source-reachable negative cycles.
+- [Floyd–Warshall all-pairs shortest paths](dsa/24-floyd-warshall-all-pairs/README.md) — Build a complete distance matrix by allowing intermediate vertices.
+- [Kruskal and disjoint sets](dsa/25-kruskal-and-disjoint-sets/README.md) — Build a minimum spanning tree by joining separate components.
+- [Prim minimum spanning trees](dsa/26-prim-minimum-spanning-trees/README.md) — Grow a cheapest connection frontier directly from a dense matrix.
+- [Fenwick trees](dsa/27-fenwick-trees/README.md) — Support point additions and range sums through binary-sized blocks.
+- [Segment trees](dsa/28-segment-trees/README.md) — Combine interval summaries and repair them after point replacements.
 
-| Chapter | New design pressure |
-| --- | --- |
-| [The first manifest](dsa/01-first-manifest/README.md) | array scans and loop invariants |
-| [Letters become inventory](dsa/02-label-shortages/README.md) | strings, frequency maps and hashing |
-| [The radio repeats itself](dsa/03-radio-patterns/README.md) | string search and KMP failure links |
-| [One manifest, many shift reports](dsa/04-shift-totals/README.md) | prefix sums and half-open ranges |
-| [A truck can carry only so many cargo kinds](dsa/05-mixed-load-window/README.md) | sliding windows with frequency counts |
-| [Two crates, one exact pallet](dsa/06-balanced-pallets/README.md) | sorting and two pointers |
-| [Buying the smallest workable truck](dsa/07-fleet-capacity/README.md) | binary search over a monotone answer |
-| [Detaching closed depots](dsa/08-rerouting-linked-stops/README.md) | linked-list pointer surgery |
-| [The pallet at the back blocks the door](dsa/09-loading-stack/README.md) | stacks and nested obligations |
-| [The busiest recent loading window](dsa/10-conveyor-peaks/README.md) | monotone deques |
-| [One arrival board from many depots](dsa/11-arrival-heap/README.md) | heaps and k-way merging |
-| [Serve the most ships with one dock](dsa/12-dock-greedy/README.md) | greedy interval scheduling and exchange arguments |
-| [When the largest pack is the wrong choice](dsa/13-relief-pack-dp/README.md) | dynamic programming: optimal substructure and reusable states |
-| [One copy of each medical kit](dsa/14-medical-knapsack/README.md) | 0/1 knapsack and dependency-safe DP updates |
-| [Two depots disagree about a manifest](dsa/15-manifest-reconciliation/README.md) | two-dimensional DP and edit distance |
-| [An early choice can strand the next ship](dsa/16-berth-backtracking/README.md) | backtracking, rollback and search pruning |
-| [Inspect the depot hierarchy by distance](dsa/17-inspection-tree/README.md) | binary trees, traversals and queues |
-| [Find the nearest lower storage code](dsa/18-bst-depot-index/README.md) | binary search trees, deletion and ordering invariants |
-| [Complete a depot name before the radio drops](dsa/19-trie-radio-directory/README.md) | tries and prefix indexes |
-| [The depot map is no longer a tree](dsa/20-road-bfs/README.md) | graph representation and breadth-first search |
-| [Road repairs must happen in the right order](dsa/21-repair-dependencies/README.md) | directed graphs, cycles and topological sorting |
-| [The fewest roads is not the fastest ambulance](dsa/22-ambulance-dijkstra/README.md) | Dijkstra and nonnegative shortest paths |
-| [Subsidies invalidate the greedy frontier](dsa/23-rebate-bellman-ford/README.md) | Bellman-Ford, relaxation and negative cycles |
-| [Every depot asks about every other depot](dsa/24-city-floyd-warshall/README.md) | Floyd-Warshall and DP over allowed intermediate vertices |
-| [Connect the city without buying redundant cable](dsa/25-fiber-kruskal/README.md) | disjoint sets, Kruskal and the cut property |
-| [The cable supplier quotes every pair](dsa/26-dense-network-prim/README.md) | Prim and representation-dependent algorithm choice |
-| [Yesterday’s prefix sums cannot absorb today’s corrections](dsa/27-live-ledger-fenwick/README.md) | Fenwick trees and dynamic prefix aggregates |
-| [An increase can erase the old minimum](dsa/28-cold-chain-segment-tree/README.md) | segment trees and associative summaries |
+## Low-level design
 
-## Python: the dispatch script becomes a service
+Fifteen familiar design problems. Each lesson explains the problem, a naive approach, its failure cases, a better design with costs and tradeoffs, and practical uses before opening the exercise. All fifteen run in the browser. The eight in-memory system topics adapt the local `industry_coding_playlist`; seven additional problems cover object state, bounded resources, reservations, and expense accounting.
 
-| Chapter | New design pressure |
-| --- | --- |
-| [The first shipping quote](python/01-exact-prices/README.md) | values, types, Decimal and rounding |
-| [Allocate stock in arrival order](python/02-dispatch-decisions/README.md) | branches, loops, dictionaries, copies and comprehensions |
-| [The second call inherits the first call’s seals](python/03-function-boundaries/README.md) | function binding, keyword-only arguments and mutable defaults |
-| [Reject a malformed radio record before it changes stock](python/04-strict-radio-parser/README.md) | Unicode text, unpacking, exceptions and precise validation |
-| [A crash must not erase the previous manifest](python/05-atomic-manifest-files/README.md) | modules, JSON, filesystem I/O and exception-safe replacement |
-| [A dictionary typo reaches the loading bay](python/06-typed-shipment-model/README.md) | annotations, dataclasses and runtime invariants |
-| [Make invalid inventory states unreachable](python/07-inventory-object/README.md) | classes, encapsulation and instance ownership |
-| [Add drones without rewriting the dispatcher](python/08-carrier-polymorphism/README.md) | abstract classes, inheritance and substitutability |
-| [Change carrier and audit policy independently](python/09-composed-dispatch/README.md) | composition, structural protocols and dependency injection |
-| [A million records must not become a million objects](python/10-lazy-manifest-batches/README.md) | iterators, generators and single-pass ownership |
-| [Retry a transient outage without hiding a bad request](python/11-retry-decorator/README.md) | closures, decorators and exception selection |
-| [Rollback a reservation if dispatch fails](python/12-reservation-context/README.md) | context managers, generators and exception propagation |
-| [The same shipment appears twice in a set](python/13-identity-data-model/README.md) | dunder methods, immutability, equality, hashing and ordering |
-| [Reuse field validation without sharing field values](python/14-validated-descriptors/README.md) | descriptors, __set_name__ and instance storage |
-| [Two dispatchers reserve the last crate](python/15-atomic-threaded-stock/README.md) | threads, locks and atomic invariants |
-| [The input desk must not outrun the workers](python/16-bounded-worker-queue/README.md) | bounded queues, task accounting and graceful shutdown |
-| [Finish out of order, report in request order](python/17-ordered-futures/README.md) | ThreadPoolExecutor, futures and exception ownership |
-| [CPU work needs a different boundary](python/18-spawned-process-workers/README.md) | multiprocessing spawn, pickling and import safety |
-| [Cancel the shipment group without orphaning work](python/19-structured-async-dispatch/README.md) | async/await, semaphores, TaskGroup and cancellation |
+- [Parking Lot](lld/01-parking-lot/README.md) — Compatible allocation and ticket lifecycle.
+- [Vending Machine](lld/02-vending-machine/README.md) — Atomic purchase and credit ownership.
+- [Library Management System](lld/03-library-management/README.md) — Title identity, copies, and loan ownership.
+- [LRU Cache](lld/04-lru-cache/README.md) — Recency ownership and bounded cache state.
+- [Rate Limiter](lld/05-rate-limiter/README.md) — Per-client sliding windows and explicit time.
+- [Banking System](lld/06-banking-system/README.md) — Atomic transfers, validation, and idempotency.
+- [Transactional Key-Value Store](lld/07-transactional-key-value-store/README.md) — Nested transactions and rollback boundaries.
+- [In-Memory Database](lld/08-in-memory-database/README.md) — TTL, conditional updates, and version history.
+- [Document Search Engine](lld/09-document-search-engine/README.md) — Tokenization, positional indexes, and stale updates.
+- [Task Scheduler](lld/10-task-scheduler/README.md) — Priority dispatch, worker quotas, and expiring leases.
+- [Recipe Manager](lld/11-recipe-manager/README.md) — Permissions and immutable revision history.
+- [Message Broker](lld/12-message-broker/README.md) — Independent delivery state and bounded retries.
+- [File Storage System](lld/13-file-storage-system/README.md) — Quota accounting and explicit expiration.
+- [Meeting Room Booking System](lld/14-meeting-room-booking/README.md) — Interval conflicts and atomic room allocation.
+- [Expense Sharing System](lld/15-expense-sharing/README.md) — Integer accounting and idempotent operations.
+
+## High-level design
+
+Fifteen familiar system design problems. Each lesson works through requirements, scale, request flows, failure cases, architecture choices, and tradeoffs. Practice opens an Excalidraw canvas with a system-specific brief, failure scenarios, and a self-review checklist. Draw and justify the architecture; your diagram and notes save per lesson on this device. Export an editable drawing or use Excalidraw’s image export. There are no HLD code stubs or test cases.
+
+- [URL Shortener](hld/01-url-shortener/README.md) — Authoritative claims and cached reads.
+- [API Rate Limiter](hld/02-api-rate-limiter/README.md) — Shared quotas and outage policy.
+- [Distributed Cache](hld/03-distributed-cache/README.md) — Stable routing during topology changes.
+- [Distributed Key-Value Store](hld/04-distributed-key-value-store/README.md) — Quorum reads and version reconciliation.
+- [File Storage Service](hld/05-file-storage-service/README.md) — Multipart integrity and publication.
+- [Content Delivery Network](hld/06-content-delivery-network/README.md) — Cache identity, freshness, and refresh ownership.
+- [Distributed Message Queue](hld/07-distributed-message-queue/README.md) — Partition ownership and contiguous consumer commits.
+- [Notification Service](hld/08-notification-service/README.md) — Transactional outbox and bounded provider retries.
+- [Chat System](hld/09-chat-system/README.md) — Conversation sequence, retries, and reconnect cursors.
+- [News Feed](hld/10-news-feed/README.md) — Hybrid fanout and stable feed pagination.
+- [Video Streaming Platform](hld/11-video-streaming-platform/README.md) — Versioned jobs and complete manifest publication.
+- [Web Crawler](hld/12-web-crawler/README.md) — Fair host scheduling and retry eligibility.
+- [Search Engine](hld/13-search-engine/README.md) — Partitioned ranking and index visibility.
+- [Metrics and Monitoring System](hld/14-metrics-and-monitoring/README.md) — Bounded cardinality and mergeable histograms.
+- [Ticket Booking System](hld/15-ticket-booking-system/README.md) — Expiring ownership and payment compensation.
+
+## Writing lessons
+
+Write for senior and staff engineers: introduce the decision or mechanism briefly, show a small concrete code or configuration example, then explain its observed behavior, invariant, and failure boundary. Replace repetitive prose rather than appending examples. Show enough of a mechanism to make it inspectable without supplying the complete practice implementation.
+
+Prefer self-contained examples with visible results. Label integration fragments, schema assumptions, placeholders, and runtime requirements explicitly; distinguish a database guarantee from an external side effect. Keep HLD architecture practice diagram-based and field guides reading-only. Verify executable snippets before publishing and preserve the existing exercise contracts when changing teaching material.
+
+Keep sections concise while covering the complete progression. Use a cheatsheet for operational commands and longer flows, and link each flow to the context that explains when it is useful. Validate both directions of the section links; distinguish read-only diagnostics from operations that change a target.
