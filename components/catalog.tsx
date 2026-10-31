@@ -65,52 +65,16 @@ function Course({
         <p>{courses[track].description}</p>
       )}
       <div className="path-course-actions">
-        <Link className="text-link course-start" href={`/learn/${resume.id}/`}>
-          {done ? "Continue" : "Start learning"}
+        <Link
+          className="button primary course-start"
+          href={`/learn/${resume.id}/`}
+        >
+          {done ? "Resume" : "Start"}
         </Link>
         <span>
-          {done} {track === "hld" ? "reviewed" : "completed"}
+          {done} of {items.length} {track === "hld" ? "reviewed" : "completed"}
         </span>
       </div>
-      <div
-        className="progress-track"
-        role="progressbar"
-        aria-label={`${title}: ${done} of ${items.length} lessons ${track === "hld" ? "reviewed" : "completed"}`}
-        aria-valuemin={0}
-        aria-valuemax={items.length}
-        aria-valuenow={done}
-      >
-        <span style={{ width: `${(done / items.length) * 100}%` }} />
-      </div>
-      <details className="course-contents">
-        <summary>
-          Browse lessons <ChevronDown size={14} aria-hidden="true" />
-        </summary>
-        <div className="chapter-groups">
-          {sections.map((section) => (
-            <details className="chapter-group" key={section}>
-              <summary>
-                <ChevronDown size={14} />
-                <span>{section}</span>
-                <span className="group-count">
-                  {items.filter((c) => c.section === section).length}
-                </span>
-              </summary>
-              <div>
-                {items
-                  .filter((c) => c.section === section)
-                  .map((chapter) => (
-                    <ChapterLink
-                      key={chapter.id}
-                      chapter={chapter}
-                      completed={completed}
-                    />
-                  ))}
-              </div>
-            </details>
-          ))}
-        </div>
-      </details>
     </article>
   );
 }
@@ -370,9 +334,6 @@ export function Catalog({
                     className="path-art"
                   />
                   <div className="path-step-heading">
-                    <span className="path-marker" aria-hidden="true">
-                      01
-                    </span>
                     <h2>Machine coding</h2>
                     <p>
                       Refresh your language, then work through data structures
@@ -411,9 +372,6 @@ export function Catalog({
                     className="path-art"
                   />
                   <div className="path-step-heading">
-                    <span className="path-marker" aria-hidden="true">
-                      02
-                    </span>
                     <h2>System design basics</h2>
                     <p>
                       Revisit the mechanisms that shape a distributed system
@@ -450,9 +408,6 @@ export function Catalog({
                     className="path-art"
                   />
                   <div className="path-step-heading">
-                    <span className="path-marker" aria-hidden="true">
-                      03
-                    </span>
                     <h2>Low-level design</h2>
                     <p>
                       Turn requirements into objects, interfaces, and invariants
@@ -483,9 +438,6 @@ export function Catalog({
                     className="path-art"
                   />
                   <div className="path-step-heading">
-                    <span className="path-marker" aria-hidden="true">
-                      04
-                    </span>
                     <h2>High-level design</h2>
                     <p>
                       Draw service boundaries, data flows, and failure paths.

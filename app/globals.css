@@ -2679,27 +2679,17 @@ input::placeholder {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  margin: 14px 0 12px;
+  margin-top: 16px;
 }
 .path-course-actions .course-start {
-  font-size: 14px;
+  padding: 8px 16px;
+  font-size: 13px;
   margin: 0;
 }
 .path-course-actions > span {
   font-size: 13px;
   color: var(--muted);
 }
-.path-course .progress-track {
-  height: 2px;
-  background: #e8e8e8;
-}
-.path-course .progress-track > span {
-  background: var(--accent);
-}
-.course-contents {
-  margin-top: 14px;
-}
-.course-contents > summary,
 .foundation-lessons > summary {
   display: flex;
   align-items: center;
@@ -2712,34 +2702,11 @@ input::placeholder {
   width: fit-content;
   padding-block: 6px;
 }
-.course-contents > summary::-webkit-details-marker,
 .foundation-lessons > summary::-webkit-details-marker {
   display: none;
 }
-.course-contents[open] > summary svg,
 .foundation-lessons[open] > summary svg {
   transform: rotate(180deg);
-}
-.course-contents .chapter-groups {
-  margin-top: 14px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  overflow: hidden;
-  background: white;
-}
-.path-course .chapter-group > summary {
-  font-size: 14px;
-  padding: 14px;
-}
-.path-course .catalog-chapter {
-  padding: 14px;
-  gap: 10px;
-}
-.path-course .catalog-chapter strong {
-  font-size: 14px;
-}
-.path-course .catalog-chapter small {
-  font-size: 13px;
 }
 .path-choose {
   font-size: 15px;
