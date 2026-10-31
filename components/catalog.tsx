@@ -148,7 +148,11 @@ function GuideCard({
             {modules.length === 1 ? "" : "s"} · {guide.parts.length} lessons
           </div>
         )}
-        <h3>{guide.title}</h3>
+        <h3>
+          <Link className="playlist-open" href={`/guides/${guide.slug}/`}>
+            {guide.title}
+          </Link>
+        </h3>
         {search && <p className="guide-search-desc">{guide.description}</p>}
         {!search && (
           <ul className="guide-track-list" aria-label={`${guide.title} topics`}>
@@ -163,12 +167,6 @@ function GuideCard({
             ))}
           </ul>
         )}
-        <Link className="playlist-open" href={`/guides/${guide.slug}/`}>
-          <span>Explore curriculum</span>
-          <span className="playlist-open-arrow" aria-hidden="true">
-            →
-          </span>
-        </Link>
         {search && (
           <ol className="guide-parts search-parts">
             {guide.parts.map((part) => (

@@ -2854,10 +2854,22 @@ input::placeholder {
   color: var(--ink);
   margin: 0 0 16px;
 }
+.path-catalog .guide-card h3 a.playlist-open,
+.path-catalog .playlist-open {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.path-catalog .guide-card h3 a.playlist-open:hover,
+.path-catalog .playlist-open:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .path-catalog .guide-track-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 20px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -2891,33 +2903,6 @@ input::placeholder {
   text-decoration: underline;
   text-underline-offset: 3px;
   color: var(--accent);
-}
-.path-catalog .playlist-open {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-.path-catalog .playlist-open:hover {
-  color: var(--accent);
-  text-decoration: none;
-}
-.path-catalog .playlist-open .playlist-open-arrow {
-  color: var(--accent);
-  font-size: 16px;
-  line-height: 1;
-  transition: transform 0.15s ease;
-}
-.path-catalog .playlist-open:hover .playlist-open-arrow {
-  transform: translateX(4px);
 }
 .guide-search-desc {
   font-size: 14px;
