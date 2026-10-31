@@ -33,7 +33,6 @@ test("home searches full curricula without expanding every lesson by default", a
   for (const [term, slug] of [
     ["hydration", "frontend"],
     ["MVCC", "backend"],
-    ["LoRA", "ai-engineering"],
     ["Terraform", "devops"],
   ]) {
     await search.fill(term);
@@ -115,15 +114,12 @@ test("mobile curriculum navigation contains focus and supports switching playlis
   await expect(
     dialog.getByRole("button", { name: "Close navigation", exact: true }),
   ).toBeFocused();
+  await dialog.locator("summary").filter({ hasText: "DevOps" }).click();
+  const devops = guides.find((guide) => guide.slug === "devops")!;
   await dialog
-    .locator("summary")
-    .filter({ hasText: "Agentic Engineering" })
+    .locator(`a[href="/guides/devops/${devops.parts[0].slug}/"]`)
     .click();
-  const ai = guides.find((guide) => guide.slug === "ai-engineering")!;
-  await dialog
-    .locator(`a[href="/guides/ai-engineering/${ai.parts[0].slug}/"]`)
-    .click();
-  await expect(page).toHaveURL(`/guides/ai-engineering/${ai.parts[0].slug}/`);
+  await expect(page).toHaveURL(`/guides/devops/${devops.parts[0].slug}/`);
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await open.click();
   await page.keyboard.press("Escape");

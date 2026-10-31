@@ -117,13 +117,6 @@
         "fenced_examples": 78
       },
       {
-        "slug": "ai-engineering",
-        "lessons": 14,
-        "modules": 6,
-        "sections": 92,
-        "fenced_examples": 41
-      },
-      {
         "slug": "devops",
         "lessons": 13,
         "modules": 4,
@@ -396,7 +389,7 @@
     "preference": "Existing local storage key retained; cross-tab synchronization and blocked-write memory fallback verified",
     "selected_content": "Only selected-language fundamentals, DSA and LLD; HLD remains diagram based",
     "system_design_basics": "Eight curated existing backend lessons; all links verified",
-    "supplementary": "Frontend, Backend, AI Engineering, DevOps, and Last Mile Prep; tool cheatsheets retained.",
+    "supplementary": "Frontend, Backend, DevOps, and Last Mile Prep; tool cheatsheets retained.",
     "navigation": "DSA/LLD preserve problem and mode; fundamentals switch to first lesson of chosen language; guide/HLD stay on page",
     "accessibility": "Hero choice moves focus to Start; 320px layout and axe checks passed; section bookmarks clear sticky navbar",
     "verification": "47 distinct browser scenarios passed, including a final six-case focused rerun after updating the legacy card-layout assertion; 37 Node tests and production build passed",

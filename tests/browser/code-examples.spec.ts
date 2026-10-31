@@ -18,7 +18,6 @@ test("reading pairs explanations with copyable examples on desktop and mobile", 
     "/guides/devops/processes-and-first-deploy/",
     "/guides/last-mile-prep/signals-and-instrumentation/",
     "/guides/last-mile-prep/requirements-and-audience/",
-    "/guides/ai-engineering/foundations/",
   ];
   for (const route of routes) {
     await page.goto(route);

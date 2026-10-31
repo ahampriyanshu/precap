@@ -6,7 +6,7 @@ test("mechanism diagrams load on desktop and narrow mobile screens", async ({
   page,
 }) => {
   const routes = [] as string[];
-  for (const slug of ["frontend", "backend", "ai-engineering", "devops"]) {
+  for (const slug of ["frontend", "backend", "devops"]) {
     const guide = guides.find((g: { slug: string }) => g.slug === slug);
     for (const part of guide.parts) {
       if (
@@ -19,7 +19,7 @@ test("mechanism diagrams load on desktop and narrow mobile screens", async ({
       }
     }
   }
-  expect(routes).toHaveLength(4);
+  expect(routes).toHaveLength(3);
   for (const width of [1280, 320]) {
     await page.setViewportSize({ width, height: 900 });
     for (const route of routes) {

@@ -27,10 +27,6 @@ export const conceptArt = {
     alt: "A server cabinet and a database, linked by a cable beside a stack of reference books.",
     caption: "The work behind every request.",
   },
-  "ai-engineering": {
-    alt: "An open reference book feeds an interconnected model chip.",
-    caption: "Build with models. Reason from evidence.",
-  },
   devops: {
     alt: "Packages move along a release conveyor, with inspection tools nearby.",
     caption: "From a working build to a dependable release.",

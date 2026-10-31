@@ -95,11 +95,6 @@ const guideTopics: Record<string, { title: string; moduleIndex: number }[]> = {
     { title: "Data and correctness", moduleIndex: 3 },
     { title: "Architecture and operations", moduleIndex: 6 },
   ],
-  "ai-engineering": [
-    { title: "Models and learning", moduleIndex: 1 },
-    { title: "Serving and economics", moduleIndex: 4 },
-    { title: "Agents and multimodal systems", moduleIndex: 5 },
-  ],
   devops: [
     { title: "Processes and hosts", moduleIndex: 1 },
     { title: "Artifacts and infrastructure", moduleIndex: 2 },

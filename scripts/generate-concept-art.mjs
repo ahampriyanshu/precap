@@ -357,54 +357,6 @@ const drawings = [
       book(520, 285, 87, 17, "SYSTEMS", -1),
   },
   {
-    id: "ai-engineering",
-    title: "An open reference book feeds an interconnected model chip.",
-    draw: () =>
-      ground() +
-      path(
-        "M81 211q60-29 139 7 70-43 149-24l-8 109q-65-11-141 24-72-30-142-8Z",
-        white,
-      ) +
-      path("m220 218 0 109m-139-7-9 9q75-9 148 24 77-34 147-31l8-119", white) +
-      [0, 1, 2, 3, 4]
-        .map((i) =>
-          path(
-            `M99 ${233 + i * 15}q47-13 102 10m39-5q51-20 108-16`,
-            'opacity=".3"',
-          ),
-        )
-        .join("") +
-      group(
-        444,
-        140,
-        1,
-        rect(0, 0, 120, 118, white) +
-          rect(12, 12, 96, 94, wash) +
-          [0, 1, 2, 3, 4, 5]
-            .map((i) =>
-              path(
-                `M${18 + i * 17} 0v-17m0 135v17M0 ${16 + i * 17}h-17m137 0h17`,
-              ),
-            )
-            .join("") +
-          path(
-            "M30 31 61 51 90 29M30 31l-2 56 33-36 29 34m-62 2 62-58m-29 22v42",
-            `stroke="${accent}"`,
-          ) +
-          [
-            [30, 31],
-            [61, 51],
-            [90, 29],
-            [28, 87],
-            [90, 85],
-            [61, 93],
-          ]
-            .map(([x, y]) => circle(x, y, 5, white))
-            .join(""),
-      ) +
-      path("M367 256h31v-57h29", `stroke="${accent}" stroke-dasharray="4 5"`),
-  },
-  {
     id: "devops",
     title:
       "Packages move along a release conveyor, with inspection tools nearby.",

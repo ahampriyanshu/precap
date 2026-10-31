@@ -2,9 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 const { guides } = JSON.parse(fs.readFileSync("guides.json", "utf8"));
-test("Frontend, Backend, AI Engineering and DevOps have independent modular curricula", () => {
+test("Frontend, Backend, and DevOps have independent modular curricula", () => {
   assert.ok(!guides.some((guide) => guide.slug === "engineering"));
-  for (const slug of ["frontend", "backend", "ai-engineering", "devops"]) {
+  for (const slug of ["frontend", "backend", "devops"]) {
     const guide = guides.find((item) => item.slug === slug);
     assert.ok(guide, slug);
     assert.ok(new Set(guide.parts.map((part) => part.module)).size > 1, slug);
@@ -14,10 +14,7 @@ test("Frontend, Backend, AI Engineering and DevOps have independent modular curr
     );
     assert.ok(
       guide.parts.every(
-        (part) =>
-          !["frontend", "backend", "ai-engineering", "devops"].includes(
-            part.cheatsheet,
-          ),
+        (part) => !["frontend", "backend", "devops"].includes(part.cheatsheet),
       ),
       slug,
     );
@@ -36,8 +33,6 @@ test("Frontend, Backend, AI Engineering and DevOps have independent modular curr
     "devops/production",
     "devops/deploying",
     "devops/scaling",
-    "llms-and-ai/designing",
-    "llms-and-ai/operating",
   ])
     assert.ok(aliases.includes(legacy), legacy);
 });
