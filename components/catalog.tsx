@@ -70,13 +70,46 @@ function Course({
         >
           {done ? "Resume" : "Start"}
         </Link>
-        <span>
+        <span
+          role="progressbar"
+          aria-valuenow={done}
+          aria-valuemin={0}
+          aria-valuemax={items.length}
+        >
           {done} of {items.length} {track === "hld" ? "reviewed" : "completed"}
         </span>
       </div>
     </article>
   );
 }
+const guideTopics: Record<string, { title: string; moduleIndex: number }[]> = {
+  frontend: [
+    { title: "Browser foundations", moduleIndex: 1 },
+    { title: "Application architecture", moduleIndex: 2 },
+    { title: "Rendering and delivery", moduleIndex: 3 },
+  ],
+  backend: [
+    { title: "Requests and execution", moduleIndex: 1 },
+    { title: "Data and correctness", moduleIndex: 3 },
+    { title: "Architecture and operations", moduleIndex: 6 },
+  ],
+  "ai-engineering": [
+    { title: "Models and learning", moduleIndex: 1 },
+    { title: "Serving and economics", moduleIndex: 4 },
+    { title: "Agents and multimodal systems", moduleIndex: 5 },
+  ],
+  devops: [
+    { title: "Processes and hosts", moduleIndex: 1 },
+    { title: "Artifacts and infrastructure", moduleIndex: 2 },
+    { title: "Orchestration and delivery", moduleIndex: 3 },
+  ],
+  "last-mile-prep": [
+    { title: "Incident Triage", moduleIndex: 1 },
+    { title: "Product Management", moduleIndex: 2 },
+    { title: "Telemetry & Observability", moduleIndex: 3 },
+  ],
+};
+
 function GuideCard({
   guide,
   search = false,
@@ -88,34 +121,53 @@ function GuideCard({
     guide.moduleLabel === "Track"
       ? [...new Set(guide.parts.map((part) => part.module).filter(Boolean))]
       : [];
+  const topics =
+    guideTopics[guide.slug] ||
+    [...new Set(guide.parts.map((part) => part.module).filter(Boolean))]
+      .slice(0, 3)
+      .map((mod, i) => ({ title: mod, moduleIndex: i + 1 }));
+  const modules = [
+    ...new Set(guide.parts.map((part) => part.module).filter(Boolean)),
+  ];
+  const moduleLabel = guide.moduleLabel === "Track" ? "TRACK" : "MODULE";
+
   return (
     <article
-      className={`guide-card ${tracks.length && !search ? "guide-card-tracks" : ""}`}
+      className={`guide-card ${!search ? `guide-card-themed guide-card-${guide.slug}` : ""} ${tracks.length && !search ? "guide-card-tracks" : ""}`}
     >
       {!search && hasConceptArt(guide.slug) && (
-        <ConceptIllustration concept={guide.slug} className="playlist-art" />
+        <div className="guide-card-art">
+          <ConceptIllustration concept={guide.slug} className="playlist-art" />
+        </div>
       )}
-      <div className="playlist-meta">
-        {tracks.length
-          ? `${tracks.length} ${tracks.length === 1 ? "track" : "tracks"} · `
-          : ""}
-        {guide.parts.length} {guide.parts.length === 1 ? "lesson" : "lessons"}
-      </div>
       <h3>{guide.title}</h3>
-      <p>{guide.description}</p>
-      {!search && !!tracks.length && (
-        <ul className="guide-track-list" aria-label={`${guide.title} tracks`}>
-          {tracks.map((track, index) => (
-            <li key={track}>
-              <Link href={`/guides/${guide.slug}/#module-${index + 1}`}>
-                <span>{track}</span>
+      {search && <p className="guide-search-desc">{guide.description}</p>}
+      {!search && (
+        <ul className="guide-track-list" aria-label={`${guide.title} topics`}>
+          {topics.map((topic) => (
+            <li key={topic.title}>
+              <span className="guide-plus" aria-hidden="true">
+                +
+              </span>
+              <Link href={`/guides/${guide.slug}/#module-${topic.moduleIndex}`}>
+                <span>{topic.title}</span>
               </Link>
             </li>
           ))}
         </ul>
       )}
-      <Link className="text-link playlist-open" href={`/guides/${guide.slug}/`}>
-        Open playlist
+      {!search && (
+        <div className="playlist-meta">
+          {modules.length} {moduleLabel}
+          {modules.length === 1 ? "" : "S"} · {guide.parts.length} LESSONS ·
+          FREE
+        </div>
+      )}
+      <Link className="playlist-open" href={`/guides/${guide.slug}/`}>
+        <span>Open</span>
+        <span className="playlist-open-arrow" aria-hidden="true">
+          →
+        </span>
       </Link>
       {search && (
         <ol className="guide-parts search-parts">
@@ -444,9 +496,6 @@ export function Catalog({
               <div className="section-heading">
                 <div>
                   <h2>The engineering bookshelf</h2>
-                  <p className="section-description">
-                    A few subjects worth keeping close.
-                  </p>
                 </div>
               </div>
               <div className="guide-grid">

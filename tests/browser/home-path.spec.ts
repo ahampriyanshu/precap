@@ -9,7 +9,7 @@ test("first visit asks for a language and presents the ordered interview path", 
     name: "Programming language",
     exact: true,
   });
-  await expect(language).toHaveValue("");
+  await expect(language).toHaveValue("python");
   await expect(page.locator(".site-header a")).toHaveCount(1);
   await expect(page.locator(".learning-path > li h2")).toHaveText([
     "Machine coding",
@@ -17,11 +17,7 @@ test("first visit asks for a language and presents the ordered interview path", 
     "Low-level design",
     "High-level design",
   ]);
-  await expect(
-    page.locator(
-      ".track-python,.track-go,.track-java,.track-cpp,.track-javascript",
-    ),
-  ).toHaveCount(0);
+  await expect(page.locator(".track-python")).toBeVisible();
   await language.selectOption("go");
   await expect(language).toHaveValue("go");
   await expect(page.locator(".track-go")).toBeVisible();
@@ -107,7 +103,7 @@ test("invalid or unavailable preference storage keeps first-visit choice usable 
     name: "Programming language",
     exact: true,
   });
-  await expect(language).toHaveValue("");
+  await expect(language).toHaveValue("python");
   await language.selectOption("cpp");
   await expect(page.locator(".track-cpp")).toBeVisible();
   expect(

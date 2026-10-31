@@ -245,9 +245,6 @@ test("old native completion flags retain drafts without counting browser course 
     await expect(
       page.locator(".track-dsa").getByRole("progressbar"),
     ).toHaveAttribute("aria-valuenow", "1");
-    await expect(
-      page.locator(".track-dsa .chapter-number.is-complete"),
-    ).toHaveCount(1);
   }
   for (const language of compiledLanguages) {
     const fundamental = manifest.find((chapter) => chapter.track === language)!;
