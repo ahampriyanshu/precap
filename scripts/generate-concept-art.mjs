@@ -241,8 +241,8 @@ function deskScene() {
       path("M37 273h1002v12H37Z", white) +
       path("M79 285 65 340h16l20-55m876 0 22 55h17l-17-55", white) +
       laptop(395, 91, 0.91) +
-      book(104, 220, 132, 22, "SYSTEMS", -3) +
-      book(111, 199, 118, 18, "FIELD NOTES", 1) +
+      book(104, 220, 132, 22, "", -3) +
+      book(111, 199, 118, 18, "", 1) +
       mug(742, 247, 0.85) +
       notebook(785, 211, 0.26) +
       path("M280 241 318 235l-3-5-39 6Zm-4-5-11 8 15-3", white) +
