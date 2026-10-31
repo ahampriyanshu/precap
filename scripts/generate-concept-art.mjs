@@ -409,25 +409,77 @@ const drawings = [
     title:
       "Packages move along a release conveyor, with inspection tools nearby.",
     draw: () =>
-      ground(352) +
-      path("M92 264h475q24 0 24 25t-24 25H92q-24 0-24-25t24-25Z", white) +
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      ground(341) +
+      // Telemetry & pipeline console on the right
+      path("M588 285v56m-12 0h24", 'stroke-width="2"') +
+      rect(558, 202, 60, 83, `${white} rx="3"`) +
+      rect(563, 208, 50, 71, `${wash} rx="2"`) +
+      rect(567, 215, 42, 11, `${white} rx="2"`) +
+      path("m570 220 2 2 4-4", `stroke="${accent}" stroke-width="1.6"`) +
+      path("M578 221h27", 'opacity=".4" stroke-width="1"') +
+      rect(567, 230, 42, 11, `${white} rx="2"`) +
+      path("m570 235 2 2 4-4", `stroke="${accent}" stroke-width="1.6"`) +
+      path("M578 236h27", 'opacity=".4" stroke-width="1"') +
+      rect(567, 245, 42, 11, `${spot} rx="2"`) +
+      path("M573 250h30", 'stroke="white" stroke-width="1.8"') +
+      path(
+        "M567 268l8-4 10 6 11-8 13 4",
+        `stroke="${accent}" stroke-width="1.4"`,
+      ) +
+      // Overhead gantry structural pillars (behind conveyor)
+      rect(234, 104, 14, 160, white) +
+      path(
+        "M234 120h14m-14 30h14m-14 30h14m-14 30h14m-14 30h14",
+        'opacity=".35"',
+      ) +
+      rect(422, 104, 14, 160, white) +
+      path(
+        "M422 120h14m-14 30h14m-14 30h14m-14 30h14m-14 30h14",
+        'opacity=".35"',
+      ) +
+      // Conveyor belt body and rollers
+      path("M82 264h455q22 0 22 25t-22 25H82q-22 0-22-25t22-25Z", white) +
+      [0, 1, 2, 3, 4, 5, 6, 7, 8]
         .map(
           (i) =>
-            circle(99 + i * 51, 289, 15, white) +
-            circle(99 + i * 51, 289, 4, wash),
+            circle(88 + i * 53, 289, 15, white) +
+            circle(88 + i * 53, 289, 4, wash),
         )
         .join("") +
       path(
-        "M125 314v38m12-38v38m396-38v38m12-38v38M86 265h482",
+        "M112 314v27m12-27v27m356-27v27m12-27v27M76 265h468M76 313h468",
         'stroke-width="2"',
       ) +
-      cube(141, 243, 0.6) +
-      cube(299, 231, 0.78, true) +
-      cube(469, 243, 0.6) +
-      path("M104 186v-67h451v67M116 119v-12h428v12", white) +
-      path("M330 120v29m-16 0h32v27h-32Z", spot) +
-      path("M319 184 289 211m53-27 29 27", 'opacity=".3"'),
+      // Conveyor feet
+      path("M104 341h28m356 0h28", 'stroke-width="2"') +
+      // Overhead crossbeam
+      rect(222, 88, 226, 16, white) +
+      path("M218 88h234", 'stroke-width="2"') +
+      path(
+        "M248 104l16 16m-16 0l16-16m142 0l16 16m-16 0l16-16",
+        'opacity=".4"',
+      ) +
+      // Packages on conveyor
+      cube(135, 245, 0.6) +
+      cube(289, 233, 0.78, true) +
+      cube(435, 245, 0.6) +
+      // Inspection scanner unit suspended from beam above middle package
+      rect(336, 104, 18, 14, wash) +
+      rect(320, 118, 50, 26, white) +
+      rect(326, 123, 38, 16, wash) +
+      circle(335, 131, 2.5, 'fill="#171717" stroke="none"') +
+      circle(345, 131, 2.5, `fill="${accent}" stroke="none"`) +
+      circle(355, 131, 2.5, `fill="${accent}" stroke="none"`) +
+      path("M334 144h22l-4 7h-14Z", spot) +
+      // Subtle laser scan guide rays down to package top
+      path(
+        "M337 151l-26 28m20-28l28 28",
+        `stroke="${accent}" opacity=".45" stroke-dasharray="3 3"`,
+      ) +
+      path(
+        "M345 151v29",
+        `stroke="${accent}" opacity=".6" stroke-dasharray="2 3"`,
+      ),
   },
   {
     id: "last-mile-prep",

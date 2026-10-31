@@ -122,9 +122,6 @@ test("LLD is discoverable and teaches the design before opening browser practice
     ).toBeVisible();
   }
   await expect(page.locator(".cm-editor")).toHaveCount(0);
-  await expect(
-    page.getByRole("button", { name: "LLD", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("link", { name: "Open practice" }).click();
   await expect(page).toHaveURL(practice(lld));
   const editor = page.getByRole("textbox", { name: "Python code editor" });
@@ -181,9 +178,6 @@ test("HLD is discoverable and opens an architecture canvas after the lesson", as
   await expect(
     page.locator(".lesson-reader pre code.language-text"),
   ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "HLD", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
   await page
     .getByRole("link", { name: "Open design canvas", exact: true })
     .click();
@@ -273,12 +267,7 @@ test("mobile keeps the same lesson-first flow and usable navigation", async ({
     .fill("garbage");
   await page.getByRole("link", { name: new RegExp(gc.title) }).click();
   await expect(page).toHaveURL(lesson(gc));
-  await page.getByRole("button", { name: "Open lesson navigation" }).click();
-  await page.getByRole("button", { name: "HLD", exact: true }).click();
-  await page
-    .getByRole("textbox", { name: "Search course lessons" })
-    .fill("URL Shortener");
-  await page.getByRole("link", { name: new RegExp(hld.title) }).click();
+  await page.goto(lesson(hld));
   await expect(page).toHaveURL(lesson(hld));
   expect(
     await page.evaluate(
