@@ -416,6 +416,19 @@ input::placeholder {
   font-size: 11px;
   padding: 28px 0 34px;
 }
+.catalog-footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line);
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+}
+.catalog-footer a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
 
 /* Shared lesson navigation */
 .workspace-shell {

@@ -117,7 +117,16 @@ export default async function PlaylistPage({ params }: Props) {
         </div>
         <footer className="catalog-footer">
           <Link href="/#guides">All playlists</Link>
-          <span>made by ahampriyanshi</span>
+          <span>
+            made by{" "}
+            <a
+              href="https://ahampriyanshu.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ahampriyanshu
+            </a>
+          </span>
         </footer>
       </main>
     </div>

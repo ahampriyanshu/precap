@@ -509,7 +509,16 @@ export function Catalog({
           </>
         )}
         <footer className="catalog-footer">
-          <span>made by ahampriyanshi</span>
+          <span>
+            made by{" "}
+            <a
+              href="https://ahampriyanshu.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ahampriyanshu
+            </a>
+          </span>
           <span>Your code and progress stay in this browser.</span>
         </footer>
       </main>
