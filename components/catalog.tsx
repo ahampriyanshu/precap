@@ -291,9 +291,6 @@ export function Catalog({
         <section className="path-hero">
           <div className="hero-copy">
             <h1>Deadline Driven Preparation</h1>
-            <p className="intro-copy">
-              Revisit the fundamentals of the systems you know how to build.
-            </p>
           </div>
           <ConceptIllustration
             concept="engineering-desk"
@@ -303,11 +300,7 @@ export function Catalog({
         </section>
         <div className="path-section-heading" id="courses">
           <div>
-            <h2>{term ? "Search topics" : "The core path"}</h2>
-            <p>
-              From implementation to architecture. Start where you need the
-              refresher.
-            </p>
+            <h2>{term ? "Search topics" : "Curriculum"}</h2>
           </div>
           <label className="search-field">
             <Search size={16} aria-hidden="true" />

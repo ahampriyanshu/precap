@@ -625,24 +625,11 @@ test("browser compiler desktop evidence and mobile language controls remain usab
     name: "Lesson navigation",
     exact: true,
   });
-  const buttons = sidebar
-    .getByRole("group", { name: "Course", exact: true })
-    .getByRole("button");
-  await expect(buttons).toHaveCount(8);
-  for (const name of [
-    "Python",
-    "JS",
-    "Go",
-    "Java",
-    "C++",
-    "DSA",
-    "LLD",
-    "HLD",
-  ]) {
-    await expect(
-      sidebar.getByRole("button", { name, exact: true }),
-    ).toBeVisible();
-  }
+  await expect(sidebar).toBeVisible();
+  await expect(
+    sidebar.getByRole("textbox", { name: "Search course lessons" }),
+  ).toBeVisible();
+  await expect(sidebar.locator(".nav-chapter").first()).toBeVisible();
   await page.screenshot({
     path: testInfo.outputPath("language-practice-mobile.png"),
   });

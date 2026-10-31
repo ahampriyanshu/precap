@@ -5,10 +5,10 @@ import { Check, Menu, Search, X } from "lucide-react";
 import { Brand } from "./brand";
 import { useNavigationMenu } from "@/hooks/use-navigation-menu";
 import { useProgress } from "@/hooks/use-progress";
-import type { Chapter, Track } from "@/lib/types";
+import type { Chapter } from "@/lib/types";
 import { LanguageSelect } from "./language-select";
 import { languageInfo } from "@/lib/languages";
-import { courses, tracks } from "@/lib/courses";
+import { courses } from "@/lib/courses";
 
 export function LessonShell({
   lesson,
@@ -21,7 +21,6 @@ export function LessonShell({
   practice: boolean;
   children: ReactNode;
 }) {
-  const [track, setTrack] = useState<Track>(lesson.track);
   const [query, setQuery] = useState("");
   const { menu, setMenu, sidebarRef } = useNavigationMenu();
   const { completed } = useProgress(chapters);
@@ -31,7 +30,7 @@ export function LessonShell({
     next = siblings[position + 1];
   const visible = chapters.filter(
     (c) =>
-      c.track === track &&
+      c.track === lesson.track &&
       `${c.title} ${c.concept}`.toLowerCase().includes(query.toLowerCase()),
   );
   return (
@@ -65,20 +64,6 @@ export function LessonShell({
             <X size={18} />
           </button>
         </div>
-        <Link className="all-courses" href="/">
-          All topics
-        </Link>
-        <div className="sidebar-track-tabs" role="group" aria-label="Course">
-          {tracks.map((value) => (
-            <button
-              key={value}
-              aria-pressed={track === value}
-              onClick={() => setTrack(value)}
-            >
-              {courses[value].label}
-            </button>
-          ))}
-        </div>
         <label className="sidebar-search">
           <Search size={15} />
           <input
@@ -93,10 +78,11 @@ export function LessonShell({
             <span>Lessons</span>
             <span>
               {
-                chapters.filter((c) => c.track === track && completed.has(c.id))
-                  .length
+                chapters.filter(
+                  (c) => c.track === lesson.track && completed.has(c.id),
+                ).length
               }{" "}
-              / {chapters.filter((c) => c.track === track).length}
+              / {chapters.filter((c) => c.track === lesson.track).length}
             </span>
           </div>
           {visible.map((chapter) => (

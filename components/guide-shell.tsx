@@ -61,9 +61,6 @@ export function GuideShell({
             <X size={18} />
           </button>
         </div>
-        <Link className="all-courses" href="/">
-          All topics
-        </Link>
         <div className="sidebar-list guide-navigation">
           <nav aria-label="Playlists">
             <h2 className="guide-nav-label">Playlists</h2>

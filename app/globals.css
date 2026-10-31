@@ -2571,7 +2571,7 @@ input::placeholder {
 .path-section-heading h2 {
   font: 400 38px/1.2 var(--serif);
   letter-spacing: -1px;
-  margin: 0 0 12px;
+  margin: 0;
 }
 .path-section-heading p {
   font-size: 15px;
