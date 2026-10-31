@@ -12,6 +12,7 @@ import type { Chapter, Guide, Cheatsheet, Track } from "@/lib/types";
 import { languageInfo, chapterForLanguage } from "@/lib/languages";
 import { courses } from "@/lib/courses";
 import { systemDesignBasics } from "@/lib/learning-path";
+import { TechLogo } from "./tech-logo";
 
 function ChapterLink({
   chapter,
@@ -191,10 +192,13 @@ function Sheets({ sheets }: { sheets: Cheatsheet[] }) {
           href={cheatsheetUrl(sheet.slug)}
           key={sheet.slug}
         >
-          <span>
+          <div className="cheatsheet-icon">
+            <TechLogo slug={sheet.slug} size={28} />
+          </div>
+          <div className="cheatsheet-info">
             <strong>{sheet.title}</strong>
             <small>{sheet.description}</small>
-          </span>
+          </div>
         </Link>
       ))}
     </div>
