@@ -32,6 +32,9 @@ export function LanguageSelect({
   return (
     <label className="language-select">
       <LanguageLogo language={currentLanguage} size={15} />
+      <span className="language-select-current">
+        {languageInfo[currentLanguage].label}
+      </span>
       <select
         aria-label="Programming language"
         value={currentLanguage}
