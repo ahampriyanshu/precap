@@ -9,7 +9,7 @@ import { useProgress } from "@/hooks/use-progress";
 import { usePreferredLanguage } from "@/hooks/use-preferred-language";
 import { guideUrl, cheatsheetUrl } from "@/lib/guide-utils";
 import type { Chapter, Guide, Cheatsheet, Track } from "@/lib/types";
-import { languages, languageInfo, chapterForLanguage } from "@/lib/languages";
+import { languageInfo, chapterForLanguage } from "@/lib/languages";
 import { courses } from "@/lib/courses";
 import { systemDesignBasics } from "@/lib/learning-path";
 
@@ -213,14 +213,6 @@ export function Catalog({
   );
   const { completed, started } = useProgress(practiceChapters);
   const searchRef = useRef<HTMLInputElement>(null);
-  const choiceRef = useRef<HTMLDivElement>(null);
-  const startRef = useRef<HTMLAnchorElement>(null);
-  const chosenFromHero = useRef(false);
-  useEffect(() => {
-    if (!chosenFromHero.current || !language) return;
-    chosenFromHero.current = false;
-    startRef.current?.focus({ preventScroll: true });
-  }, [language]);
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
       if (
@@ -242,8 +234,11 @@ export function Catalog({
     return () => document.removeEventListener("keydown", focusSearch);
   }, []);
   const chooseLanguage = () => {
-    choiceRef.current?.scrollIntoView({ block: "center" });
-    choiceRef.current?.querySelector("button")?.focus();
+    const select = document.querySelector<HTMLSelectElement>(
+      'select[aria-label="Programming language"]',
+    );
+    select?.scrollIntoView({ block: "center", behavior: "smooth" });
+    select?.focus();
   };
   const term = query.trim().toLowerCase();
   const matchingChapters = practiceChapters.filter((chapter) =>
@@ -266,16 +261,6 @@ export function Catalog({
       .toLowerCase()
       .includes(term),
   );
-  const selected = practiceChapters.filter(
-    (chapter) => chapter.track !== "hld",
-  );
-  const resume =
-    selected.find(
-      (chapter) => started.has(chapter.id) && !completed.has(chapter.id),
-    ) ||
-    selected.find((chapter) => !completed.has(chapter.id)) ||
-    selected[0];
-  const anyStarted = selected.some((chapter) => started.has(chapter.id));
   const items = (track: Track) =>
     practiceChapters.filter((chapter) => chapter.track === track);
   return (
@@ -301,52 +286,6 @@ export function Catalog({
             className="hero-scene"
             priority
           />
-          <div className="hero-language" ref={choiceRef}>
-            {language && resume ? (
-              <>
-                <p className="hero-language-heading">
-                  Your {languageInfo[language].label} track
-                </p>
-                <p>Pick up where you left off, or explore the path below.</p>
-                <Link
-                  ref={startRef}
-                  className="button primary hero-start"
-                  href={`/learn/${resume.id}/`}
-                >
-                  {anyStarted ? "Continue your track" : "Start your track"}
-                </Link>
-              </>
-            ) : (
-              <>
-                <p className="hero-language-heading">
-                  Choose your programming language
-                </p>
-                <p>Start with what you know. You can change it any time.</p>
-                <div
-                  className="hero-language-options"
-                  role="group"
-                  aria-label="Choose your programming language"
-                >
-                  {languages.map((value) => (
-                    <button
-                      key={value}
-                      onClick={() => {
-                        chosenFromHero.current = true;
-                        setLanguage(value);
-                      }}
-                    >
-                      {languageInfo[value].label}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-          <nav className="hero-navigation" aria-label="Explore Precap">
-            <a href="#courses">Coding & design</a>
-            <a href="#guides">Engineering guides</a>
-            <a href="#cheatsheets">Tool cheatsheets</a>
-          </nav>
         </section>
         <div className="path-section-heading" id="courses">
           <div>

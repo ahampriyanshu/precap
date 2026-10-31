@@ -11,9 +11,6 @@ test("first visit asks for a language and presents the ordered interview path", 
   });
   await expect(language).toHaveValue("");
   await expect(page.locator(".site-header a")).toHaveCount(1);
-  await expect(
-    page.getByRole("group", { name: "Choose your programming language" }),
-  ).toBeVisible();
   await expect(page.locator(".learning-path > li h2")).toHaveText([
     "Machine coding",
     "System design basics",
@@ -25,12 +22,8 @@ test("first visit asks for a language and presents the ordered interview path", 
       ".track-python,.track-go,.track-java,.track-cpp,.track-javascript",
     ),
   ).toHaveCount(0);
-  await page.getByRole("button", { name: "Go", exact: true }).click();
+  await language.selectOption("go");
   await expect(language).toHaveValue("go");
-  await expect(page.locator(".hero-start")).toBeFocused();
-  await expect(
-    page.getByRole("group", { name: "Choose your programming language" }),
-  ).toHaveCount(0);
   await expect(page.locator(".track-go")).toBeVisible();
   for (const section of ["courses", "guides", "cheatsheets"]) {
     await page.goto(`/#${section}`);
@@ -66,7 +59,9 @@ test("language preference stays in sync across navbar, guides, tabs and practice
   context,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Python", exact: true }).click();
+  await page
+    .getByRole("combobox", { name: "Programming language", exact: true })
+    .selectOption("python");
   const second = await context.newPage();
   await second.goto("/guides/frontend/");
   await expect(
@@ -108,10 +103,12 @@ test("invalid or unavailable preference storage keeps first-visit choice usable 
   });
   await page.setViewportSize({ width: 320, height: 820 });
   await page.goto("/");
-  await expect(
-    page.getByRole("combobox", { name: "Programming language", exact: true }),
-  ).toHaveValue("");
-  await page.getByRole("button", { name: "C++", exact: true }).click();
+  const language = page.getByRole("combobox", {
+    name: "Programming language",
+    exact: true,
+  });
+  await expect(language).toHaveValue("");
+  await language.selectOption("cpp");
   await expect(page.locator(".track-cpp")).toBeVisible();
   expect(
     await page.evaluate(
@@ -139,7 +136,9 @@ test("source choice remains usable when preference writes are blocked", async ({
     };
   });
   await page.goto("/");
-  await page.getByRole("button", { name: "JavaScript", exact: true }).click();
+  await page
+    .getByRole("combobox", { name: "Programming language", exact: true })
+    .selectOption("javascript");
   await expect(
     page.getByRole("combobox", { name: "Programming language", exact: true }),
   ).toHaveValue("javascript");
