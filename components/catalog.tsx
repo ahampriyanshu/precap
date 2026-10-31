@@ -72,6 +72,7 @@ function Course({
         </Link>
         <span
           role="progressbar"
+          aria-label={`${title} progress`}
           aria-valuenow={done}
           aria-valuemin={0}
           aria-valuemax={items.length}
@@ -129,57 +130,57 @@ function GuideCard({
   const modules = [
     ...new Set(guide.parts.map((part) => part.module).filter(Boolean)),
   ];
-  const moduleLabel = guide.moduleLabel === "Track" ? "TRACK" : "MODULE";
+  const moduleLabel = guide.moduleLabel === "Track" ? "Track" : "Module";
 
   return (
     <article
-      className={`guide-card ${!search ? `guide-card-themed guide-card-${guide.slug}` : ""} ${tracks.length && !search ? "guide-card-tracks" : ""}`}
+      className={`guide-card ${tracks.length && !search ? "guide-card-tracks" : ""}`}
     >
       {!search && hasConceptArt(guide.slug) && (
-        <div className="guide-card-art">
+        <div className="guide-card-visual">
           <ConceptIllustration concept={guide.slug} className="playlist-art" />
         </div>
       )}
-      <h3>{guide.title}</h3>
-      {search && <p className="guide-search-desc">{guide.description}</p>}
-      {!search && (
-        <ul className="guide-track-list" aria-label={`${guide.title} topics`}>
-          {topics.map((topic) => (
-            <li key={topic.title}>
-              <span className="guide-plus" aria-hidden="true">
-                +
-              </span>
-              <Link href={`/guides/${guide.slug}/#module-${topic.moduleIndex}`}>
-                <span>{topic.title}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      {!search && (
-        <div className="playlist-meta">
-          {modules.length} {moduleLabel}
-          {modules.length === 1 ? "" : "S"} · {guide.parts.length} LESSONS ·
-          FREE
-        </div>
-      )}
-      <Link className="playlist-open" href={`/guides/${guide.slug}/`}>
-        <span>Open</span>
-        <span className="playlist-open-arrow" aria-hidden="true">
-          →
-        </span>
-      </Link>
-      {search && (
-        <ol className="guide-parts search-parts">
-          {guide.parts.map((part) => (
-            <li key={part.slug}>
-              <Link href={guideUrl(guide.slug, part.slug)}>
-                <span className="guide-part-title">{part.title}</span>
-              </Link>
-            </li>
-          ))}
-        </ol>
-      )}
+      <div className="guide-card-body">
+        {!search && (
+          <div className="playlist-meta">
+            {modules.length} {moduleLabel}
+            {modules.length === 1 ? "" : "s"} · {guide.parts.length} lessons
+          </div>
+        )}
+        <h3>{guide.title}</h3>
+        {search && <p className="guide-search-desc">{guide.description}</p>}
+        {!search && (
+          <ul className="guide-track-list" aria-label={`${guide.title} topics`}>
+            {topics.map((topic) => (
+              <li key={topic.title}>
+                <Link
+                  href={`/guides/${guide.slug}/#module-${topic.moduleIndex}`}
+                >
+                  <span>{topic.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <Link className="playlist-open" href={`/guides/${guide.slug}/`}>
+          <span>Explore curriculum</span>
+          <span className="playlist-open-arrow" aria-hidden="true">
+            →
+          </span>
+        </Link>
+        {search && (
+          <ol className="guide-parts search-parts">
+            {guide.parts.map((part) => (
+              <li key={part.slug}>
+                <Link href={guideUrl(guide.slug, part.slug)}>
+                  <span className="guide-part-title">{part.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
     </article>
   );
 }

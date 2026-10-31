@@ -8,11 +8,21 @@ const event = "precap:language";
 const defaultLanguage: Language = "python";
 let memory: Language = defaultLanguage;
 let volatile = false;
+function getBackup(): Language | null {
+  try {
+    if (typeof window !== "undefined" && window.name && isLanguage(window.name))
+      return window.name;
+  } catch {}
+  return null;
+}
 function snapshot(): Language {
   if (volatile) return memory;
   try {
     const stored = localStorage.getItem(key);
-    return stored && isLanguage(stored) ? stored : defaultLanguage;
+    if (stored && isLanguage(stored)) return stored;
+    const backup = getBackup();
+    if (backup) return backup;
+    return defaultLanguage;
   } catch {
     return memory;
   }
@@ -33,6 +43,9 @@ function subscribe(update: () => void) {
 }
 export function setPreferredLanguage(language: Language) {
   memory = language;
+  try {
+    if (typeof window !== "undefined") window.name = language;
+  } catch {}
   try {
     localStorage.setItem(key, language);
     volatile = false;

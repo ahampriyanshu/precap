@@ -2784,58 +2784,41 @@ input::placeholder {
 .path-catalog .guide-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
+  gap: 24px;
 }
 .path-catalog .guide-card {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 26px 24px 20px;
-  border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  background: white;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--white);
   min-height: 100%;
   box-sizing: border-box;
+  overflow: hidden;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 .path-catalog .guide-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.07);
+  border-color: rgba(136, 98, 30, 0.45);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
 }
-.path-catalog .guide-card-frontend {
-  background: #f5e6de;
-}
-.path-catalog .guide-card-backend {
-  background: #dbe3d8;
-}
-.path-catalog .guide-card-ai-engineering {
-  background: #ebdcd9;
-}
-.path-catalog .guide-card-devops {
-  background: #dbe3ea;
-}
-.path-catalog .guide-card-last-mile-prep {
-  background: #eae3d5;
-}
-.path-catalog .guide-card-art {
+.path-catalog .guide-card-visual {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 180px;
-  margin-bottom: 22px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.5),
-    0 4px 14px rgba(0, 0, 0, 0.03);
-  padding: 16px;
+  height: 155px;
+  background: #fafaf8;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 24px;
   overflow: hidden;
 }
-.path-catalog .guide-card-art .playlist-art {
+.path-catalog .guide-card-visual .playlist-art {
   margin: 0;
   border: 0;
   width: 100%;
@@ -2844,19 +2827,30 @@ input::placeholder {
   align-items: center;
   justify-content: center;
 }
-.path-catalog .guide-card-art .playlist-art img {
+.path-catalog .guide-card-visual .playlist-art img {
   max-height: 100%;
   width: auto;
   max-width: 100%;
   object-fit: contain;
   background: transparent;
   border: 0;
-  border-radius: 0;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.06));
+}
+.path-catalog .guide-card-body {
+  padding: 24px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.path-catalog .playlist-meta {
+  font: 11px/1.4 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin: 0 0 10px;
 }
 .path-catalog .guide-card h3 {
-  font: 700 23px/1.25 var(--sans);
-  letter-spacing: -0.4px;
+  font: 400 24px/1.25 var(--serif);
+  letter-spacing: -0.3px;
   color: var(--ink);
   margin: 0 0 16px;
 }
@@ -2866,30 +2860,29 @@ input::placeholder {
   margin: 0 0 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 .path-catalog .guide-track-list li {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  font-size: 15px;
+  gap: 9px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--ink);
 }
-.path-catalog .guide-plus {
-  color: rgba(23, 23, 23, 0.55);
-  font-size: 15px;
-  font-weight: 500;
+.path-catalog .guide-track-list li::before {
+  content: "—";
+  color: var(--accent);
+  font-weight: 400;
   flex-shrink: 0;
-  user-select: none;
 }
 .path-catalog .guide-track-list li a {
   display: inline;
   padding: 0;
   border: 0;
   color: var(--ink);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.5;
   text-decoration: none;
   transition: color 0.15s ease;
@@ -2899,30 +2892,16 @@ input::placeholder {
   text-underline-offset: 3px;
   color: var(--accent);
 }
-.path-catalog .playlist-meta {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  margin-top: auto;
-  margin-bottom: 22px;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  font: 600 11px/1 var(--sans);
-  letter-spacing: 0.05em;
-  color: var(--ink);
-  text-transform: uppercase;
-}
 .path-catalog .playlist-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin-top: auto;
   padding-top: 14px;
-  border-top: 1px solid rgba(23, 23, 23, 0.08);
-  font-size: 15px;
-  font-weight: 600;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 500;
   color: var(--ink);
   text-decoration: none;
   transition: color 0.15s ease;
@@ -2932,7 +2911,8 @@ input::placeholder {
   text-decoration: none;
 }
 .path-catalog .playlist-open .playlist-open-arrow {
-  font-size: 18px;
+  color: var(--accent);
+  font-size: 16px;
   line-height: 1;
   transition: transform 0.15s ease;
 }
@@ -2940,7 +2920,7 @@ input::placeholder {
   transform: translateX(4px);
 }
 .guide-search-desc {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
   margin: 0 0 16px;
@@ -3257,8 +3237,8 @@ input::placeholder {
   .path-cheatsheets .cheatsheet-list {
     grid-template-columns: 1fr;
   }
-  .path-catalog .guide-card-art {
-    height: 160px;
+  .path-catalog .guide-card-visual {
+    height: 140px;
   }
   .path-catalog .section-heading h2 {
     font-size: 33px;
