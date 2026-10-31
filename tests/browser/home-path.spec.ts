@@ -155,14 +155,14 @@ test("foundation links use real lessons and language changes preserve noncoding 
   page,
 }) => {
   await page.goto("/");
-  await page.locator(".foundation-lessons summary").click();
-  const links = page.locator(".foundation-lessons a");
-  await expect(links).toHaveCount(8);
-  for (const link of await links.all()) {
-    const response = await page.request.get((await link.getAttribute("href"))!);
-    expect(response.status()).toBe(200);
-  }
-  await links.first().click();
+  const startButton = page.locator(
+    '.path-step:has-text("System design basics") .course-start',
+  );
+  await expect(startButton).toHaveAttribute(
+    "href",
+    "/guides/backend/requests-and-protocols/",
+  );
+  await startButton.click();
   await expect(page).toHaveURL("/guides/backend/requests-and-protocols/");
   await page
     .getByRole("combobox", { name: "Programming language", exact: true })

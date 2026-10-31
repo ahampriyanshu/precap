@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Check, ChevronDown, Search, X } from "lucide-react";
+import { Check, Search, X } from "lucide-react";
 import { SiteHeader } from "./site-header";
 import { ConceptIllustration } from "./concept-illustration";
 import { hasConceptArt } from "@/lib/concept-art";
@@ -378,27 +378,15 @@ export function Catalog({
                       before designing one.
                     </p>
                   </div>
-                  <details className="foundation-lessons">
-                    <summary>
-                      Explore {systemDesignBasics.length} foundation lessons{" "}
-                      <ChevronDown size={15} />
-                    </summary>
-                    <ol>
-                      {systemDesignBasics.map((lesson, index) => (
-                        <li key={lesson.slug}>
-                          <Link href={guideUrl("backend", lesson.slug)}>
-                            <span className="foundation-number">
-                              {String(index + 1).padStart(2, "0")}
-                            </span>
-                            <span>
-                              <strong>{lesson.label}</strong>
-                              <small>{lesson.focus}</small>
-                            </span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ol>
-                  </details>
+                  <div className="path-course-actions">
+                    <Link
+                      className="button primary course-start"
+                      href={guideUrl("backend", systemDesignBasics[0].slug)}
+                    >
+                      Start
+                    </Link>
+                    <span>{systemDesignBasics.length} foundation lessons</span>
+                  </div>
                 </div>
               </li>
               <li className="path-step">
