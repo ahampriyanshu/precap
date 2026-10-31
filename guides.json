@@ -737,7 +737,6 @@
       "slug": "last-mile-prep",
       "title": "Last Mile Prep",
       "description": "Handle incidents, turn ambiguous requests into product decisions, and measure what reaches production.",
-      "moduleLabel": "Track",
       "indexAliases": ["observability", "product-management"],
       "parts": [
         {

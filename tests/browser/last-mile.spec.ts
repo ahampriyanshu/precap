@@ -16,8 +16,9 @@ test("Last Mile Prep offers three tracks with usable deep links and searchable t
     "Telemetry & Observability",
   ];
   await expect(card.locator(".guide-track-list a")).toHaveText(tracks);
+  await expect(card.locator(".playlist-meta")).toContainText("3 Modules");
   await expect(page.locator(".supplementary-section .guide-card")).toHaveCount(
-    5,
+    4,
   );
   for (const [index, track] of tracks.entries()) {
     await page.goto("/");

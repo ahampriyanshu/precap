@@ -49,9 +49,11 @@ export default async function PlaylistPage({ params }: Props) {
         <header className="playlist-intro">
           <div className="playlist-intro-copy">
             <p className="intro-kicker">
-              {guide.moduleLabel === "Track"
-                ? `${modules.length} tracks`
-                : "Engineering curriculum"}{" "}
+              {guide.slug === "last-mile-prep"
+                ? `${modules.length} modules`
+                : guide.moduleLabel === "Track"
+                  ? `${modules.length} tracks`
+                  : "Engineering curriculum"}{" "}
               · {guide.parts.length} lessons
             </p>
             <h1>{guide.title}</h1>

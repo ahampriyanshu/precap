@@ -115,7 +115,7 @@ function GuideCard({
   search?: boolean;
 }) {
   const tracks =
-    guide.moduleLabel === "Track"
+    guide.slug === "last-mile-prep" || guide.moduleLabel === "Track"
       ? [...new Set(guide.parts.map((part) => part.module).filter(Boolean))]
       : [];
   const topics =
