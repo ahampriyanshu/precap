@@ -272,10 +272,9 @@ export function Catalog({
       <main className="catalog-main" id="main-content" tabIndex={-1}>
         <section className="path-hero">
           <div className="hero-copy">
-            <h1>Engineering, revisited.</h1>
+            <h1>Deadline Driven Preparation</h1>
             <p className="intro-copy">
-              A refresher for your next interview. Revisit the code, the
-              tradeoffs, and the systems you know how to build.
+              Revisit the fundamentals of the systems you know how to build.
             </p>
           </div>
           <ConceptIllustration
@@ -531,7 +530,7 @@ export function Catalog({
           </>
         )}
         <footer className="catalog-footer">
-          <span>precap · Keep your experience in focus.</span>
+          <span>made by ahampriyanshi</span>
           <span>Your code and progress stay in this browser.</span>
         </footer>
       </main>

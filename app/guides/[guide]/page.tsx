@@ -117,7 +117,7 @@ export default async function PlaylistPage({ params }: Props) {
         </div>
         <footer className="catalog-footer">
           <Link href="/#guides">All playlists</Link>
-          <span>precap · Keep your experience in focus.</span>
+          <span>made by ahampriyanshi</span>
         </footer>
       </main>
     </div>
