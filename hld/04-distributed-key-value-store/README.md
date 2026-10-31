@@ -54,7 +54,7 @@ remove v if any(other != v and dominates(other.context, v.context)
 return frontier  # Incomparable versions remain separate siblings.
 ```
 
-For contexts `{a:1}` and `{a:2}`, only the latter survives. `{a:1}` and `{b:1}` are incomparable, so both survive. This rule requires writers to create valid context covering the versions they observed; it cannot infer causality from arbitrary client counters. Vector growth needs a bounded-identity policy. The [Dynamo paper](https://www.amazon.science/publications/dynamo-amazons-highly-available-key-value-store) motivates versioning and reconciliation.
+For contexts `{a:1}` and `{a:2}`, only the latter survives. `{a:1}` and `{b:1}` are incomparable, so both survive. This rule requires writers to create valid context covering the versions they observed; it cannot infer causality from arbitrary client counters. Vector growth needs a bounded-identity policy.
 
 The API returns sibling values with their contexts. A resolving client merges values according to application semantics and writes with context covering every sibling. The coordinator must not concatenate opaque payloads or discard a sibling because its timestamp looks older. A failed write may have reached some replicas even when the client receives a timeout; retry identity and reconciliation need an explicit policy.
 

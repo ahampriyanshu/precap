@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="350" viewBox="0 0 960 350" role="img" aria-labelledby="title desc">
+<title id="title">Collection preserves correlation across separate telemetry stores</title><desc id="desc">Application metrics, structured logs, and spans pass through bounded collection and export. Metrics go to a metrics store, logs to Loki, and traces to Tempo. Trace and span identifiers link relevant logs to traces. Grafana queries the configured stores.</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="m1 1 8 4-8 4" fill="none" stroke="#305b59" stroke-width="1.5"/></marker></defs>
+<style>text{font:18px Arial,Helvetica,sans-serif;fill:#263b33}.h{font-size:21px;font-weight:600}.small{font-size:15px;fill:#4e635b}.box{fill:#f8faf6;stroke:#70958b;stroke-width:1.3}.flow{fill:none;stroke:#305b59;stroke-width:1.5;marker-end:url(#a)}</style>
+<rect width="960" height="350" fill="#fff" rx="8"/>
+<text x="28" y="34" class="h">A signal pipeline with separate responsibilities</text>
+<rect x="26" y="66" width="188" height="197" rx="7" class="box"/>
+<text x="120" y="101" text-anchor="middle" class="h">Application</text>
+<text x="120" y="142" text-anchor="middle">metrics</text><text x="120" y="184" text-anchor="middle">structured logs</text><text x="120" y="226" text-anchor="middle">spans + context</text>
+<path d="M220 166h57" class="flow"/>
+<rect x="289" y="98" width="245" height="136" rx="7" fill="#e9f1ef" stroke="#70958b" stroke-width="1.3"/>
+<text x="412" y="133" text-anchor="middle" class="h">Collect and export</text>
+<text x="412" y="166" text-anchor="middle">redact · batch · route</text>
+<text x="412" y="200" text-anchor="middle" class="small">bounded queues; count dropped data</text>
+<path d="M541 165h25v-61h31M566 165h31M566 165v61h31" class="flow"/>
+<rect x="609" y="78" width="191" height="51" rx="5" class="box"/><text x="704" y="101" text-anchor="middle">Prometheus / Mimir</text><text x="704" y="120" text-anchor="middle" class="small">metrics</text>
+<rect x="609" y="140" width="191" height="51" rx="5" class="box"/><text x="704" y="163" text-anchor="middle">Loki</text><text x="704" y="182" text-anchor="middle" class="small">logs</text>
+<rect x="609" y="202" width="191" height="51" rx="5" class="box"/><text x="704" y="225" text-anchor="middle">Tempo</text><text x="704" y="244" text-anchor="middle" class="small">traces</text>
+<path d="M807 104h21v123h-21" fill="none" stroke="#305b59" stroke-width="1.5"/>
+<path d="M834 165h24" class="flow"/><text transform="translate(891 166) rotate(-90)" text-anchor="middle" class="h">Grafana queries</text>
+<path d="M671 263v20H167v-42" fill="none" stroke="#70958b" stroke-dasharray="5 5" stroke-width="1.2"/>
+<text x="480" y="319" text-anchor="middle" class="small">Shared trace/span IDs connect detailed evidence; collection health remains observable.</text>
+</svg>

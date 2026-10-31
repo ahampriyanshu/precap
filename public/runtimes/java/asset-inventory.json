@@ -1,0 +1,64 @@
+{
+  "assets": [
+    {
+      "path": "THIRD_PARTY_NOTICES.txt",
+      "bytes": 3086,
+      "sha256": "eb7f648894b4f481e7a655bdf84d93ae32c7fef85dffd64574412cc87d52f5a4"
+    },
+    {
+      "path": "adapter.mjs",
+      "bytes": 2306,
+      "sha256": "49784d2a5633b5c9b7d7ad33c74425f96708bcbe3dcf173fd88eb3ac12c05f0f"
+    },
+    {
+      "path": "licenses/bridge-upstream-README.md",
+      "bytes": 33610,
+      "sha256": "8eff40b4022c4e9ae5aec307c77e6518c0ae23c313c791aa2872189be791eb82"
+    },
+    {
+      "path": "licenses/ecj-EPL-2.0.txt",
+      "bytes": 14301,
+      "sha256": "82103a6f309fd572ad168605daa0f8835dc5df0cd1d84fd21388c9072d00fab7"
+    },
+    {
+      "path": "licenses/java-api-ADDITIONAL_LICENSE_INFO.txt",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916"
+    },
+    {
+      "path": "licenses/java-api-ASSEMBLY_EXCEPTION.txt",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33"
+    },
+    {
+      "path": "licenses/java-api-GPL-2.0-with-Classpath-exception.txt",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726"
+    },
+    {
+      "path": "licenses/temurin-NOTICE.txt",
+      "bytes": 2400,
+      "sha256": "c02756bcd9fa8191bf0fda4451bc018414dd44ee35bf09922c24377a475e4b5a"
+    },
+    {
+      "path": "licenses/upstream-THIRD_PARTY_NOTICES.md",
+      "bytes": 7064,
+      "sha256": "3456b93d1f6aa5d0cfecf7fa376a519b5711ccacbe299fae39cc645021bf1891"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 2166,
+      "sha256": "33c91932a39c009413950a32069395f16ce9cda24fbb9575f430c4ba1e296367"
+    },
+    {
+      "path": "precap-java-runtime.jar",
+      "bytes": 5816870,
+      "sha256": "d8642fe753cac7aa6f5a01d817dcbcd967482a75184b245dee8144056fb19091"
+    },
+    {
+      "path": "precap-java.worker.js",
+      "bytes": 3345,
+      "sha256": "dfb26818b617c6d4737a80fe10d27fac58e2f2688453a58360f1bd623dbfce2f"
+    }
+  ]
+}

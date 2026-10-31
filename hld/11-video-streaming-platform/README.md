@@ -62,7 +62,7 @@ Separate queues and quotas stop large encodes from starving small uploads. Quara
 
 ## Real-world usage
 
-Streaming and training platforms separate expensive preparation from interactive delivery. [Netflix Open Connect](https://openconnect.netflix.com/en/) illustrates the role of delivery infrastructure near viewers; it does not prescribe this hypothetical upload or publication workflow.
+Streaming and training platforms separate expensive preparation from interactive delivery.
 
 ## Practice
 

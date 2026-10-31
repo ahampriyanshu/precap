@@ -60,7 +60,7 @@ Assignment syntax does not imply an infallible update. Callers must handle the p
 
 A descriptor is stored on a class and customizes access with `__get__`, `__set__`, or `__delete__`. Properties are data descriptors: they take precedence over ordinary entries in an instance dictionary, including a property with no setter. Functions are non-data descriptors, which is how ordinary method access binds `self`; an instance attribute can shadow a non-data descriptor.
 
-A reusable validator can learn its attribute name through `__set_name__` and store each instance's value under a private key. Storing the latest value directly on the descriptor would accidentally share it across all instances. A descriptor's `__get__` must also decide what class-level access such as `Owner.field` means, where the instance argument is `None`. Implementing these rules earns its complexity when several fields need the same behavior. See the [descriptor lookup rules](https://docs.python.org/3.12/howto/descriptor.html#invocation-from-an-instance).
+A reusable validator can learn its attribute name through `__set_name__` and store each instance's value under a private key. Storing the latest value directly on the descriptor would accidentally share it across all instances. A descriptor's `__get__` must also decide what class-level access such as `Owner.field` means, where the instance argument is `None`. Implementing these rules earns its complexity when several fields need the same behavior.
 
 ## Choices and mistakes
 
@@ -68,7 +68,6 @@ Prefer a property for one computed or validated field and a custom descriptor fo
 
 Do not hide slow network operations, surprising mutations, or major state transitions behind attribute reads. Type hints do not execute setter validation, and a read-only property does not freeze other attributes or nested objects. Test both accepted updates and preservation of state after rejection. When several fields must change atomically, a method describing that transition is usually clearer than coordinating independent setters.
 
-Further reading: [Descriptor guide](https://docs.python.org/3.12/howto/descriptor.html).
 
 ## Practice
 

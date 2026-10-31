@@ -62,7 +62,6 @@ Code reuse alone is weak evidence for a subtype relationship. Prefer a small hie
 
 Avoid exact-class branches before every common operation; they make adding an implementation require editing callers. Conversely, do not assume any matching method name guarantees matching semantics. Document mutation and resource ownership as part of the common interface. Shared class-level mutable state can couple otherwise separate subclasses. A stack that forbids arbitrary insertion is not automatically a compatible list subtype just because a list can store its elements.
 
-Further reading: [Inheritance and method resolution](https://docs.python.org/3/tutorial/classes.html#multiple-inheritance).
 
 ## Practice
 

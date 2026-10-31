@@ -7,18 +7,18 @@ test("reading pairs explanations with copyable examples on desktop and mobile", 
 }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   const routes = [
-    "/guides/engineering/frontend/",
-    "/guides/engineering/backend/",
-    "/cheatsheets/frontend/",
-    "/cheatsheets/backend/",
+    "/guides/frontend/html-forms-and-semantics/",
+    "/guides/backend/requests-and-protocols/",
+    "/cheatsheets/git/",
+    "/cheatsheets/docker/",
     "/learn/python/20-memory-and-garbage-collection/",
     "/learn/dsa/01-arrays-and-linear-scans/",
     "/learn/lld/01-parking-lot/",
     "/learn/hld/01-url-shortener/",
-    "/guides/engineering/devops/",
-    "/guides/observability/signals/",
-    "/guides/product-management/discovery/",
-    "/guides/llms-and-ai/designing/",
+    "/guides/devops/processes-and-first-deploy/",
+    "/guides/last-mile-prep/signals-and-instrumentation/",
+    "/guides/last-mile-prep/requirements-and-audience/",
+    "/guides/ai-engineering/foundations/",
   ];
   for (const route of routes) {
     await page.goto(route);
@@ -73,13 +73,13 @@ test("highlighted source arrives without JavaScript and preserves literal markup
   });
   try {
     const page = await context.newPage();
-    await page.goto("/guides/engineering/frontend/");
+    await page.goto("/guides/frontend/html-forms-and-semantics/");
     const code = page.locator(".prose .code-example pre code");
     const html = code.filter({
-      hasText: '<form action="/products" method="get">',
+      hasText: '<form action="/orders" method="get">',
     });
     await expect(html).toContainText(
-      '<input id="search" name="q" type="search">',
+      '<input id="order-query" name="q" type="search" maxlength="100">',
     );
     await expect(html.locator("form, input, button")).toHaveCount(0);
     const tokens = await html.locator(".code-token").count();
@@ -88,11 +88,12 @@ test("highlighted source arrives without JavaScript and preserves literal markup
       "background-color",
       "rgb(13, 17, 23)",
     );
-    const literal = code.filter({
-      hasText: 'label.textContent = "<strong>Special offer</strong>";',
-    });
-    await expect(literal).toContainText("<strong>Special offer</strong>");
-    await expect(literal.locator("strong")).toHaveCount(0);
+    await page.goto("/guides/frontend/browser-security/");
+    const literal = page
+      .locator(".code-example pre code")
+      .filter({ hasText: "label.textContent = value;" });
+    await expect(literal).toContainText('<img src=x onerror="alert(1)">');
+    await expect(literal.locator("img,script")).toHaveCount(0);
   } finally {
     await context.close();
   }

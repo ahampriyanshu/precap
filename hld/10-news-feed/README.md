@@ -53,7 +53,7 @@ LIMIT $5;
 
 This PostgreSQL query assumes an already retained immutable candidate set, nonnull sort fields, and unique post IDs within the view. The parameters identify the view, reader, previous final row, and bounded page size. It implements continuation within that set; it does not create the snapshot. Creation, expiry, cursor authentication, hydration, and current visibility checks are omitted.
 
-A `GET /feed?cursor=opaque&limit=n` token binds those values to the reader and an expiry. New publications and delayed fanout appear on refresh. Retaining views costs memory/storage, so a service may choose bounded expiring result sets, database snapshots, or explicitly weaker pagination. An individual store’s continuation token is not a feed-wide snapshot guarantee; [DynamoDB’s query documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html) makes its per-query boundary clear.
+A `GET /feed?cursor=opaque&limit=n` token binds those values to the reader and an expiry. New publications and delayed fanout appear on refresh. Retaining views costs memory/storage, so a service may choose bounded expiring result sets, database snapshots, or explicitly weaker pagination.
 
 If fanout crashes halfway through a follower list, replay inserts only missing references. Sorting by source metadata restores order even when delivery is delayed. Ordinary posts may remain absent until fanout catches up. Switching an author between push and pull also requires a migration policy so neither path loses posts.
 

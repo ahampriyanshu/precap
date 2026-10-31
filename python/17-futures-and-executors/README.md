@@ -52,7 +52,7 @@ with ThreadPoolExecutor(max_workers=1) as executor:
     print(active.result())
 ```
 
-The outputs are `True False` and `done`. The first callable occupies the only worker, so the second remains pending and can be cancelled. Cancelling the running callable fails. Its explicit release signal is separate from the future's state. A `result(timeout=...)` timeout likewise stops the caller's wait, not the worker. Cooperative cancellation requires the callable to check a signal, and blocking external operations need their own timeouts. See [future cancellation](https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Future.cancel).
+The outputs are `True False` and `done`. The first callable occupies the only worker, so the second remains pending and can be cancelled. Cancelling the running callable fails. Its explicit release signal is separate from the future's state. A `result(timeout=...)` timeout likewise stops the caller's wait, not the worker. Cooperative cancellation requires the callable to check a signal, and blocking external operations need their own timeouts.
 
 ## Practical uses and tradeoffs
 
@@ -60,7 +60,6 @@ Thread pools overlap independent blocking I/O; process pools add serialization a
 
 Do not let every worker block waiting for another task submitted to the same exhausted pool. Keep pool ownership above a useful batch and always arrange shutdown. The `with` block can still wait for slow running tasks even when the body exits through an exception. An executor does not synchronize shared application state or undo side effects from failed work. Native thread pools are unavailable in the browser runner.
 
-Further reading: [Executor shutdown](https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Executor.shutdown).
 
 ## Practice
 

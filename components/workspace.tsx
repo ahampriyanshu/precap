@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { Content } from "./content";
 import { LessonShell } from "./lesson-shell";
 import { Practice } from "./practice";
 import { DiagramPractice } from "./diagram-practice";
+import { languageInfo } from "@/lib/languages";
 import type { Chapter, Lesson } from "@/lib/types";
 
 export function Workspace({
@@ -34,6 +34,9 @@ export function Workspace({
           <div className="reading-inner">
             <p className="lesson-kicker">
               {lesson.section} · Lesson {Number(lesson.number)}
+              {lesson.languages.length > 1 && lesson.language
+                ? ` · ${languageInfo[lesson.language].label}`
+                : ""}
             </p>
             <h1>{lesson.title}</h1>
             <p className="lesson-focus">{lesson.concept}</p>
@@ -45,7 +48,9 @@ export function Workspace({
                 <p>
                   {lesson.practiceKind === "diagram"
                     ? "Draw the architecture in Excalidraw, stress the design, and explain your tradeoffs."
-                    : "Implement the exercise in a full-screen workspace, then run its tests."}
+                    : lesson.native
+                      ? "Implement the exercise in the workspace, then download it and run the tests with your local toolchain."
+                      : "Implement the exercise in a full-screen workspace, then run its tests."}
                 </p>
               </div>
               <Link
@@ -55,7 +60,6 @@ export function Workspace({
                 {lesson.practiceKind === "diagram"
                   ? "Open design canvas"
                   : "Open practice"}
-                <ArrowRight size={16} />
               </Link>
             </section>
             {next && (
@@ -63,7 +67,6 @@ export function Workspace({
                 <span>
                   Next lesson<strong>{next.title}</strong>
                 </span>
-                <ArrowRight size={19} />
               </Link>
             )}
           </div>

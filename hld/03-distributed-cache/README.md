@@ -52,7 +52,7 @@ for token in clockwise_walk(tokens, start=primary):
         break
 ```
 
-Replica selection skips repeated virtual tokens on the same machine; otherwise “two replicas” could share one failure domain. This assumes enough distinct healthy nodes and one agreed topology. It specifies placement, not byte copying, membership consensus, or automatic repair. The [Dynamo paper](https://www.amazon.science/publications/dynamo-amazons-highly-available-key-value-store) supplies the underlying partitioning reference.
+Replica selection skips repeated virtual tokens on the same machine; otherwise “two replicas” could share one failure domain. This assumes enough distinct healthy nodes and one agreed topology. It specifies placement, not byte copying, membership consensus, or automatic repair.
 
 Inserting one token transfers only its acquired interval from the previous owner; other intervals retain ownership. Plan migration, temporary dual reads, or controlled refill while clients change topology versions. Virtual nodes improve balancing options, but a hot key still concentrates traffic and node memory is not equivalent to request load.
 
@@ -62,7 +62,7 @@ Replication can preserve hits during a node outage at memory and invalidation co
 
 ## Real-world usage
 
-Shared caches suit catalog reads, computed fragments, and other expensive results with explicit freshness rules. Track hit rate by operation, origin fallback rate, refill concurrency, evictions, per-node memory, and ownership imbalance during deployments. Cap value sizes and cache-key cardinality so untrusted requests cannot fill memory cheaply. The [Dynamo paper](https://www.amazon.science/publications/dynamo-amazons-highly-available-key-value-store) describes consistent hashing and virtual nodes for partitioning; the cache above is a separate worked design.
+Shared caches suit catalog reads, computed fragments, and other expensive results with explicit freshness rules. Track hit rate by operation, origin fallback rate, refill concurrency, evictions, per-node memory, and ownership imbalance during deployments. Cap value sizes and cache-key cardinality so untrusted requests cannot fill memory cheaply.
 
 ## Practice
 

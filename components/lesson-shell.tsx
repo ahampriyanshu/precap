@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, Check, Menu, Search, X } from "lucide-react";
+import { Check, Menu, Search, X } from "lucide-react";
 import { Brand } from "./brand";
 import { useNavigationMenu } from "@/hooks/use-navigation-menu";
 import { useProgress } from "@/hooks/use-progress";
 import type { Chapter, Track } from "@/lib/types";
+import { LanguageSelect } from "./language-select";
+import { languageInfo } from "@/lib/languages";
 import { courses, tracks } from "@/lib/courses";
 
 export function LessonShell({
@@ -64,7 +66,6 @@ export function LessonShell({
           </button>
         </div>
         <Link className="all-courses" href="/">
-          <ArrowLeft size={14} />
           All topics
         </Link>
         <div className="sidebar-track-tabs" role="group" aria-label="Course">
@@ -118,7 +119,10 @@ export function LessonShell({
               <span>
                 {chapter.title}
                 {chapter.native && (
-                  <small className="nav-local">Local Python practice</small>
+                  <small className="nav-local">
+                    Local {languageInfo[chapter.language || "python"].label}{" "}
+                    practice
+                  </small>
                 )}
               </span>
             </Link>
@@ -145,7 +149,6 @@ export function LessonShell({
             </button>
             {practice ? (
               <Link className="back-to-lesson" href={`/learn/${lesson.id}/`}>
-                <ArrowLeft size={14} />
                 Back to lesson
               </Link>
             ) : (
@@ -158,11 +161,11 @@ export function LessonShell({
             <div className="chapter-pager">
               {previous && (
                 <Link
-                  className="icon-button"
+                  className="pager-link"
                   href={`/learn/${previous.id}/`}
                   aria-label="Previous lesson"
                 >
-                  <ArrowLeft size={17} />
+                  Previous
                 </Link>
               )}
               <span>
@@ -170,15 +173,20 @@ export function LessonShell({
               </span>
               {next && (
                 <Link
-                  className="icon-button"
+                  className="pager-link"
                   href={`/learn/${next.id}/`}
                   aria-label="Next lesson"
                 >
-                  <ArrowRight size={17} />
+                  Next
                 </Link>
               )}
             </div>
           )}
+          <LanguageSelect
+            lesson={lesson}
+            chapters={chapters}
+            practice={practice}
+          />
         </header>
         {children}
       </main>

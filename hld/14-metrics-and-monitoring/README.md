@@ -48,7 +48,7 @@ histogram_quantile(
 )
 ```
 
-This assumes cumulative bucket counters with identical boundaries and enough scrapes in the selected minute. Preserve `le`, the bucket upper bound, while aggregating away instance identity. Applying `rate` before summing lets each counter’s reset be detected. The output is a bucket-based estimate, not an exact percentile of raw observations. [Prometheus documents histogram aggregation and quantile behavior](https://prometheus.io/docs/prometheus/latest/querying/functions/#histogram_quantile).
+This assumes cumulative bucket counters with identical boundaries and enough scrapes in the selected minute. Preserve `le`, the bucket upper bound, while aggregating away instance identity. Applying `rate` before summing lets each counter’s reset be detected. The output is a bucket-based estimate, not an exact percentile of raw observations.
 
 Keep observation count and sum too. Compatible buckets can be merged across instances and time windows; averaging per-minute p95 values still cannot produce an hourly p95. More buckets improve precision at extra ingestion, storage, and query cost. Missing samples are not zero latency or successful requests.
 

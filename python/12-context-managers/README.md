@@ -66,7 +66,6 @@ For temporary configuration, distinguish a missing value from one explicitly set
 
 `with` arranges cleanup on ordinary control-flow exits. It cannot guarantee successful I/O cleanup or recovery after abrupt process termination. If `__enter__` fails, Python does not call that manager's `__exit__`; acquisition code must handle partial setup. If cleanup raises, it can replace the visible failure while retaining exception context. State that policy explicitly when cleanup can fail.
 
-Further reading: [`ExitStack` and context managers](https://docs.python.org/3.12/library/contextlib.html#contextlib.ExitStack).
 
 ## Practice
 

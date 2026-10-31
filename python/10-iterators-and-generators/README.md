@@ -41,7 +41,7 @@ print(list(stream))
 
 The outputs are `True`, `True`, and `['row-1', 'row-2']`. Calling `iter` on this iterator returns the same cursor. `any` stops at the first match, so the probe consumes only the header here. If there were no match, it would exhaust the whole stream. A downstream stage must receive the remaining stream deliberately, a replayable source, or a buffered copy. Calling `iter` again does not rewind an iterator.
 
-Generators retain local variables and source iterators while suspended. Laziness alone does not guarantee constant memory: sorting usually needs all items, and `itertools.tee` buffers data when its consumers progress at different speeds. The slowest consumer can therefore determine retained memory. See [`tee`'s storage tradeoff](https://docs.python.org/3.12/library/itertools.html#itertools.tee).
+Generators retain local variables and source iterators while suspended. Laziness alone does not guarantee constant memory: sorting usually needs all items, and `itertools.tee` buffers data when its consumers progress at different speeds. The slowest consumer can therefore determine retained memory.
 
 ## Common mistakes and choices
 
@@ -49,7 +49,6 @@ Do not reuse an exhausted generator expecting a fresh traversal. Call the genera
 
 Inside a generator, `return` signals completion. Explicitly raising `StopIteration` from its body is converted to `RuntimeError`, so it is not the normal completion mechanism. Early loop exit also does not guarantee that a still-referenced generator releases its resources immediately. Keep file or connection ownership around the consuming scope, or explicitly close a generator you own when prompt cleanup matters. Avoid yielding from a resource scope and assuming the caller will always exhaust it.
 
-Further reading: [Iterator and generator tutorial](https://docs.python.org/3/tutorial/classes.html#iterators).
 
 ## Practice
 

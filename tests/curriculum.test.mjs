@@ -4,6 +4,19 @@ import fs from "node:fs";
 import path from "node:path";
 
 const { chapters } = JSON.parse(fs.readFileSync("curriculum.json", "utf8"));
+test("Go, Java, and C++ fundamentals use browser execution", () => {
+  for (const language of ["go", "java", "cpp"]) {
+    const lessons = chapters.filter((chapter) => chapter.track === language);
+    assert.ok(lessons.length > 0, `${language}: fundamentals are present`);
+    for (const chapter of lessons) {
+      assert.equal(
+        chapter.native,
+        false,
+        `${chapter.directory} runs in the browser`,
+      );
+    }
+  }
+});
 test("every lesson provides separate teaching and a matching practice contract", () => {
   const ids = new Set();
   for (const chapter of chapters) {
@@ -36,8 +49,19 @@ test("every lesson provides separate teaching and a matching practice contract",
       );
       assert.match(practice, /final/i, `Final contract: ${chapter.directory}`);
       assert.match(
-        fs.readFileSync(path.join(folder, "exercise.py"), "utf8"),
-        /NotImplementedError/,
+        fs.readFileSync(
+          path.join(
+            folder,
+            {
+              javascript: "exercise.mjs",
+              go: "exercise.go",
+              java: "Exercise.java",
+              cpp: "exercise.hpp",
+            }[chapter.track] || "exercise.py",
+          ),
+          "utf8",
+        ),
+        /NotImplementedError|Not implemented|not implemented|UnsupportedOperationException|TODO|panic\(/,
       );
     }
     assert.doesNotMatch(
@@ -71,10 +95,10 @@ test("HLD teaches fifteen architectures with request flows before drawing practi
       /```text\n[\s\S]+?```/,
       `Request flow: ${chapter.directory}`,
     );
-    assert.match(
+    assert.doesNotMatch(
       teaching,
-      /\]\(https:\/\//,
-      `Primary reference: ${chapter.directory}`,
+      /\]\(https?:\/\//,
+      `No outbound references: ${chapter.directory}`,
     );
     assert.match(
       practice,

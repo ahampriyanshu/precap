@@ -55,7 +55,6 @@ A synchronous wrapper around `async def` observes coroutine creation rather than
 
 Closure state lives while its returned function is reachable and requires synchronization if concurrent calls mutate it. A class can make ownership clearer when several operations share many state variables. A closure works well for one operation with a little configuration. Use `nonlocal` to rebind an enclosing binding; mutating an object already referenced there does not require it.
 
-Further reading: [`functools.wraps`](https://docs.python.org/3/library/functools.html#functools.wraps).
 
 ## Practice
 

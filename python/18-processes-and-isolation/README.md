@@ -61,7 +61,6 @@ Measure startup, serialization, result transfer, and peak memory as well as comp
 
 Default start methods vary across operating systems and Python versions, so select a local context when a method is part of the application's assumptions. Return structured results rather than printing from workers, where output can interleave. This lesson requires operating-system processes and cannot run in the browser WebAssembly runtime.
 
-Further reading: [Process contexts and start methods](https://docs.python.org/3.12/library/multiprocessing.html#contexts-and-start-methods).
 
 ## Practice
 

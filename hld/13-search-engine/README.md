@@ -49,13 +49,13 @@ WHERE stored.version < EXCLUDED.version
 RETURNING document_id, version;
 ```
 
-Assume a primary key on document ID and trusted source-monotonic versions. PostgreSQL evaluates the conflict update under its row coordination, so a stale or equal event changes nothing. Equal-version payloads must agree; detect producer conflicts separately. This table illustrates version admission, not posting-list construction. The shard must coordinate the fence with index mutation or recover safely from its log. [PostgreSQL documents conditional conflict updates](https://www.postgresql.org/docs/current/sql-insert.html).
+Assume a primary key on document ID and trusted source-monotonic versions. PostgreSQL evaluates the conflict update under its row coordination, so a stale or equal event changes nothing. Equal-version payloads must agree; detect producer conflicts separately. This table illustrates version admission, not posting-list construction. The shard must coordinate the fence with index mutation or recover safely from its log.
 
 Keep tombstone versions until replay and replica recovery cannot reintroduce older content. Recoverable logs and checkpoints support rebuilds; compacting tombstones without a replay bound loses the fence. Reindex into a new generation, validate it, then switch an alias rather than serve a half-built schema.
 
 `GET /search?q=...&limit=10` returns IDs, comparable scores, generation, and completeness. Shards use the same token analysis and ranking contract. A coordinator merges shard top-k results with a stable ID tie-break. Local top k suffices only when each document has one shard owner and scores share one comparable ordering. Replica copies are not extra documents. A timeout must produce explicit partial results or fail according to policy.
 
-Search visibility differs from durable event acceptance. Refresh publishes a searchable view; a read-after-write option may wait for a specific version or refresh token, adding latency and coupling. [Elasticsearch’s near-real-time description](https://www.elastic.co/docs/manage-data/data-store/near-real-time-search) explains that visibility boundary.
+Search visibility differs from durable event acceptance. Refresh publishes a searchable view; a read-after-write option may wait for a specific version or refresh token, adding latency and coupling.
 
 Apply authorization filters inside shard candidate selection. Filtering only after the top ten can leak or omit authorized matches. Bound query fanout, expensive filters, and result sizes; slow shards dominate tail latency. Monitor ingestion lag, stale-event rejection, refresh age, shard skew, partial-query rate, and p99 latency.
 

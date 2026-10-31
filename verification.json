@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-10-28T14:36:54.977586+00:00",
+  "verified_at": "2026-10-28T19:47:15.917272+00:00",
   "lesson_structure": {
     "python": 20,
     "dsa": 28,
@@ -7,8 +7,21 @@
     "learner_implementations": "unfinished stubs",
     "lld": 15,
     "hld": 15,
-    "coding_exercises": 63,
-    "hld_practice": "diagram"
+    "coding_exercises": 289,
+    "hld_practice": "diagram",
+    "fundamentals": {
+      "python": 20,
+      "javascript": 14,
+      "go": 13,
+      "java": 14,
+      "cpp": 13
+    },
+    "shared_problems": {
+      "dsa": 28,
+      "lld": 15
+    },
+    "new_language_shared_variants": 172,
+    "language_count": 5
   },
   "reference_validation": {
     "native_stage_runs": 96,
@@ -31,14 +44,17 @@
   },
   "site_checks": {
     "production_build": "passed",
-    "typecheck": "passed in production build",
+    "typecheck": "passed",
     "format_check": "passed",
-    "node_tests": 15,
-    "browser_tests": 22,
-    "automated_accessibility": "Passed for home, all guides and references, Python/LLD lessons and coding practice, HLD lesson and Excalidraw workspace, native practice, mobile guides and both workspace types.",
-    "static_pages": 174
+    "node_tests": 37,
+    "browser_tests": 47,
+    "automated_accessibility": "Passed representative first/last playlist reads, mechanism diagrams at desktop and 320px, tool reference navigation, existing coding and Excalidraw workspaces.",
+    "build_generated_pages": 709,
+    "exported_html_files": 714,
+    "cli_tests": 21,
+    "all_real_toolchains": "Each correctly rejects unfinished code and leaves learner sources unchanged"
   },
-  "content_review": "Independent review covered all eight guides and representative Python, DSA, LLD and HLD lessons. Complete-answer leakage in DSA01 and repetition in HLD07 were corrected. Long openings in eleven Python/DSA lessons were tightened to reach examples sooner.",
+  "content_review": "Independent language integration, JavaScript semantics/grading, and native test reviews completed. Fixed sparse-array/report validation, error identity, gated cancellation/draining/cleanup checks, and Go goroutine panic containment. All new readings have contextual native examples, no external lesson references, exact Practice contracts, and unfinished starters. Original 126 Python starter/test files are byte-identical to the pre-expansion snapshot. Earlier original Python/reference validation above is retained for unchanged exercises.",
   "lld_validation": {
     "lessons": 15,
     "native_reference_stage_runs": 30,
@@ -83,228 +99,381 @@
   },
   "guide_validation": {
     "brand": "precap",
-    "domains": 4,
-    "reading_parts": 9,
-    "practice_or_editor": false,
-    "python_runtime_requests": [],
-    "content_review": "Frontend and Backend were rewritten with engineering fundamentals as the lesson structure. Mechanisms precede focused examples and tradeoffs. Technical claims were checked against primary documentation; snippet checks, reciprocal links and rendered topic order passed. Existing DevOps content and aliases are unchanged.",
-    "mobile_navigation_and_section_anchors": "passed",
-    "search_across_guides_and_practice": "passed",
-    "desktop_and_mobile_visual_review": "passed",
-    "final_search_navigation_recheck": 2,
-    "devops": "One complete recap with 13 connected sections, now at /guides/engineering/devops/.",
-    "legacy_devops_links": "All three old URLs redirect to Engineering, including mapped section targets. Verified with JavaScript enabled and disabled.",
-    "engineering": "Three independent one-page recaps: Frontend Engineering, Backend Engineering, and DevOps. No numbered sequence or part pager."
+    "domains": 6,
+    "reading_parts": 63,
+    "expanded_curricula": [
+      {
+        "slug": "frontend",
+        "lessons": 15,
+        "modules": 4,
+        "sections": 95,
+        "fenced_examples": 52
+      },
+      {
+        "slug": "backend",
+        "lessons": 17,
+        "modules": 6,
+        "sections": 94,
+        "fenced_examples": 78
+      },
+      {
+        "slug": "ai-engineering",
+        "lessons": 14,
+        "modules": 6,
+        "sections": 92,
+        "fenced_examples": 41
+      },
+      {
+        "slug": "devops",
+        "lessons": 13,
+        "modules": 4,
+        "sections": 65,
+        "fenced_examples": 20
+      }
+    ],
+    "other_guides": [
+      {
+        "slug": "observability",
+        "lessons": 2,
+        "modules": 1,
+        "sections": 8,
+        "fenced_examples": 6
+      },
+      {
+        "slug": "product-management",
+        "lessons": 2,
+        "modules": 1,
+        "sections": 8,
+        "fenced_examples": 4
+      }
+    ],
+    "index_routes": "Each playlist has a grouped curriculum index at /guides/<playlist>/. Homepage shows compact entries and expands matching lessons during search.",
+    "reading_only": true,
+    "outbound_prose_links": 0,
+    "all_internal_teaching_links_and_anchors": "passed across all 148 reading sources",
+    "legacy_guide_and_broad_cheatsheet_redirects": "passed with JavaScript enabled and disabled",
+    "mobile_navigation": "passed, including modal focus and switching playlists",
+    "diagram_accessibility": "22 local SVGs with title/description and meaningful Markdown alt; focusable horizontal scrolling frames at narrow widths",
+    "visual_review": "Frontend curriculum index, AI transformer diagram in reading context, DevOps state diagram; desktop and narrow layouts covered by browser checks."
   },
   "technical_content_revision": {
-    "reading_pages": 90,
-    "practice_sections_preserved_exactly": 78,
-    "fenced_examples_by_language": {
-      "python": 137,
-      "text": 46,
+    "reading_pages": 148,
+    "fenced_examples": 416,
+    "languages": {
+      "html": 8,
+      "javascript": 16,
+      "css": 4,
+      "typescript": 5,
+      "tsx": 6,
+      "http": 7,
+      "text": 77,
+      "python": 168,
+      "json": 9,
+      "sql": 31,
       "pseudocode": 20,
-      "sql": 21,
-      "lua": 1,
-      "http": 4,
-      "promql": 3,
-      "html": 2,
-      "css": 1,
-      "javascript": 9,
-      "tsx": 3,
-      "yaml": 6,
-      "ini": 2,
-      "dockerfile": 1,
-      "hcl": 1,
-      "json": 1,
-      "bash": 28,
+      "yaml": 11,
+      "ini": 1,
       "nginx": 1,
-      "groovy": 1
+      "groovy": 1,
+      "dockerfile": 1,
+      "hcl": 3,
+      "bash": 42,
+      "promql": 4,
+      "lua": 1
     },
-    "standalone_python_examples": 133,
-    "python_expected_outputs": "Earlier 130 standalone examples and three current Frontend/Backend revision examples passed. Replaced examples are excluded from the current inventory.",
+    "new_python_blocks_executed": 38,
+    "shell_blocks_syntax_checked_bash_and_zsh": 42,
+    "new_json_blocks_parsed": 9,
+    "svg_diagrams_parsed": 22,
+    "practice_sections_preserved_exactly": 78,
+    "learner_python_files": "byte-for-byte unchanged",
+    "frontend_js_ts_tsx_syntax_checks": 27,
+    "new_yaml_fragments_parsed": 8,
     "python_runtime": "CPython 3.12.14",
-    "integration_python_fragments": 4,
-    "configuration_syntax_checks": {
-      "lua_syntax": 1,
-      "nginx_configuration_test": 1,
-      "yaml_parse": 5,
-      "shell_syntax": 1
-    },
-    "json_examples_parsed": 1,
-    "service_dependent_fragments": "Reviewed against primary documentation with explicit assumptions; not executed against live databases, brokers or providers.",
-    "content_review": "Independent review covered all eight guides and representative Python, DSA, LLD and HLD lessons. Complete-answer leakage in DSA01 and repetition in HLD07 were corrected. Long openings in eleven Python/DSA lessons were tightened to reach examples sooner.",
-    "presentation": "GitHub Dark Default syntax colors, language labels, clipboard copy, keyboard-scrollable examples and inset focus outlines; pre-rendered highlighting checked without JavaScript and on desktop/mobile.",
-    "exercise_implementations_and_tests": "unchanged",
-    "hld_practice": "Excalidraw canvas preserved"
+    "new_python_scope": "All 38 Python fences across the four expanded curricula parse and execute; integration function definitions are not live service tests.",
+    "source_fidelity": "All 416 reading fences match rendered static HTML exactly.",
+    "exercise_implementations_and_tests": "byte-for-byte unchanged from pre-revision snapshot",
+    "service_dependent_fragments": "Reviewed, not executed against live infrastructure."
   },
   "cheatsheet_validation": {
-    "references": 3,
-    "domain": "Engineering: Frontend, Backend and DevOps",
-    "sections": 43,
-    "reciprocal_section_links": 86,
-    "all_section_links_browser_checked": true,
-    "catalog_search_and_reference_navigation": "passed",
-    "desktop_and_mobile_accessibility": "passed",
-    "narrow_screen_width": 320,
-    "document_horizontal_overflow": false,
-    "syntax_checks": {
-      "bash_blocks": 25,
-      "ini_blocks": 2,
-      "yaml_blocks": 2,
-      "standalone_python_examples": 1,
-      "nginx_configuration": "passed with temporary certificates; server not started"
-    },
-    "service_dependent_flows": "Reviewed with primary documentation and explicit prerequisites; no cloud, database, registry or cluster operations executed.",
-    "practice_runtime_requests": [],
-    "final_legacy_alias_recheck": "All three aliases checked with and without JavaScript.",
-    "visual_review": "desktop and mobile"
+    "references": 7,
+    "tools": [
+      "git",
+      "docker",
+      "kubernetes",
+      "aws-cli",
+      "terraform",
+      "helm",
+      "linux-networking"
+    ],
+    "sections": 40,
+    "general_subject_cheatsheets": false,
+    "mapped_lesson_contexts": "All resolve; internal links checked across reading sources.",
+    "service_dependent_flows": "Reviewed with explicit prerequisites; cloud, cluster, registry, database, and Terraform mutations were not executed.",
+    "legacy_broad_urls": "Redirect to curriculum indexes, verified with and without JavaScript."
   },
   "engineering_validation": {
-    "recaps": 3,
-    "revised_recaps": [
-      "frontend",
-      "backend"
-    ],
-    "lesson_structure": "Fundamentals first; focused real-world examples establish mechanism, purpose, limits and the reason for subsequent approaches.",
-    "frontend_sequence": [
-      "HTML: structure, semantics, and native behavior",
-      "Browser rendering: from a URL to pixels",
-      "CSS: cascade, layout, and responsive design",
-      "JavaScript: behavior and the event loop",
-      "Modules, types, and components",
-      "HTTP, asynchronous data, and state ownership",
-      "MPA and SPA: who owns navigation",
-      "SSR: initial HTML, hydration, and streaming",
-      "SSG: render once and serve the artifact",
-      "ISR: regenerate shared pages as content changes",
-      "Server and client boundaries in modern frameworks",
-      "Delivery: assets, HTTP caching, and perceived speed",
-      "Security: the browser is a trust boundary",
-      "Auditing: measure the user journey and locate the cost",
-      "Testing and release: protect behavior across delivery modes"
-    ],
-    "backend_sequence": [
-      "Requests, protocols, and the network path",
-      "Application servers, processes, and request lifecycles",
-      "Concurrency: blocking workers, threads, and event loops",
-      "HTTP APIs: make the contract explicit",
-      "Business logic and code boundaries",
-      "Validation, authentication, and authorization",
-      "Persistence: model durable data and invariants",
-      "Transactions and concurrent updates",
-      "Queries, indexes, and pagination",
-      "Timeouts, retries, and idempotency",
-      "Caching: reduce repeated work with a freshness contract",
-      "Queues and background work",
-      "Scaling and service boundaries",
-      "Schema and contract evolution",
-      "Observability, testing, and production diagnosis"
-    ],
-    "revised_recap_sections": 30,
-    "revised_reference_sections": 30,
-    "revised_fences_by_language": {
-      "bash": 3,
-      "text": 27,
-      "python": 5,
-      "sql": 7,
-      "javascript": 9,
-      "http": 2,
-      "pseudocode": 1,
-      "html": 2,
-      "css": 1,
-      "tsx": 3
-    },
-    "revised_fences": 60,
-    "standalone_examples_executed": 5,
-    "standalone_runtimes": {
-      "python": 3,
-      "node_javascript": 2
-    },
-    "additional_checks": {
-      "wsgi_response_and_length": "passed",
-      "mocked_concurrent_async_reads": "passed",
-      "pricing_validation": "passed",
-      "tsx_syntax_checks": 3,
-      "request_race": "passed",
-      "http_error_handling": "passed",
-      "native_form": "passed",
-      "css_rules": "passed",
-      "text_sink_browser_examples": 2
-    },
-    "syntax_checks": {
-      "python": 5,
-      "javascript": 9,
-      "bash": 3,
-      "tsx": 3
-    },
-    "technical_review": "Reviewed against MDN, React, Next.js, Python/WSGI, HTTP RFCs, PostgreSQL, OWASP, RabbitMQ, AWS and OpenTelemetry primary documentation. SQL and service-dependent fragments were reviewed without live operations.",
-    "desktop_and_mobile_visual_review": "Passed for the new openings and SSR example; no document overflow at 320px for home or either recap/reference.",
-    "topic_order_in_rendered_pages": "Passed: HTML/browser/CSS/JavaScript precede navigation and SSR/SSG/ISR; backend request/server/concurrency precede data and distributed-system concerns.",
-    "practice_changes": false,
-    "new_dependencies": false
+    "curricula": 4,
+    "expanded_reading_pages": 59,
+    "sections": 346,
+    "lesson_structure": "Fundamentals and problem context, mechanisms, code or worked traces, real failure behavior, tradeoffs, and production use; depth varies by topic.",
+    "independent_review": "Representative deep reads across all four curricula plus static navigation. React deferred-results memo prerequisite corrected before final build.",
+    "new_dependencies": false,
+    "practice_changes": false
   },
   "code_theme_validation": {
     "theme": "GitHub Dark Default",
     "highlighter": "Shiki 4.5.0",
-    "coverage": "All fenced snippets in lessons, engineering guides, cheatsheets, coding practice questions and HLD briefs.",
-    "syntax_generation": "Build/server only; token data is rendered through React text nodes. No highlighter engine in browser chunks.",
+    "syntax_generation": "Build/server only; existing code renderer preserved.",
     "source_fidelity": {
-      "pages": 90,
-      "highlighted_blocks": 316,
-      "languages": {
-        "python": 137,
-        "bash": 56,
-        "text": 46,
-        "pseudocode": 20,
-        "sql": 21,
-        "lua": 1,
-        "http": 4,
-        "promql": 3,
-        "html": 2,
-        "css": 1,
-        "javascript": 9,
-        "tsx": 3,
-        "yaml": 6,
-        "ini": 2,
-        "dockerfile": 1,
-        "hcl": 1,
-        "json": 1,
-        "nginx": 1,
-        "groovy": 1
-      },
-      "source_fidelity": "passed",
-      "theme": "github-dark-default",
-      "engine": "build-only"
+      "reading_pages": 148,
+      "fenced_blocks": 416,
+      "result": "All match source exactly."
     },
-    "client_chunks_checked": 167,
-    "clipboard_and_keyboard_scrolling": "passed",
-    "javascript_disabled_rendering": "passed",
-    "literal_html_preserved_as_text": "passed",
-    "desktop_mobile_visual_review": "passed",
-    "narrow_layout": [
-      {
-        "route": "/guides/engineering/frontend/",
-        "overflow": false
-      },
-      {
-        "route": "/guides/engineering/backend/",
-        "overflow": false
-      },
-      {
-        "route": "/cheatsheets/frontend/",
-        "overflow": false
-      },
-      {
-        "route": "/cheatsheets/backend/",
-        "overflow": false
-      },
-      {
-        "route": "/learn/python/20-memory-and-garbage-collection/",
-        "overflow": false
-      }
-    ],
-    "plain_text_and_pseudocode": "Same frame and neutral text; no invented syntax coloring.",
-    "inline_code": "Neutral GitHub-style inline code treatment.",
+    "clipboard_keyboard_and_no_javascript_rendering": "passed in browser suite",
+    "literal_markup_as_text": "passed",
     "editable_practice_editor": "unchanged"
+  },
+  "ai_engineering_validation": {
+    "parts": [
+      "foundations",
+      "learning",
+      "transformers",
+      "prompting",
+      "adaptation",
+      "embeddings",
+      "retrieval",
+      "evaluation",
+      "inference",
+      "model-selection",
+      "agents",
+      "security",
+      "multimodal",
+      "production"
+    ],
+    "sections": 92,
+    "python_examples_executed": 24,
+    "json_examples_parsed": 6,
+    "diagrams": 6,
+    "source_use": "Original explanations and examples; public topic maps used for coverage inspiration, primary technical material checked privately. No external references shipped in lesson prose.",
+    "integration_limits": "No live model/provider calls or GPU benchmarks. Service-dependent configurations are explanatory integration fragments.",
+    "existing_six_canonical_paths": "retained",
+    "old_ai_aliases": "passed with and without JavaScript"
+  },
+  "languages": {
+    "python": {
+      "runtime": "Browser Pyodide; four native concurrency exercises use local Python"
+    },
+    "javascript": {
+      "runtime": "Fresh browser module worker or local Node.js 20+"
+    },
+    "go": {
+      "runtime": "Browser Go 1.26.5/WASI; native Go remains optional",
+      "lessons": 56
+    },
+    "java": {
+      "runtime": "Browser Java 17 with CheerpJ 4.3 and ECJ 3.42.0; native JDK remains optional",
+      "lessons": 57
+    },
+    "cpp": {
+      "runtime": "Browser Clang 22/C++20 with exception-enabled WASIX and Wasmer SDK; native C++ remains optional",
+      "lessons": 56
+    },
+    "drafts_and_progress": "Separate problem-and-language identities; original Python keys retained",
+    "download": "Current starter, executable tests, README, and required helper files"
+  },
+  "browser_javascript": {
+    "runs": 228,
+    "reference_stage_runs": 114,
+    "reference_checks": 1216,
+    "unfinished_stub_stages_rejected": 114,
+    "failures": 0,
+    "externalRequests": [],
+    "lessons": 57,
+    "fresh_execution_stop_async_and_report_validation": "passed"
+  },
+  "new_native_reference_validation": {
+    "go": {
+      "lessons": 56,
+      "reference_stage_runs": 112,
+      "unfinished_stage_runs_rejected": 112,
+      "race_checked_lessons": [
+        10,
+        11,
+        12
+      ],
+      "panic_containment": "Harness-owned learner calls relay panics to named checks; panic(nil) verified"
+    },
+    "java": {
+      "lessons": 57,
+      "reference_stage_runs": 114,
+      "unfinished_stage_runs_rejected": 114,
+      "verified_java_source_hashes": 114,
+      "reading_examples_compiled_and_run": 43
+    },
+    "cpp": {
+      "lessons": 56,
+      "reference_stage_runs": 112,
+      "unfinished_stage_runs_rejected": 112,
+      "assertions": 9092,
+      "sanitizer_suites": 23,
+      "two_translation_unit_linkage": "passed"
+    },
+    "answers_shipped": false
+  },
+  "new_reading_pages": 226,
+  "total_reading_pages": 380,
+  "browser_compilers": {
+    "languages": [
+      "go",
+      "java",
+      "cpp"
+    ],
+    "reference_stage_runs": 338,
+    "unexpected_reference_failures": 0,
+    "go": {
+      "lessons": 56,
+      "reference_stage_runs": 112,
+      "named_checks": 1283,
+      "runtime": "Go 1.26.5 wasip1, @wasm-oj/browser 0.2.5, toolchain-go 0.2.0",
+      "int64_and_goroutines": "passed",
+      "limitation": "Cooperative scheduler; browser checks do not establish race freedom",
+      "external_requests": []
+    },
+    "java": {
+      "lessons": 57,
+      "reference_stage_runs": 114,
+      "named_checks": 1217,
+      "runtime": "CheerpJ 4.3 Java 17 + ECJ 3.42.0",
+      "jar_sha256": "d8642fe753cac7aa6f5a01d817dcbcd967482a75184b245dee8144056fb19091",
+      "core_host": "Official versioned vendor CDN; no source uploads",
+      "license_scope": "User confirmed personal project; visible credit and notices retained",
+      "compiler_filenames_and_coordinates": "passed Exercise.java/Main.java, CRLF and Unicode/blank lines",
+      "runtime_stack_limitation": "Class and method frames available; source lines can be Unknown Source",
+      "control_checks": "Starter failures, compiler errors, exit status, spoofed ordinary console text, CPU cancellation and recovery passed"
+    },
+    "cpp": {
+      "lessons": 56,
+      "reference_stage_runs": 112,
+      "unfinished_starter_stages_rejected": 112,
+      "named_case_reports": 2282,
+      "unexpected_report_errors": 0,
+      "runtime": "Clang22 + WASIX exception sysroot v2026-10-02.1; WasmerSDK0.10 compiler/0.19.1 execution",
+      "threads_exceptions_condition_variables": "passed",
+      "hard_stop_and_timeout": "Parent removes per-invocation execution frame; CDP confirms no worker targets after cleanup; immediate rerun passes",
+      "compiler_warning_regression": "Warnings containing error: compile successfully; real linker errors rejected",
+      "requires": "SharedArrayBuffer, cross-origin isolation, JSPI; Chrome156 verified",
+      "external_requests": []
+    },
+    "installed_ui": {
+      "passing_stage_runs": 6,
+      "saved_drafts_and_stage_progress_after_reload": "passed for all three languages",
+      "compiler_errors_and_unfinished_starters": "passed",
+      "loading_cancellation_and_retry": "passed",
+      "old_manual_completion_migration": "passed; drafts preserved and only browser-verified final results count"
+    },
+    "http_policy": "COOP same-origin, COEP require-corp, CORP same-origin; correct MIME, GET/HEAD, source POST rejected; immutable only pinned assets",
+    "asset_integrity": {
+      "go": 30,
+      "java": 12,
+      "cpp": 57,
+      "checks": "Every vendored runtime asset byte count and SHA-256 verified before build"
+    },
+    "unchanged_curriculum_files": 883,
+    "answers_shipped": false,
+    "existing_flows": "Python, four native Python concurrency exceptions, JavaScript, HLD canvas, downloads, responsive panes and accessibility preserved",
+    "independent_review": "Shared integration, final C++ lifecycle/warnings/artifacts and final Java source-mount/diagnostic delta reviewed; no outstanding important findings"
+  },
+  "homepage_learning_path": {
+    "sequence": [
+      "Machine coding",
+      "System design basics",
+      "Low-level design",
+      "High-level design"
+    ],
+    "navbar": "Shared programming-language selector replaces homepage navlinks; present on indexes, reading, practice and cheatsheets",
+    "first_visit": "Hero offers five languages; no implicit Python selection",
+    "preference": "Existing local storage key retained; cross-tab synchronization and blocked-write memory fallback verified",
+    "selected_content": "Only selected-language fundamentals, DSA and LLD; HLD remains diagram based",
+    "system_design_basics": "Eight curated existing backend lessons; all links verified",
+    "supplementary": "Frontend, Backend, AI Engineering, DevOps, and Last Mile Prep; tool cheatsheets retained.",
+    "navigation": "DSA/LLD preserve problem and mode; fundamentals switch to first lesson of chosen language; guide/HLD stay on page",
+    "accessibility": "Hero choice moves focus to Start; 320px layout and axe checks passed; section bookmarks clear sticky navbar",
+    "verification": "47 distinct browser scenarios passed, including a final six-case focused rerun after updating the legacy card-layout assertion; 37 Node tests and production build passed",
+    "unchanged_curriculum_files": 883,
+    "independent_review": "No critical or important regressions found"
+  },
+  "concept_illustrations": {
+    "verified_at": "2026-10-29T08:07:05.165382+00:00",
+    "original_svg_assets": 10,
+    "total_asset_bytes": 40056,
+    "placements": "Four core-path stages, six supplementary playlist cards, and all six playlist overview headers. Covers omitted from search results.",
+    "mode": "Original code-authored SVG, informed by the custom illustration approach in supertrips.",
+    "production_build": "passed",
+    "typecheck": "passed",
+    "format_check": "passed",
+    "node_tests": 37,
+    "focused_browser_tests": 9,
+    "visual_layout_checks": 17,
+    "home_widths_px": [
+      1440,
+      1024,
+      768,
+      390,
+      320
+    ],
+    "all_playlist_widths_px": [
+      1440,
+      320
+    ],
+    "broken_images_or_overflow": [],
+    "review": "Independent review completed. Corrected HLD wiring so interchangeable API instances share all downstream dependencies; reviewer confirmed no important findings remain."
+  },
+  "last_mile_prep": {
+    "verified_at": "2026-10-29T09:23:44.109730+00:00",
+    "canonical_playlist": "/guides/last-mile-prep/",
+    "tracks": [
+      "Incident Triage",
+      "Product Management",
+      "Telemetry & Observability"
+    ],
+    "lessons": 10,
+    "sections": 61,
+    "fenced_examples": 28,
+    "tools": [
+      "Grafana",
+      "New Relic",
+      "Sentry",
+      "FullStory",
+      "Honeybadger",
+      "PostHog",
+      "Pendo",
+      "Google Analytics 4"
+    ],
+    "legacy_indexes": [
+      "observability",
+      "product-management"
+    ],
+    "legacy_lessons": 4,
+    "legacy_routes_with_and_without_javascript": "passed",
+    "track_and_tool_search": "passed; includes module names; regression reproduced before fix",
+    "production_build": "passed",
+    "typecheck": "passed",
+    "format_check": "passed",
+    "node_tests": 37,
+    "focused_browser_tests": 12,
+    "self_contained_python_examples_executed": 5,
+    "visual_and_accessibility_checks": 28,
+    "visual_errors": [],
+    "viewports": [
+      1440,
+      768,
+      390,
+      320
+    ],
+    "reading_only": true,
+    "outbound_lesson_references": 0,
+    "diagrams": "Shared release feedback cover, trace waterfall, experiment guardrail, and telemetry pipeline.",
+    "review": "Independent review of all ten lessons and scoped routing/UI changes completed. Track-name search finding fixed and confirmed; no remaining actionable findings."
   }
 }

@@ -51,7 +51,7 @@ ON CONFLICT (alias) DO NOTHING
 RETURNING alias, destination;
 ```
 
-The driver binds the alias and validated destination. A returned row means this statement inserted the mapping; no row means it did not. After a conflict, read the authoritative row in a subsequent statement and compare destination and owner: an authorized identical retry returns the existing result, while conflicting reuse fails. This minimal schema omits owner and audit columns. [PostgreSQL documents conflict handling and `RETURNING`](https://www.postgresql.org/docs/current/sql-insert.html).
+The driver binds the alias and validated destination. A returned row means this statement inserted the mapping; no row means it did not. After a conflict, read the authoritative row in a subsequent statement and compare destination and owner: an authorized identical retry returns the existing result, while conflicting reuse fails. This minimal schema omits owner and audit columns.
 
 Generated-alias conflicts trigger another candidate; custom aliases return a clear conflict. Candidate randomness reduces collision frequency but does not enforce uniqueness. A lost response remains ambiguous until the retry finds the immutable committed mapping.
 

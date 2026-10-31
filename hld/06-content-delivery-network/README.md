@@ -52,7 +52,7 @@ Accept-Language: en
 If-None-Match: "help-en-v8"
 ```
 
-The second exchange is a later conditional revalidation request, with its response omitted. An unchanged representation can produce 304 and renew metadata without sending the body again. `Vary` requires matching the nominated request headers; it does not itself authorize storage or normalize equivalent languages. [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html) defines those cache rules.
+The second exchange is a later conditional revalidation request, with its response omitted. An unchanged representation can produce 304 and renew metadata without sending the body again. `Vary` requires matching the nominated request headers; it does not itself authorize storage or normalize equivalent languages.
 
 An entry records body reference, validator, freshness deadline, stale deadline, and generation. Include host, relevant path/query, and agreed variants in the key. Normalize only equivalences guaranteed by the origin. This design bypasses shared caching for authenticated requests. Including unlimited tracking parameters destroys reuse; omitting meaningful size parameters serves the wrong image.
 

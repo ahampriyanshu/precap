@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
 The output is `['released'] True`: cancellation is observed only after the worker's cleanup has run. A cancellation request is not proof that a task has stopped; await its completion. A task can suppress cancellation, but doing so can break structured timeout and task-group behavior. Cancelling an await on an offloaded blocking function also does not forcibly stop that underlying thread.
 
-With default `gather`, one exception is propagated while other submitted awaitables can continue. Python 3.11+ `TaskGroup` cancels remaining siblings after an ordinary child failure and waits for their cleanup; multiple failures can be reported as an exception group. Choose the batch failure policy deliberately. See [task cancellation](https://docs.python.org/3.12/library/asyncio-task.html#task-cancellation).
+With default `gather`, one exception is propagated while other submitted awaitables can continue. Python 3.11+ `TaskGroup` cancels remaining siblings after an ordinary child failure and waits for their cleanup; multiple failures can be reported as an exception group. Choose the batch failure policy deliberately.
 
 ## Common mistakes and tradeoffs
 
@@ -71,7 +71,6 @@ An `await` may complete immediately, so it is not always a scheduling yield. Con
 
 Keep tasks owned and exceptions observed. A semaphore limits active operations but does not bound memory from creating millions of waiting tasks. Use bounded submission or workers consuming a queue for large streams. Keep loop-bound coordination objects within the lifetime of their intended loop. Synchronous code remains simpler when there is no independent waiting to overlap.
 
-Further reading: [Task groups](https://docs.python.org/3.12/library/asyncio-task.html#task-groups).
 
 ## Practice
 

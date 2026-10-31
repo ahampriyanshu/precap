@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+<title id="title">A decoder block preserves shape and updates features</title><desc id="desc">Token IDs become hidden states. Normalization precedes causal attention and feed-forward computation. Each sublayer adds a residual update. Final states project to vocabulary logits.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#526176"/></marker></defs>
+<rect width="900" height="430" rx="18" fill="#f8fafc"/>
+<g font-family="system-ui,-apple-system,sans-serif">
+<text x="28" y="36" fill="#172033" font-size="21" font-weight="650">A decoder block preserves shape and updates features</text>
+<rect x="28" y="74" width="160" height="86" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="108.0" y="101" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Token IDs</text>
+<text x="108.0" y="125" text-anchor="middle" fill="#526176" font-size="15">[batch, tokens]</text>
+<rect x="224" y="74" width="190" height="86" rx="10" fill="#dbeafe" stroke="#cbd5e1"/>
+<text x="319.0" y="101" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Embedding lookup</text>
+<text x="319.0" y="125" text-anchor="middle" fill="#526176" font-size="15">[batch, tokens, width]</text>
+<path d="M188 117 L224 117" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="450" y="74" width="192" height="86" rx="10" fill="#ccfbf1" stroke="#cbd5e1"/>
+<text x="546.0" y="101" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Decoder blocks</text>
+<text x="546.0" y="125" text-anchor="middle" fill="#526176" font-size="15">repeat N times</text>
+<path d="M414 117 L450 117" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="678" y="74" width="194" height="86" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="775.0" y="101" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Output projection</text>
+<text x="775.0" y="125" text-anchor="middle" fill="#526176" font-size="15">vocabulary logits</text>
+<path d="M642 117 L678 117" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="28" y="205" fill="#172033" font-size="17" text-anchor="start">Inside one pre-normalized block</text>
+<rect x="28" y="232" width="160" height="100" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="108.0" y="259" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Hidden states</text>
+<text x="108.0" y="283" text-anchor="middle" fill="#526176" font-size="15">shape stays</text>
+<text x="108.0" y="305" text-anchor="middle" fill="#526176" font-size="15">[batch, tokens, width]</text>
+<rect x="224" y="232" width="190" height="100" rx="10" fill="#dbeafe" stroke="#cbd5e1"/>
+<text x="319.0" y="259" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Norm → attention</text>
+<text x="319.0" y="283" text-anchor="middle" fill="#526176" font-size="15">causal Q/K/V mixing</text>
+<text x="319.0" y="305" text-anchor="middle" fill="#526176" font-size="15">+ residual</text>
+<rect x="450" y="232" width="192" height="100" rx="10" fill="#ccfbf1" stroke="#cbd5e1"/>
+<text x="546.0" y="259" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Norm → feed-forward</text>
+<text x="546.0" y="283" text-anchor="middle" fill="#526176" font-size="15">per-position features</text>
+<text x="546.0" y="305" text-anchor="middle" fill="#526176" font-size="15">+ residual</text>
+<rect x="678" y="232" width="194" height="100" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="775.0" y="259" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Updated states</text>
+<text x="775.0" y="283" text-anchor="middle" fill="#526176" font-size="15">same outer shape</text>
+<text x="775.0" y="305" text-anchor="middle" fill="#526176" font-size="15">new contextual features</text>
+<path d="M188 282 L224 282" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M414 282 L450 282" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M642 282 L678 282" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="28" y="388" fill="#526176" font-size="15" text-anchor="start">Causal visibility excludes future targets; residual paths retain and update earlier features.</text>
+</g></svg>

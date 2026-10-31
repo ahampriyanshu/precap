@@ -1,289 +1,1237 @@
 {
   "guides": [
     {
-      "slug": "engineering",
-      "title": "Engineering",
-      "description": "Revisit how frontend, backend, and production systems work\u2014from their foundations to the tradeoffs behind modern architectures.",
+      "slug": "frontend",
+      "title": "Frontend Engineering",
+      "description": "From HTML, CSS, and JavaScript to application state, rendering architecture, accessibility, security, and production diagnosis.",
       "parts": [
         {
-          "slug": "frontend",
-          "title": "Frontend Engineering",
-          "description": "HTML, CSS, JavaScript, and browser rendering\u2014then components, SPA navigation, SSR, SSG, ISR, delivery, and website auditing.",
+          "slug": "browser-platform",
+          "title": "The browser: from a URL to an interactive page",
+          "module": "Browser foundations",
+          "description": "Follow navigation, resource discovery, rendering, and main-thread work to locate the dependency delaying a useful page.",
           "keywords": [
-            "frontend",
-            "HTML",
-            "DOM",
-            "CSS",
-            "cascade",
-            "layout",
-            "JavaScript",
-            "event loop",
-            "TypeScript",
-            "modules",
-            "components",
-            "React",
-            "Next.js",
-            "forms",
-            "accessibility",
-            "state",
-            "HTTP",
-            "fetch",
-            "routing",
-            "MPA",
-            "SPA",
-            "CSR",
-            "SSR",
-            "hydration",
-            "streaming",
-            "SSG",
-            "ISR",
-            "static generation",
-            "server components",
-            "caching",
-            "CDN",
-            "bundles",
-            "Lighthouse",
-            "DevTools",
-            "Web Vitals",
-            "LCP",
-            "INP",
-            "CLS",
-            "SEO",
-            "CSP",
-            "XSS",
-            "testing"
-          ],
-          "cheatsheet": "frontend"
-        },
-        {
-          "slug": "backend",
-          "title": "Backend Engineering",
-          "description": "The request lifecycle, servers, concurrency, APIs, and databases\u2014then transactions, caches, queues, scaling, and production diagnosis.",
-          "keywords": [
-            "backend",
+            "html",
+            "css",
+            "javascript",
+            "browser",
+            "rendering",
+            "critical path",
             "network",
-            "HTTP",
-            "API",
-            "REST",
-            "RPC",
-            "GraphQL",
-            "Python",
-            "WSGI",
-            "ASGI",
-            "server",
-            "processes",
-            "threads",
-            "event loop",
-            "concurrency",
-            "business logic",
-            "validation",
-            "authentication",
-            "authorization",
-            "tenant",
-            "SQL",
-            "PostgreSQL",
-            "database",
-            "persistence",
-            "connection pool",
-            "transactions",
-            "isolation",
-            "indexes",
-            "EXPLAIN",
-            "pagination",
-            "timeouts",
-            "idempotency",
-            "retries",
-            "cache",
-            "outbox",
-            "queues",
-            "workers",
-            "scaling",
-            "replication",
-            "sharding",
-            "microservices",
-            "monolith",
-            "schema evolution",
-            "observability",
-            "testing"
+            "layout",
+            "paint"
           ],
-          "cheatsheet": "backend"
-        },
-        {
-          "slug": "devops",
-          "title": "From first deploy to production",
-          "description": "A connected DevOps recap: what each layer solves, how it works, and what remains yours to operate.",
-          "keywords": [
-            "EC2",
-            "DNS",
-            "TLS",
-            "Nginx",
-            "Docker",
-            "Jenkins",
-            "Terraform",
-            "CI/CD",
-            "deployment",
-            "secrets",
-            "migrations",
-            "state",
-            "rollback",
-            "scaling",
-            "load balancer",
-            "database",
-            "queue",
-            "ECS",
-            "PaaS",
-            "Kubernetes",
-            "Helm",
-            "HPA",
-            "probes",
-            "SLO",
-            "on-call",
-            "backup",
-            "cost",
-            "systemd",
-            "GitOps",
-            "Argo CD",
-            "cheatsheet"
-          ],
-          "cheatsheet": "devops",
           "aliases": [
             {
-              "guide": "devops",
-              "slug": "production"
-            },
-            {
-              "slug": "deploying",
-              "section": "start-with-a-deployment-contract",
-              "guide": "devops"
-            },
-            {
-              "slug": "scaling",
-              "section": "scale-the-constrained-resource",
-              "guide": "devops"
+              "guide": "engineering",
+              "slug": "frontend"
             }
-          ],
-          "label": "DevOps"
-        }
-      ],
-      "sequential": false
-    },
-    {
-      "slug": "observability",
-      "title": "Telemetry & observability",
-      "description": "Follow a customer failure across services and turn telemetry into reliability decisions.",
-      "parts": [
-        {
-          "slug": "signals",
-          "title": "Follow a failure across the system",
-          "description": "Connect journey symptoms to service boundaries, asynchronous work, and useful telemetry.",
-          "keywords": [
-            "OpenTelemetry",
-            "context propagation",
-            "distributed tracing",
-            "sampling",
-            "cardinality",
-            "logs",
-            "metrics"
           ]
         },
         {
-          "slug": "reliability",
-          "title": "Turn telemetry into reliability decisions",
-          "description": "Set experience-based targets, page on impact, and invest in recovery and prevention.",
+          "slug": "html-forms-and-semantics",
+          "title": "HTML, forms, and document contracts",
+          "module": "Browser foundations",
+          "description": "Use semantic structure, native forms, validation, and progressive enhancement as reliable contracts between users, browsers, and servers.",
+          "keywords": [
+            "html",
+            "forms",
+            "semantics",
+            "validation",
+            "accessibility",
+            "progressive enhancement",
+            "metadata"
+          ]
+        },
+        {
+          "slug": "css-layout-and-design",
+          "title": "CSS: cascade, layout, and resilient presentation",
+          "module": "Browser foundations",
+          "description": "Understand cascade ownership, intrinsic sizing, responsive layouts, stacking contexts, and the real costs of animation.",
+          "keywords": [
+            "css",
+            "grid",
+            "flexbox",
+            "cascade",
+            "container queries",
+            "stacking context",
+            "responsive",
+            "design tokens"
+          ]
+        },
+        {
+          "slug": "javascript-runtime",
+          "title": "JavaScript: execution, asynchronous work, and memory",
+          "module": "Browser foundations",
+          "description": "Reason about tasks, microtasks, object identity, workers, cancellation, reachability, and memory diagnosis.",
+          "keywords": [
+            "javascript",
+            "event loop",
+            "promises",
+            "closures",
+            "workers",
+            "wasm",
+            "memory",
+            "garbage collection"
+          ]
+        },
+        {
+          "slug": "types-modules-and-builds",
+          "title": "TypeScript, modules, and the build graph",
+          "module": "Application architecture",
+          "description": "Model valid states, validate runtime boundaries, understand module graphs, and ship reproducible compatible assets.",
+          "keywords": [
+            "typescript",
+            "modules",
+            "bundler",
+            "code splitting",
+            "runtime validation",
+            "build",
+            "source maps"
+          ]
+        },
+        {
+          "slug": "components-state-and-react",
+          "title": "Components, state ownership, and React scheduling",
+          "module": "Application architecture",
+          "description": "Place facts under clear owners, model transitions, preserve component identity, and distinguish rendering priority from parallel computation.",
+          "keywords": [
+            "react",
+            "state",
+            "reducer",
+            "context",
+            "effects",
+            "scheduling",
+            "useDeferredValue",
+            "concurrency"
+          ]
+        },
+        {
+          "slug": "requests-cache-and-consistency",
+          "title": "Requests, caches, and consistency in the interface",
+          "module": "Application architecture",
+          "description": "Handle stale responses, scoped caches, optimistic updates, concurrency conflicts, ambiguous writes, and changing paginated data.",
+          "keywords": [
+            "fetch",
+            "races",
+            "cache",
+            "idempotency",
+            "etag",
+            "optimistic updates",
+            "pagination",
+            "tenant"
+          ]
+        },
+        {
+          "slug": "navigation-and-application-architecture",
+          "title": "Navigation, SPAs, and application boundaries",
+          "module": "Application architecture",
+          "description": "Explain why client navigation arose and preserve URLs, history, focus, route errors, and ownership as applications grow.",
+          "keywords": [
+            "spa",
+            "mpa",
+            "routing",
+            "history",
+            "url",
+            "microfrontends",
+            "prefetch",
+            "architecture"
+          ]
+        },
+        {
+          "slug": "rendering-strategies",
+          "title": "CSR, SSR, SSG, and incremental regeneration",
+          "module": "Rendering and delivery",
+          "description": "Choose rendering time and location around freshness, personalization, hydration, cache scope, and deployment capabilities.",
+          "keywords": [
+            "csr",
+            "ssr",
+            "ssg",
+            "isr",
+            "hydration",
+            "static generation",
+            "http cache",
+            "cdn"
+          ]
+        },
+        {
+          "slug": "streaming-and-server-components",
+          "title": "Streaming, Server Components, and useful boundaries",
+          "module": "Rendering and delivery",
+          "description": "Design streaming and server/client boundaries around independent work, error isolation, serialization, and browser code budgets.",
+          "keywords": [
+            "streaming",
+            "suspense",
+            "server components",
+            "rsc",
+            "nextjs",
+            "client boundary",
+            "serialization"
+          ]
+        },
+        {
+          "slug": "accessibility-and-design-systems",
+          "title": "Accessibility and design systems as engineering contracts",
+          "module": "Production engineering",
+          "description": "Build reusable semantics, keyboard behavior, overlays, announcements, localization, and compatibility into shared components.",
+          "keywords": [
+            "accessibility",
+            "a11y",
+            "aria",
+            "keyboard",
+            "dialog",
+            "design systems",
+            "internationalization",
+            "i18n"
+          ]
+        },
+        {
+          "slug": "browser-security",
+          "title": "Browser security and trust boundaries",
+          "module": "Production engineering",
+          "description": "Separate origins, CORS, XSS, CSP, sessions, CSRF, private caching, and third-party authority into explicit security decisions.",
+          "keywords": [
+            "security",
+            "xss",
+            "csrf",
+            "csp",
+            "cors",
+            "cookies",
+            "same origin",
+            "authentication"
+          ]
+        },
+        {
+          "slug": "performance-and-observability",
+          "title": "Performance, auditing, and production diagnosis",
+          "module": "Production engineering",
+          "description": "Connect user experience to load and interaction traces, work through a concrete regression, and verify production outcomes by cohort.",
+          "keywords": [
+            "performance",
+            "lcp",
+            "inp",
+            "cls",
+            "core web vitals",
+            "lighthouse",
+            "audit",
+            "observability",
+            "telemetry"
+          ]
+        },
+        {
+          "slug": "realtime-and-offline",
+          "title": "Realtime, browser storage, and offline behavior",
+          "module": "Production engineering",
+          "description": "Choose transports, replay with versions, bound local storage, and define safe offline writes and service-worker upgrades.",
+          "keywords": [
+            "websocket",
+            "sse",
+            "realtime",
+            "offline",
+            "indexeddb",
+            "service worker",
+            "crdt",
+            "reconnect"
+          ]
+        },
+        {
+          "slug": "testing-and-evolution",
+          "title": "Testing, release safety, and architectural evolution",
+          "module": "Production engineering",
+          "description": "Test meaningful invariants, control asynchronous failures, preserve old clients, and evolve frontend architecture through observable seams.",
+          "keywords": [
+            "testing",
+            "playwright",
+            "release",
+            "rollback",
+            "compatibility",
+            "migration",
+            "architecture",
+            "browser"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "backend",
+      "title": "Backend Engineering",
+      "description": "From request execution and trusted contracts to data correctness, distributed processing, and production recovery. Follow the mechanisms, failure schedules, and implementation tradeoffs behind reliable backends.",
+      "parts": [
+        {
+          "module": "Requests and execution",
+          "slug": "requests-and-protocols",
+          "title": "Requests, protocols, and the server boundary",
+          "description": "Trace HTTP and gRPC from the connection to the handler, including proxy trust, deadlines, and protocol guarantees.",
+          "keywords": [
+            "http",
+            "grpc",
+            "tls",
+            "dns",
+            "wsgi",
+            "asgi",
+            "proxy",
+            "http2",
+            "http3"
+          ],
+          "aliases": [
+            {
+              "guide": "engineering",
+              "slug": "backend"
+            }
+          ]
+        },
+        {
+          "module": "Requests and execution",
+          "slug": "concurrency-and-backpressure",
+          "title": "Concurrency, scheduling, and backpressure",
+          "description": "Connect event loops, workers, cancellation, queues, and global pool budgets to useful work under overload.",
+          "keywords": [
+            "asyncio",
+            "threads",
+            "event loop",
+            "backpressure",
+            "admission",
+            "pool",
+            "little law"
+          ]
+        },
+        {
+          "module": "Contracts and trust",
+          "slug": "api-contracts-and-pagination",
+          "title": "API contracts, representation, and pagination",
+          "description": "Design commands, errors, compatible representations, and stable list traversal with explicit consistency semantics.",
+          "keywords": [
+            "rest",
+            "graphql",
+            "rpc",
+            "pagination",
+            "keyset",
+            "cursor",
+            "compatibility"
+          ]
+        },
+        {
+          "module": "Contracts and trust",
+          "slug": "identity-authorization-and-tenancy",
+          "title": "Identity, authorization, and tenant isolation",
+          "description": "Carry verified identity and resource permissions through queries, caches, jobs, and shared infrastructure.",
+          "keywords": [
+            "authentication",
+            "authorization",
+            "jwt",
+            "session",
+            "csrf",
+            "cors",
+            "ssrf",
+            "tenant",
+            "row level security"
+          ]
+        },
+        {
+          "module": "Data and correctness",
+          "slug": "domain-and-data-modeling",
+          "title": "Domain rules, data models, and ownership",
+          "description": "Model invariants, historical facts, constraints, state transitions, and the owner of each durable decision.",
+          "keywords": [
+            "domain",
+            "normalization",
+            "constraints",
+            "relational",
+            "document",
+            "money",
+            "state machine"
+          ]
+        },
+        {
+          "module": "Data and correctness",
+          "slug": "storage-indexes-and-query-plans",
+          "title": "Storage engines, indexes, and query plans",
+          "description": "Read storage and query costs through WAL, MVCC maintenance, access paths, plans, and representative cardinalities.",
+          "keywords": [
+            "postgresql",
+            "sql",
+            "btree",
+            "lsm",
+            "wal",
+            "vacuum",
+            "gin",
+            "brin",
+            "explain",
+            "index"
+          ]
+        },
+        {
+          "module": "Data and correctness",
+          "slug": "transactions-and-concurrency-control",
+          "title": "Transactions, MVCC, and concurrency control",
+          "description": "Work through last-unit races, snapshot isolation, write skew, locks, version checks, and ambiguous commits.",
+          "keywords": [
+            "transaction",
+            "mvcc",
+            "isolation",
+            "serializable",
+            "write skew",
+            "locking",
+            "deadlock",
+            "optimistic"
+          ]
+        },
+        {
+          "module": "Data and correctness",
+          "slug": "caches-and-invalidation",
+          "title": "Caches, freshness, and invalidation",
+          "description": "Make cache identity, stale-fill races, stampedes, eviction, and cache-outage capacity part of one contract.",
+          "keywords": [
+            "cache",
+            "redis",
+            "ttl",
+            "invalidation",
+            "stampede",
+            "stale while revalidate",
+            "hot key"
+          ]
+        },
+        {
+          "module": "Distributed processing",
+          "slug": "dependency-failures-and-idempotency",
+          "title": "Deadlines, retries, and idempotent operations",
+          "description": "Bound failure amplification and resolve uncertain mutations using budgets, receipts, stable operation IDs, and reconciliation.",
+          "keywords": [
+            "deadline",
+            "retry",
+            "jitter",
+            "idempotency",
+            "circuit breaker",
+            "bulkhead",
+            "payment"
+          ]
+        },
+        {
+          "module": "Distributed processing",
+          "slug": "queues-streams-and-outbox",
+          "title": "Queues, streams, and transactional messaging",
+          "description": "Understand durable acceptance, outbox and inbox transactions, ordering, redelivery, replay, and backlog drain.",
+          "keywords": [
+            "queue",
+            "kafka",
+            "rabbitmq",
+            "outbox",
+            "inbox",
+            "stream",
+            "exactly once",
+            "acknowledgement"
+          ]
+        },
+        {
+          "module": "Distributed processing",
+          "slug": "replication-partitioning-and-identifiers",
+          "title": "Replication, partitioning, and identifiers",
+          "description": "Reason about replica lag, failover, shard ownership, routing epochs, global operations, and identifier guarantees.",
+          "keywords": [
+            "replication",
+            "sharding",
+            "partitioning",
+            "cap",
+            "consistency",
+            "uuid",
+            "snowflake",
+            "sequence",
+            "failover"
+          ]
+        },
+        {
+          "module": "Distributed processing",
+          "slug": "coordination-and-workflows",
+          "title": "Coordination, leases, and durable workflows",
+          "description": "See why expired owners need fencing and how persistent workflow state handles cross-system uncertainty and compensation.",
+          "keywords": [
+            "lease",
+            "fencing",
+            "consensus",
+            "saga",
+            "workflow",
+            "two phase commit",
+            "leader"
+          ]
+        },
+        {
+          "module": "Read models and long-lived work",
+          "slug": "search-and-derived-data",
+          "title": "Search indexes and derived data",
+          "description": "Build a search read model with permission-aware retrieval, versioned updates, deletion rules, rebuild boundaries, and reconciliation.",
+          "keywords": [
+            "search",
+            "inverted index",
+            "full text",
+            "bm25",
+            "projection",
+            "cdc",
+            "materialized view",
+            "rebuild"
+          ]
+        },
+        {
+          "module": "Read models and long-lived work",
+          "slug": "realtime-and-batch-processing",
+          "title": "Realtime delivery, batch jobs, and resumable work",
+          "description": "Choose polling, SSE, or WebSockets and make reconnects, snapshot gaps, slow consumers, and export checkpoints explicit.",
+          "keywords": [
+            "websocket",
+            "sse",
+            "realtime",
+            "polling",
+            "batch",
+            "export",
+            "checkpoint",
+            "resume"
+          ]
+        },
+        {
+          "module": "Architecture and operations",
+          "slug": "service-boundaries-and-evolution",
+          "title": "Service boundaries and safe evolution",
+          "description": "Use ownership to choose modules or services, then evolve schema, events, caches, and deployments without breaking overlap.",
+          "keywords": [
+            "modular monolith",
+            "microservices",
+            "architecture",
+            "migration",
+            "expand contract",
+            "backfill",
+            "rollback"
+          ]
+        },
+        {
+          "module": "Architecture and operations",
+          "slug": "testing-observability-and-capacity",
+          "title": "Testing, observability, and capacity reasoning",
+          "description": "Connect invariants to race tests, useful telemetry, critical-path diagnosis, realistic load, and operating budgets.",
+          "keywords": [
+            "testing",
+            "observability",
+            "metrics",
+            "traces",
+            "histogram",
+            "capacity",
+            "load test",
+            "slo"
+          ]
+        },
+        {
+          "module": "Architecture and operations",
+          "slug": "production-design-reviews",
+          "title": "Worked production reviews",
+          "description": "Review a recoverable checkout and an isolated large-tenant export using concrete budgets, crash schedules, and recovery evidence.",
+          "keywords": [
+            "case study",
+            "checkout",
+            "payment",
+            "export",
+            "tenant skew",
+            "reconciliation",
+            "production"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "ai-engineering",
+      "title": "AI Engineering",
+      "description": "From learning, tokens, and attention to retrieval, adaptation, GPU serving, evaluated agents, and production systems.",
+      "parts": [
+        {
+          "module": "Models and learning",
+          "slug": "foundations",
+          "title": "Language models, tokens, and generation",
+          "description": "Choose the right computation, then follow tokenization, representations, next-token probabilities, decoding, and context limits.",
+          "keywords": [
+            "LLM",
+            "tokenization",
+            "BPE",
+            "embeddings",
+            "softmax",
+            "temperature",
+            "top-p",
+            "context window",
+            "chat templates",
+            "generation"
+          ],
+          "aliases": [
+            {
+              "guide": "llms-and-ai",
+              "slug": "designing"
+            }
+          ]
+        },
+        {
+          "module": "Models and learning",
+          "slug": "learning",
+          "title": "How models learn",
+          "description": "Features, objectives, gradients, generalization, next-token training, optimization memory, distributed training, and post-training incentives.",
+          "keywords": [
+            "machine learning",
+            "neural networks",
+            "backpropagation",
+            "cross-entropy",
+            "training",
+            "generalization",
+            "leakage",
+            "Adam",
+            "mixed precision",
+            "data parallel",
+            "RLHF",
+            "reward hacking"
+          ]
+        },
+        {
+          "module": "Models and learning",
+          "slug": "transformers",
+          "title": "Inside a transformer",
+          "description": "Trace tensor shapes through Q/K/V attention, masks, positions, residuals, feed-forward blocks, MoE, and cached generation.",
+          "keywords": [
+            "transformer",
+            "attention",
+            "QKV",
+            "causal mask",
+            "RoPE",
+            "RMSNorm",
+            "residual",
+            "feed-forward",
+            "mixture of experts",
+            "prefill",
+            "decode",
+            "KV cache"
+          ]
+        },
+        {
+          "module": "Behavior and adaptation",
+          "slug": "prompting",
+          "title": "Instructions, structured output, and reasoning",
+          "description": "Version task contracts, organize context, constrain output shape, verify reasoning artifacts, and bound refinement loops.",
+          "keywords": [
+            "prompting",
+            "structured output",
+            "JSON Schema",
+            "reasoning",
+            "verification",
+            "context engineering",
+            "sampling",
+            "refinement",
+            "test-time compute",
+            "constrained decoding"
+          ]
+        },
+        {
+          "module": "Behavior and adaptation",
+          "slug": "adaptation",
+          "title": "Data, fine-tuning, and adaptation",
+          "description": "Diagnose when training helps, curate reproducible data, understand SFT, LoRA, QLoRA, DPO, distillation, and adaptation releases.",
+          "keywords": [
+            "fine-tuning",
+            "SFT",
+            "LoRA",
+            "QLoRA",
+            "DPO",
+            "distillation",
+            "preference optimization",
+            "data quality",
+            "dataset",
+            "adapters"
+          ]
+        },
+        {
+          "module": "Evidence and evaluation",
+          "slug": "embeddings",
+          "title": "Embeddings and vector indexes",
+          "description": "Understand representation contracts, similarity geometry, exact baselines, HNSW/IVF, filtering, migrations, and retrieval quality.",
+          "keywords": [
+            "embeddings",
+            "contrastive learning",
+            "cosine",
+            "dot product",
+            "ANN",
+            "HNSW",
+            "IVF",
+            "product quantization",
+            "pgvector",
+            "vector database",
+            "index migration"
+          ]
+        },
+        {
+          "module": "Evidence and evaluation",
+          "slug": "retrieval",
+          "title": "Retrieval and evidence-grounded generation",
+          "description": "Build versioned ingestion, meaningful chunks, hybrid search, reranking, context packing, advanced RAG, and permission-safe evidence reuse.",
+          "keywords": [
+            "RAG",
+            "retrieval",
+            "chunking",
+            "BM25",
+            "hybrid search",
+            "RRF",
+            "reranking",
+            "context packing",
+            "multi-hop",
+            "GraphRAG",
+            "freshness",
+            "ACL",
+            "grounding",
+            "citations"
+          ]
+        },
+        {
+          "module": "Evidence and evaluation",
+          "slug": "evaluation",
+          "title": "Evaluation that supports engineering decisions",
+          "description": "Define task outcomes, fixtures, component metrics, calibrated judges, statistical uncertainty, paired comparisons, and release gates.",
+          "keywords": [
+            "evaluation",
+            "evals",
+            "datasets",
+            "holdout",
+            "MRR",
+            "nDCG",
+            "recall",
+            "LLM judge",
+            "Wilson interval",
+            "rule of three",
+            "paired comparison",
+            "pass at k",
+            "regressions"
+          ]
+        },
+        {
+          "module": "Serving and economics",
+          "slug": "inference",
+          "title": "GPU inference, memory, and scheduling",
+          "description": "Work through serving phases, weight/KV memory, FlashAttention, paging, batching, quantization, speculation, and parallelism.",
+          "keywords": [
+            "inference",
+            "GPU",
+            "TTFT",
+            "KV cache",
+            "GQA",
+            "FlashAttention",
+            "PagedAttention",
+            "continuous batching",
+            "chunked prefill",
+            "quantization",
+            "speculative decoding",
+            "tensor parallel",
+            "prefix caching"
+          ]
+        },
+        {
+          "module": "Serving and economics",
+          "slug": "model-selection",
+          "title": "Model selection and serving economics",
+          "description": "Compare complete systems, calculate cost per accepted outcome, assess routing/cascades, and choose hosted or self-hosted capacity.",
+          "keywords": [
+            "model selection",
+            "cost",
+            "routing",
+            "cascade",
+            "small language model",
+            "self-hosting",
+            "hosted inference",
+            "capacity",
+            "fallback",
+            "caching",
+            "utilization"
+          ]
+        },
+        {
+          "module": "Agents and multimodal systems",
+          "slug": "agents",
+          "title": "Agents, tools, and durable execution",
+          "description": "Bound agent control, design domain tools, integrate MCP, make effects idempotent, recover durable tasks, and manage memory and coordination.",
+          "keywords": [
+            "agents",
+            "workflow",
+            "tools",
+            "function calling",
+            "MCP",
+            "Model Context Protocol",
+            "durable execution",
+            "idempotency",
+            "recovery",
+            "approvals",
+            "memory",
+            "multi-agent",
+            "orchestration"
+          ]
+        },
+        {
+          "module": "Agents and multimodal systems",
+          "slug": "security",
+          "title": "AI security and data boundaries",
+          "description": "Trace prompt injection and data exposure across retrieval, tools, caches, memory, execution environments, and derived artifacts.",
+          "keywords": [
+            "security",
+            "prompt injection",
+            "authorization",
+            "tenant isolation",
+            "sandbox",
+            "SSRF",
+            "privacy",
+            "retention",
+            "supply chain",
+            "data deletion",
+            "abuse",
+            "exfiltration"
+          ]
+        },
+        {
+          "module": "Agents and multimodal systems",
+          "slug": "multimodal",
+          "title": "Images, audio, and realtime interaction",
+          "description": "Handle visual representations, OCR/layout, video sampling, voice pipelines, turn cancellation, audio transport, and image generation.",
+          "keywords": [
+            "multimodal",
+            "vision",
+            "OCR",
+            "video",
+            "audio",
+            "speech",
+            "ASR",
+            "TTS",
+            "realtime",
+            "VAD",
+            "barge-in",
+            "diffusion",
+            "latency",
+            "PCM"
+          ]
+        },
+        {
+          "module": "Production design",
+          "slug": "production",
+          "title": "Production architecture, releases, and worked designs",
+          "description": "Set outcome SLOs, trace failures, release compatible system versions, and work through a private knowledge assistant and an operations agent.",
+          "keywords": [
+            "production",
+            "observability",
+            "tracing",
+            "SLO",
+            "release",
+            "canary",
+            "rollback",
+            "RAG architecture",
+            "operations assistant",
+            "case study",
+            "drift",
+            "feedback",
+            "reliability"
+          ],
+          "aliases": [
+            {
+              "guide": "llms-and-ai",
+              "slug": "operating"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "devops",
+      "title": "DevOps",
+      "description": "From supervised processes and traffic routing to repeatable artifacts, infrastructure, Kubernetes, and reliable production operations.",
+      "parts": [
+        {
+          "slug": "processes-and-first-deploy",
+          "title": "Processes and the first deployment",
+          "description": "Process identity, supervision, shutdown, resource budgets, and the limits of a single host.",
+          "keywords": ["Linux", "systemd", "process", "shutdown", "deployment"],
+          "module": "Processes and hosts",
+          "aliases": [
+            {
+              "guide": "engineering",
+              "slug": "devops"
+            },
+            {
+              "slug": "production"
+            },
+            {
+              "slug": "deploying"
+            }
+          ]
+        },
+        {
+          "slug": "networking-and-ingress",
+          "title": "DNS, TLS, and the traffic path",
+          "description": "Follow DNS, TCP, TLS, proxies, load balancers, and private routes to isolate a failing request.",
+          "keywords": [
+            "DNS",
+            "HTTP",
+            "TLS",
+            "Nginx",
+            "networking",
+            "load balancer"
+          ],
+          "module": "Processes and hosts"
+        },
+        {
+          "slug": "git-and-delivery-pipelines",
+          "title": "Git, CI, and artifact promotion",
+          "description": "Change graphs, CI trust boundaries, build provenance, and promotion of one verified artifact.",
+          "keywords": [
+            "Git",
+            "Jenkins",
+            "CI/CD",
+            "artifact",
+            "pipeline",
+            "promotion"
+          ],
+          "module": "Artifacts and infrastructure"
+        },
+        {
+          "slug": "containers-and-images",
+          "title": "Containers and image builds",
+          "description": "Understand image layers, isolation, resource limits, build inputs, secrets, and process lifecycle.",
+          "keywords": [
+            "Docker",
+            "container",
+            "cgroups",
+            "namespace",
+            "image",
+            "Buildx"
+          ],
+          "module": "Artifacts and infrastructure"
+        },
+        {
+          "slug": "cloud-identity-and-infrastructure",
+          "title": "Cloud identity, networks, and managed services",
+          "description": "Choose compute and storage models, scope cloud identities, and design network and failure boundaries.",
+          "keywords": ["AWS", "EC2", "IAM", "VPC", "S3", "cloud", "identity"],
+          "module": "Artifacts and infrastructure"
+        },
+        {
+          "slug": "terraform-and-state",
+          "title": "Terraform, state, and infrastructure changes",
+          "description": "Configuration, state bindings, plans, locks, drift, imports, refactors, and partial apply recovery.",
+          "keywords": [
+            "Terraform",
+            "state",
+            "drift",
+            "infrastructure as code",
+            "IaC",
+            "import"
+          ],
+          "module": "Artifacts and infrastructure"
+        },
+        {
+          "slug": "kubernetes-control-and-workloads",
+          "title": "Kubernetes reconciliation and workloads",
+          "description": "Trace reconciliation, scheduling, workloads, resource budgets, storage, and workload identities.",
+          "keywords": [
+            "Kubernetes",
+            "scheduler",
+            "Pod",
+            "Deployment",
+            "StatefulSet",
+            "RBAC",
+            "storage"
+          ],
+          "module": "Orchestration and delivery"
+        },
+        {
+          "slug": "services-probes-and-traffic",
+          "title": "Services, probes, and graceful traffic changes",
+          "description": "Connect Service routing, readiness, liveness, endpoint propagation, and graceful replacement.",
+          "keywords": [
+            "Kubernetes",
+            "Service",
+            "Gateway",
+            "ingress",
+            "probes",
+            "readiness",
+            "draining"
+          ],
+          "module": "Orchestration and delivery"
+        },
+        {
+          "slug": "helm-gitops-and-releases",
+          "title": "Helm, GitOps, and safe releases",
+          "description": "Chart contracts, reconciliation ownership, progressive delivery, and compatible schema evolution.",
+          "keywords": [
+            "Helm",
+            "GitOps",
+            "Argo CD",
+            "canary",
+            "rollout",
+            "migration",
+            "rollback"
+          ],
+          "module": "Orchestration and delivery"
+        },
+        {
+          "slug": "capacity-and-autoscaling",
+          "title": "Capacity, autoscaling, and overload",
+          "description": "Model throughput and headroom, understand HPA feedback, and protect constrained dependencies.",
+          "keywords": [
+            "Kubernetes",
+            "HPA",
+            "autoscaling",
+            "capacity",
+            "backpressure",
+            "queue",
+            "overload"
+          ],
+          "module": "Operating production",
+          "aliases": [
+            {
+              "slug": "scaling"
+            }
+          ]
+        },
+        {
+          "slug": "security-and-supply-chain",
+          "title": "Platform security and the software supply chain",
+          "description": "Trace build trust, provenance, runtime privileges, workload credentials, and compromise recovery.",
+          "keywords": [
+            "supply chain",
+            "SBOM",
+            "security",
+            "secrets",
+            "policy",
+            "isolation"
+          ],
+          "module": "Operating production"
+        },
+        {
+          "slug": "observability-and-incidents",
+          "title": "Observability, SLOs, and incident response",
+          "description": "Define useful SLIs, reason about telemetry, diagnose boundaries, and coordinate recovery.",
+          "keywords": [
+            "SLO",
+            "SLI",
+            "observability",
+            "Prometheus",
+            "OpenTelemetry",
+            "incident",
+            "cardinality"
+          ],
+          "module": "Operating production"
+        },
+        {
+          "slug": "backups-and-disaster-recovery",
+          "title": "Backups, disaster recovery, and stateful operations",
+          "description": "Plan RPO/RTO, application-consistent restores, failover authority, and recovery verification.",
+          "keywords": [
+            "backup",
+            "WAL",
+            "RPO",
+            "RTO",
+            "disaster recovery",
+            "restore",
+            "cost",
+            "failover"
+          ],
+          "module": "Operating production"
+        }
+      ]
+    },
+    {
+      "slug": "last-mile-prep",
+      "title": "Last Mile Prep",
+      "description": "Handle incidents, turn ambiguous requests into product decisions, and measure what reaches production.",
+      "moduleLabel": "Track",
+      "indexAliases": ["observability", "product-management"],
+      "parts": [
+        {
+          "slug": "incident-triage",
+          "title": "Incident triage: scope, stabilize, and communicate",
+          "module": "Incident Triage",
+          "description": "Establish impact, coordinate responders, choose a safe mitigation, and verify the customer journey.",
+          "keywords": [
+            "incident response",
+            "triage",
+            "severity",
+            "blast radius",
+            "mitigation",
+            "rollback",
+            "communication",
+            "on-call"
+          ]
+        },
+        {
+          "slug": "production-debugging",
+          "title": "Production debugging: test a hypothesis at each boundary",
+          "module": "Incident Triage",
+          "description": "Use traces, resource evidence, database activity, and browser context to distinguish competing explanations.",
+          "keywords": [
+            "debugging",
+            "critical path",
+            "saturation",
+            "connection pool",
+            "PostgreSQL",
+            "profiling",
+            "source maps",
+            "hypothesis"
+          ]
+        },
+        {
+          "slug": "reliability-and-recovery",
+          "title": "Reliability, recovery, and incident learning",
+          "module": "Incident Triage",
+          "description": "Set useful SLOs, verify reconciliation and backlog recovery, and turn incidents into owned improvements.",
           "keywords": [
             "SLI",
             "SLO",
             "error budget",
             "burn rate",
-            "incident response",
-            "capacity",
-            "telemetry health"
-          ]
-        }
-      ]
-    },
-    {
-      "slug": "product-management",
-      "title": "Product management",
-      "description": "Choose a worthwhile problem, test the bet, and decide what to do after launch.",
-      "parts": [
-        {
-          "slug": "discovery",
-          "title": "Choose the problem before the solution",
-          "description": "Frame customer needs, compare investments, and align decisions under uncertainty.",
-          "keywords": [
-            "discovery",
-            "segmentation",
-            "baseline",
-            "RICE",
-            "build versus buy",
-            "opportunity cost",
-            "decision ownership"
+            "postmortem",
+            "reconciliation",
+            "queue drain",
+            "capacity"
+          ],
+          "aliases": [
+            {
+              "guide": "observability",
+              "slug": "reliability"
+            }
           ]
         },
         {
-          "slug": "delivery",
-          "title": "Ship, measure, and make the next call",
-          "description": "Deliver bounded outcome bets, evaluate credible evidence, and decide what happens next.",
+          "slug": "requirements-and-audience",
+          "title": "Requirements, audience, and engineering judgment",
+          "module": "Product Management",
+          "description": "Understand the customer job and audience, make system promises explicit, and choose a complete first slice.",
           "keywords": [
-            "vertical slice",
-            "rollout",
+            "requirements gathering",
+            "audience",
+            "discovery",
+            "acceptance criteria",
+            "segmentation",
+            "RICE",
+            "tradeoffs",
+            "prioritization",
+            "build versus buy"
+          ],
+          "aliases": [
+            {
+              "guide": "product-management",
+              "slug": "discovery"
+            }
+          ]
+        },
+        {
+          "slug": "experiments-and-evidence",
+          "title": "A/B tests and product evidence",
+          "module": "Product Management",
+          "description": "Separate rollout safety from causal inference, define credible outcomes, and interpret experimental uncertainty.",
+          "keywords": [
+            "A/B testing",
             "experimentation",
             "causal inference",
             "guardrails",
+            "sample ratio mismatch",
+            "confidence interval",
             "activation",
-            "platform value"
-          ]
-        }
-      ]
-    },
-    {
-      "slug": "llms-and-ai",
-      "title": "LLMs & AI",
-      "description": "Find where a model earns its place, then bound, evaluate, and operate its behavior.",
-      "parts": [
-        {
-          "slug": "designing",
-          "title": "Put the model in the right place",
-          "description": "Choose model responsibilities, evidence sources, workflow control, and action authority.",
-          "keywords": [
-            "LLMs",
-            "traditional ML",
-            "workflows",
-            "agents",
-            "prompting",
-            "structured outputs",
-            "RAG",
-            "retrieval",
-            "fine-tuning",
-            "embeddings",
-            "document ACLs",
-            "prompt injection",
-            "tool permissions",
-            "idempotency"
+            "power"
+          ],
+          "aliases": [
+            {
+              "guide": "product-management",
+              "slug": "delivery"
+            }
           ]
         },
         {
-          "slug": "operating",
-          "title": "Evaluate, launch, and operate it",
-          "description": "Measure task quality, control cost and latency, and release a traceable production system.",
+          "slug": "feature-flags-and-releases",
+          "title": "Feature flags and controlled releases",
+          "module": "Product Management",
+          "description": "Separate deployment from exposure, preserve assignment across work, and manage fallback, rollout, and flag removal.",
           "keywords": [
-            "evaluation",
-            "datasets",
-            "holdout",
-            "model judges",
-            "quality drift",
-            "latency",
-            "p95",
-            "cost",
-            "caching",
-            "quotas",
+            "feature flags",
+            "feature releasing",
             "rollout",
-            "fallback",
-            "circuit breakers",
-            "PII",
+            "kill switch",
+            "targeting",
+            "stable bucketing",
+            "entitlements",
+            "PostHog",
+            "configuration"
+          ]
+        },
+        {
+          "slug": "deprecating-features",
+          "title": "Deprecating features without abandoning users",
+          "module": "Product Management",
+          "description": "Find dependents, define migration and compatibility, communicate sunset, and prove the removal gate.",
+          "keywords": [
+            "feature deprecation",
+            "sunset",
+            "migration",
+            "backward compatibility",
+            "Deprecation header",
+            "expand migrate contract",
+            "product lifecycle"
+          ]
+        },
+        {
+          "slug": "signals-and-instrumentation",
+          "title": "Signals, structured logs, and trace context",
+          "module": "Telemetry & Observability",
+          "description": "Design logs, metrics, traces, and asynchronous context with bounded cardinality and useful evidence.",
+          "keywords": [
+            "telemetry",
+            "logging",
+            "OpenTelemetry",
+            "OTel",
+            "context propagation",
+            "sampling",
+            "cardinality",
+            "structured logs",
+            "metrics",
+            "traces"
+          ],
+          "aliases": [
+            {
+              "guide": "observability",
+              "slug": "signals"
+            }
+          ]
+        },
+        {
+          "slug": "observability-tools",
+          "title": "Operational telemetry: Grafana, New Relic, Sentry, and replay",
+          "module": "Telemetry & Observability",
+          "description": "Navigate operational evidence with Grafana, New Relic, Sentry, Honeybadger, and FullStory.",
+          "keywords": [
+            "Grafana",
+            "Loki",
+            "Tempo",
+            "Prometheus",
+            "LogQL",
+            "New Relic",
+            "NRQL",
+            "Sentry",
+            "Honeybadger",
+            "FullStory",
+            "session replay",
+            "error tracking"
+          ]
+        },
+        {
+          "slug": "product-analytics",
+          "title": "Product analytics: PostHog, Pendo, and GA4",
+          "module": "Telemetry & Observability",
+          "description": "Define outcome events, identity, funnels, and collection contracts that support trustworthy product decisions.",
+          "keywords": [
+            "PostHog",
+            "Pendo",
+            "GA",
+            "GA4",
+            "Google Analytics",
+            "product analytics",
+            "events",
+            "identity",
+            "funnels",
             "retention",
-            "residency"
+            "outbox",
+            "consent"
           ]
         }
       ]

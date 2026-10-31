@@ -19,7 +19,8 @@ import {
 import { Content } from "./content";
 import { PracticeDivider } from "./practice-divider";
 import { Results } from "./results";
-import { usePython } from "@/hooks/use-python";
+import { useRunner } from "@/hooks/use-runner";
+import { languageInfo } from "@/lib/languages";
 import { usePracticeSplit } from "@/hooks/use-practice-split";
 import { loadWork, saveWork } from "@/lib/storage";
 import { downloadChapter } from "@/lib/download";
@@ -32,6 +33,8 @@ const CodeEditor = dynamic(() => import("./code-editor"), {
 
 export function Practice({ lesson }: { lesson: Lesson }) {
   const split = usePracticeSplit();
+  const language = lesson.language || "python";
+  const info = languageInfo[language];
   const question = split.collapsed !== "question";
   const editorVisible = split.collapsed !== "editor";
   const [stage, setStage] = useState<Stage>("prototype");
@@ -75,7 +78,7 @@ export function Practice({ lesson }: { lesson: Lesson }) {
       update({ ...workRef.current, [testedStage]: report.passed }),
     [update],
   );
-  const runner = usePython(onReport);
+  const runner = useRunner(onReport);
   const onRun = useCallback(() => {
     if (hydrated && !runner.busy && !lesson.native)
       runner.run(lesson, workRef.current.code, stage);
@@ -146,18 +149,22 @@ export function Practice({ lesson }: { lesson: Lesson }) {
       <section
         className="coding-panel"
         id="practice-editor"
-        aria-label="Python workspace"
+        aria-label={`${info.label} workspace`}
         hidden={!editorVisible}
       >
         <div className="editor-header">
-          <div className="file-tabs" role="tablist" aria-label="Python files">
+          <div
+            className="file-tabs"
+            role="tablist"
+            aria-label={`${info.label} files`}
+          >
             <button
               role="tab"
               aria-selected={file === "exercise"}
               onClick={() => setFile("exercise")}
             >
               <FileCode2 size={14} />
-              exercise.py
+              {lesson.starterFilename}
             </button>
             <button
               role="tab"
@@ -235,7 +242,7 @@ export function Practice({ lesson }: { lesson: Lesson }) {
             ))}
           </div>
           {lesson.native ? (
-            <span className="native-tag">Local Python required</span>
+            <span className="native-tag">Local {info.label} required</span>
           ) : runner.busy ? (
             <button className="button stop-button" onClick={runner.stop}>
               <Square size={11} fill="currentColor" />
@@ -255,6 +262,7 @@ export function Practice({ lesson }: { lesson: Lesson }) {
         <div className="code-area">
           <div className="code-editor-frame" hidden={file !== "exercise"}>
             <CodeEditor
+              language={language}
               code={work.code}
               onChange={edit}
               onRun={onRun}
@@ -262,7 +270,7 @@ export function Practice({ lesson }: { lesson: Lesson }) {
             />
           </div>
           <div className="code-editor-frame" hidden={file !== "tests"}>
-            <CodeEditor code={lesson.tests} readOnly />
+            <CodeEditor language={language} code={lesson.tests} readOnly />
           </div>
         </div>
         {lesson.native ? (
@@ -270,15 +278,16 @@ export function Practice({ lesson }: { lesson: Lesson }) {
             <div className="native-heading">
               <Code2 size={20} />
               <div>
-                <strong>Run this exercise with local Python.</strong>
+                <strong>Run this exercise with local {info.label}.</strong>
                 <p>
-                  This exercise starts native threads or processes, which
-                  browser Python does not support. Download your code and tests,
-                  then run the command below.
+                  {language === "python"
+                    ? "This exercise starts native threads or processes, which browser Python does not support."
+                    : `Use your local ${info.label} toolchain to compile and run these tests.`}{" "}
+                  Download your code and tests, then run the command below.
                 </p>
               </div>
             </div>
-            <code>python3 main.py --stage {stage}</code>
+            <code>{info.command.replaceAll("$STAGE", stage)}</code>
             <div className="native-actions">
               <button
                 className="button primary"
@@ -309,11 +318,29 @@ export function Practice({ lesson }: { lesson: Lesson }) {
           </section>
         ) : (
           <Results
+            language={info.label}
+            message={runner.message}
             state={runner.state}
             report={runner.report}
             output={runner.output}
             error={runner.error}
           />
+        )}
+        {language === "go" &&
+          lesson.slug === "12-synchronization-and-races" && (
+            <p className="runtime-note">
+              Browser Go schedules goroutines cooperatively. These checks do not
+              detect data races; use local Go with <code>-race</code> to check
+              synchronization.
+            </p>
+          )}
+        {language === "java" && (
+          <p className="runtime-credit">
+            Java runs on this device with CheerpJ 4.3.
+          </p>
+        )}
+        {language === "cpp" && (
+          <p className="runtime-credit">C++ runtime powered by Wasmer.</p>
         )}
         <footer className="editor-status">
           <span>
@@ -323,8 +350,8 @@ export function Practice({ lesson }: { lesson: Lesson }) {
               <span className="live-dot" />
             )}
             {lesson.native
-              ? "Local CPython required"
-              : "Python · runs on your device"}
+              ? `Local ${info.label} required`
+              : `${info.label} · runs on your device`}
           </span>
           <span className={!saved ? "save-warning" : ""}>
             {!hydrated ? (

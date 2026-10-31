@@ -9,7 +9,7 @@ export default function NotFound() {
       <h1>Lesson not found.</h1>
       <p>Choose a lesson from the course index.</p>
       <Link className="button primary" href="/">
-        Back to courses →
+        Back to courses
       </Link>
     </main>
   );

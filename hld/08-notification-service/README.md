@@ -45,7 +45,7 @@ VALUES ($2, $1, 'order.confirmed');
 COMMIT;
 ```
 
-This fragment omits schemas and the surrounding order validation; order and event identities have unique constraints. On any statement failure, the application rolls back. A retry of an existing order must validate and return its saved outcome rather than create a fresh event. No provider call occurs inside this transaction. A relay publishes committed outbox rows with stable event IDs, and consumers deduplicate because relay publication may repeat. [AWS outbox guidance](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html) describes this duplicate boundary.
+This fragment omits schemas and the surrounding order validation; order and event identities have unique constraints. On any statement failure, the application rolls back. A retry of an existing order must validate and return its saved outcome rather than create a fresh event. No provider call occurs inside this transaction. A relay publishes committed outbox rows with stable event IDs, and consumers deduplicate because relay publication may repeat.
 
 Notification intake resolves preferences, renders approved templates, and inserts delivery jobs unique on `(event_id, channel, recipient)`. A row stores state, attempt, due time, lease token, and provider identifier. The API distinguishes accepted work, attempted delivery, and provider acceptance; acceptance is not proof of arrival or reading.
 

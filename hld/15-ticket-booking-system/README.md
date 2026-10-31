@@ -55,7 +55,7 @@ WHERE event_id = $1 AND seat_id = ANY($2);
 COMMIT;
 ```
 
-Bind an event and deduplicated seat-ID array. Seat IDs are immutable; every inventory writer follows this locking protocol. After locks are acquired, compare expiry using the authoritative clock and calculate the new hold boundary. Validation, hold creation, and request-key deduplication must remain in this transaction; they are omitted from the fragment. Never run a provider call while these locks are held. [PostgreSQL describes row-lock conflicts and consistent acquisition order](https://www.postgresql.org/docs/current/explicit-locking.html). Handle aborted transactions with bounded retries.
+Bind an event and deduplicated seat-ID array. Seat IDs are immutable; every inventory writer follows this locking protocol. After locks are acquired, compare expiry using the authoritative clock and calculate the new hold boundary. Validation, hold creation, and request-key deduplication must remain in this transaction; they are omitted from the fragment. Never run a provider call while these locks are held. Handle aborted transactions with bounded retries.
 
 `POST /events/{id}/holds` includes a stable request key. Matching retries return the original hold without extending expiry. Browsing may use caches or replicas with freshness indicators; successful ownership comes from the inventory authority. A sweeper accelerates expiry cleanup, but ownership-changing operations must check expiry themselves.
 

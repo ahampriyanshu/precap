@@ -67,7 +67,6 @@ Keep critical sections short and avoid calling unknown callbacks or blocking I/O
 
 More threads can increase scheduling overhead and overload downstream services. CPU-heavy pure Python often benefits more from processes on GIL-enabled builds. Joining a raw thread waits for termination but does not re-raise its exception in the joining caller; a future offers a result and failure channel. Daemon threads can stop abruptly at shutdown, so essential cleanup needs explicit ownership and joins. This lesson requires native Python because the browser runtime does not provide ordinary operating-system threads.
 
-Further reading: [Threading reference](https://docs.python.org/3/library/threading.html).
 
 ## Practice
 

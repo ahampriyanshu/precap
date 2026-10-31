@@ -61,9 +61,12 @@ test("topic search, clear GC content, saved code, Python failures and reset", as
   await page.keyboard.press("/");
   const search = page.getByRole("textbox", { name: "Search topics" });
   await expect(search).toBeFocused();
+  await page
+    .getByRole("combobox", { name: "Programming language", exact: true })
+    .selectOption("python");
   await search.fill("garbage collection");
-  await expect(page.locator(".catalog-chapter")).toHaveCount(1);
-  await page.locator(".catalog-chapter").click();
+  await expect(page.locator(".track-python .catalog-chapter")).toHaveCount(1);
+  await page.locator(".track-python .catalog-chapter").click();
   await expect(page).toHaveURL(lesson(gc));
   await expect(page.locator(".lesson-reader")).toContainText("gc.collect");
   await expect(page.locator(".lesson-reader")).toContainText("references");
@@ -91,9 +94,12 @@ test("LLD is discoverable and teaches the design before opening browser practice
   page,
 }) => {
   await page.goto("/");
+  await page
+    .getByRole("combobox", { name: "Programming language", exact: true })
+    .selectOption("python");
   const course = page.locator(".track-lld");
   await expect(
-    course.getByRole("heading", { name: "Low-level design", exact: true }),
+    page.getByRole("heading", { name: "Low-level design", exact: true }),
   ).toBeVisible();
   await expect(course).toContainText("15 lessons");
   await page
@@ -159,10 +165,10 @@ test("HLD is discoverable and opens an architecture canvas after the lesson", as
   page,
 }) => {
   await page.goto("/");
-  await expect(page.locator(".track-card")).toHaveCount(4);
+  await expect(page.locator(".learning-path > li")).toHaveCount(4);
   const course = page.locator(".track-hld");
   await expect(
-    course.getByRole("heading", { name: "High-level design", exact: true }),
+    page.getByRole("heading", { name: "High-level design", exact: true }),
   ).toBeVisible();
   await expect(course).toContainText("15 lessons");
   await page

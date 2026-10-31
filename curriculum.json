@@ -737,6 +737,438 @@
       "section": "Large-scale applications",
       "native": false,
       "practice": "diagram"
+    },
+    {
+      "directory": "javascript/01-values-and-numeric-contracts",
+      "track": "javascript",
+      "title": "Values and numeric contracts",
+      "concept": "Primitive types, coercion, safe integers, BigInt, and explicit absence.",
+      "section": "Values and functions",
+      "native": false
+    },
+    {
+      "directory": "javascript/02-text-unicode-and-parsing",
+      "track": "javascript",
+      "title": "Text, Unicode, and parsing",
+      "concept": "Code units, code points, graphemes, normalization, regular expressions, and parsing boundaries.",
+      "section": "Values and functions",
+      "native": false
+    },
+    {
+      "directory": "javascript/03-collections-and-ownership",
+      "track": "javascript",
+      "title": "Collections, identity, and ownership",
+      "concept": "Arrays, objects, Maps, Sets, copying, iteration order, and aliasing.",
+      "section": "Values and functions",
+      "native": false
+    },
+    {
+      "directory": "javascript/04-functions-and-control-flow",
+      "track": "javascript",
+      "title": "Functions and control flow",
+      "concept": "Function contracts, iteration, callbacks, defaults, destructuring, and evaluation order.",
+      "section": "Values and functions",
+      "native": false
+    },
+    {
+      "directory": "javascript/05-scope-closures-and-caching",
+      "track": "javascript",
+      "title": "Scope, closures, and bounded caching",
+      "concept": "Lexical environments, private state, receiver identity, memoization, and retained references.",
+      "section": "Values and functions",
+      "native": false
+    },
+    {
+      "directory": "javascript/06-objects-classes-and-inheritance",
+      "track": "javascript",
+      "title": "Objects, prototypes, and classes",
+      "concept": "Property lookup, descriptors, prototypes, class initialization, inheritance, and composition.",
+      "section": "Objects and boundaries",
+      "native": false
+    },
+    {
+      "directory": "javascript/07-errors-and-resource-lifetimes",
+      "track": "javascript",
+      "title": "Errors and resource lifetimes",
+      "concept": "Error contracts, synchronous and asynchronous cleanup, and preserving multiple failures.",
+      "section": "Objects and boundaries",
+      "native": false
+    },
+    {
+      "directory": "javascript/08-modules-and-data-boundaries",
+      "track": "javascript",
+      "title": "Modules and runtime data boundaries",
+      "concept": "ES modules, live bindings, dependency graphs, JSON, and validated configuration.",
+      "section": "Objects and boundaries",
+      "native": false
+    },
+    {
+      "directory": "javascript/09-iterators-and-generators",
+      "track": "javascript",
+      "title": "Iterators, generators, and lazy work",
+      "concept": "Iteration protocols, demand, early termination, cleanup, and hidden buffering.",
+      "section": "Asynchronous and concurrent work",
+      "native": false
+    },
+    {
+      "directory": "javascript/10-promises-and-the-event-loop",
+      "track": "javascript",
+      "title": "Promises and the event loop",
+      "concept": "Tasks, microtasks, async functions, sequential versus parallel work, and failure policy.",
+      "section": "Asynchronous and concurrent work",
+      "native": false
+    },
+    {
+      "directory": "javascript/11-concurrency-and-cancellation",
+      "track": "javascript",
+      "title": "Bounded concurrency and cancellation",
+      "concept": "Admission, cooperative abort, ordering, and draining started work after failure.",
+      "section": "Asynchronous and concurrent work",
+      "native": false
+    },
+    {
+      "directory": "javascript/12-async-iteration-and-streams",
+      "track": "javascript",
+      "title": "Async iteration, streams, and backpressure",
+      "concept": "Incremental I/O, batching, demand, source errors, and iterator cleanup.",
+      "section": "Asynchronous and concurrent work",
+      "native": false
+    },
+    {
+      "directory": "javascript/13-workers-and-binary-data",
+      "track": "javascript",
+      "title": "Workers, binary data, and shared memory",
+      "concept": "Parallel execution boundaries, structured clone, transfer, typed views, and atomic coordination.",
+      "section": "Runtime and memory",
+      "native": false
+    },
+    {
+      "directory": "javascript/14-memory-garbage-collection-and-performance",
+      "track": "javascript",
+      "title": "Memory, garbage collection, and performance",
+      "concept": "Reachability, retention, weak references, disposal, heap diagnosis, and measured optimization.",
+      "section": "Runtime and memory",
+      "native": false
+    },
+    {
+      "directory": "go/01-types-zero-values-and-control",
+      "track": "go",
+      "title": "Types, zero values, and control flow",
+      "concept": "Static types, explicit conversion, zero values, conditions, loops and invariants",
+      "section": "Go foundations",
+      "native": false
+    },
+    {
+      "directory": "go/02-strings-bytes-and-runes",
+      "track": "go",
+      "title": "Strings, bytes, and runes",
+      "concept": "UTF-8 validity, byte indexing, rune iteration and Unicode categories",
+      "section": "Go foundations",
+      "native": false
+    },
+    {
+      "directory": "go/03-slices-maps-and-ownership",
+      "track": "go",
+      "title": "Slices, maps, and ownership",
+      "concept": "Backing arrays, capacity, nil collections and deep-copy boundaries",
+      "section": "Go foundations",
+      "native": false
+    },
+    {
+      "directory": "go/04-functions-and-closures",
+      "track": "go",
+      "title": "Functions, closures, and captured state",
+      "concept": "Function values, lexical capture, independent instances and loop variables",
+      "section": "Go foundations",
+      "native": false
+    },
+    {
+      "directory": "go/05-structs-methods-and-pointers",
+      "track": "go",
+      "title": "Structs, methods, and pointers",
+      "concept": "Value copying, pointer receivers, constructors and method sets",
+      "section": "Go abstractions",
+      "native": false
+    },
+    {
+      "directory": "go/06-interfaces-and-composition",
+      "track": "go",
+      "title": "Interfaces and composition",
+      "concept": "Structural satisfaction, small capabilities, method sets and typed nil",
+      "section": "Go abstractions",
+      "native": false
+    },
+    {
+      "directory": "go/07-errors-defer-and-resources",
+      "track": "go",
+      "title": "Errors, defer, and resource ownership",
+      "concept": "Error identity, cleanup ordering, panic unwinding and ownership boundaries",
+      "section": "Go abstractions",
+      "native": false
+    },
+    {
+      "directory": "go/08-generics-and-constraints",
+      "track": "go",
+      "title": "Generics and constraints",
+      "concept": "Type parameters, comparable keys, underlying types and type-safe reuse",
+      "section": "Go abstractions",
+      "native": false
+    },
+    {
+      "directory": "go/09-packages-tooling-and-testing",
+      "track": "go",
+      "title": "Packages, tooling, and testing",
+      "concept": "Package boundaries, module versions, table-driven tests and validation evidence",
+      "section": "Go engineering",
+      "native": false
+    },
+    {
+      "directory": "go/10-goroutines-and-worker-pools",
+      "track": "go",
+      "title": "Goroutines, channels, and worker pools",
+      "concept": "Bounded parallelism, indexed results, channel ownership and cancellation",
+      "section": "Go concurrency and performance",
+      "native": false
+    },
+    {
+      "directory": "go/11-context-and-cancellation",
+      "track": "go",
+      "title": "Context, cancellation, and channel lifetimes",
+      "concept": "Cancellation propagation, deadlines, backpressure and owned channel closure",
+      "section": "Go concurrency and performance",
+      "native": false
+    },
+    {
+      "directory": "go/12-synchronization-and-races",
+      "track": "go",
+      "title": "Synchronization and race-free state",
+      "concept": "Mutex ownership, atomic operations, coherent snapshots and zero-value usability",
+      "section": "Go concurrency and performance",
+      "native": false
+    },
+    {
+      "directory": "go/13-memory-gc-and-performance",
+      "track": "go",
+      "title": "Memory, garbage collection, and performance",
+      "concept": "Reachability, backing-array retention, escape analysis and measured optimization",
+      "section": "Go concurrency and performance",
+      "native": false
+    },
+    {
+      "directory": "java/01-values-references-and-null",
+      "track": "java",
+      "title": "Values, references, and null",
+      "concept": "Primitive arithmetic, boxing, reference identity, and explicit absence",
+      "section": "Values and control",
+      "native": false
+    },
+    {
+      "directory": "java/02-control-flow-and-arrays",
+      "track": "java",
+      "title": "Control flow and arrays",
+      "concept": "Loop invariants, short circuiting, array bounds, and half-open ranges",
+      "section": "Values and control",
+      "native": false
+    },
+    {
+      "directory": "java/03-collections-equality-and-order",
+      "track": "java",
+      "title": "Collections, equality, and order",
+      "concept": "Hash contracts, comparators, collection choice, and mutation ownership",
+      "section": "Values and control",
+      "native": false
+    },
+    {
+      "directory": "java/04-strings-and-unicode",
+      "track": "java",
+      "title": "Strings and Unicode",
+      "concept": "UTF-16 units, code points, normalization, and safe indexing",
+      "section": "Language and types",
+      "native": false
+    },
+    {
+      "directory": "java/05-methods-overloads-and-generics",
+      "track": "java",
+      "title": "Methods, overloads, and generics",
+      "concept": "Static overload resolution, variance, erasure, and functional interfaces",
+      "section": "Language and types",
+      "native": false
+    },
+    {
+      "directory": "java/06-classes-records-and-immutability",
+      "track": "java",
+      "title": "Classes, records, and immutability",
+      "concept": "Invariants, shallow record semantics, and defensive snapshots",
+      "section": "Language and types",
+      "native": false
+    },
+    {
+      "directory": "java/07-interfaces-inheritance-and-composition",
+      "track": "java",
+      "title": "Interfaces, inheritance, and composition",
+      "concept": "Runtime substitution, default methods, and composed behavior",
+      "section": "Object design and resources",
+      "native": false
+    },
+    {
+      "directory": "java/08-exceptions-and-resource-lifetimes",
+      "track": "java",
+      "title": "Exceptions and resource lifetimes",
+      "concept": "Checked failures, contextual errors, suppression, and deterministic cleanup",
+      "section": "Object design and resources",
+      "native": false
+    },
+    {
+      "directory": "java/09-packages-builds-and-tests",
+      "track": "java",
+      "title": "Packages, builds, and tests",
+      "concept": "Source identity, classpaths, dependency boundaries, and executable contracts",
+      "section": "Object design and resources",
+      "native": false
+    },
+    {
+      "directory": "java/10-streams-and-lazy-evaluation",
+      "track": "java",
+      "title": "Streams and lazy evaluation",
+      "concept": "Encounter order, single-use pipelines, short circuiting, and closure",
+      "section": "Language and runtime",
+      "native": false
+    },
+    {
+      "directory": "java/11-threads-locks-and-visibility",
+      "track": "java",
+      "title": "Threads, locks, and visibility",
+      "concept": "Happens-before, atomicity, monitor ownership, and joining workers",
+      "section": "Concurrency",
+      "native": false
+    },
+    {
+      "directory": "java/12-executors-futures-and-cancellation",
+      "track": "java",
+      "title": "Executors, futures, and cancellation",
+      "concept": "Bounded execution, result ordering, task failure, and cooperative cleanup",
+      "section": "Concurrency",
+      "native": false
+    },
+    {
+      "directory": "java/13-queues-and-backpressure",
+      "track": "java",
+      "title": "Queues and backpressure",
+      "concept": "Blocking handoff, bounded capacity, interruption, and partial publication",
+      "section": "Concurrency",
+      "native": false
+    },
+    {
+      "directory": "java/14-jvm-memory-gc-and-performance",
+      "track": "java",
+      "title": "JVM memory, GC, and performance",
+      "concept": "Reachability, allocation pressure, cache retention, and trustworthy measurement",
+      "section": "Language and runtime",
+      "native": false
+    },
+    {
+      "directory": "cpp/01-values-initialization-control",
+      "track": "cpp",
+      "title": "Values, initialization, and control flow",
+      "concept": "Representations, narrowing, overflow, branch invariants",
+      "section": "C++ foundations",
+      "native": false
+    },
+    {
+      "directory": "cpp/02-strings-unicode-containers",
+      "track": "cpp",
+      "title": "Strings, Unicode, and standard containers",
+      "concept": "Byte strings, code points, sequence and associative ownership",
+      "section": "C++ foundations",
+      "native": false
+    },
+    {
+      "directory": "cpp/03-references-pointers-lifetimes",
+      "track": "cpp",
+      "title": "References, pointers, const, and lifetimes",
+      "concept": "Borrowed views, aliases, nullable observers and dangling",
+      "section": "Ownership and objects",
+      "native": false
+    },
+    {
+      "directory": "cpp/04-functions-templates-concepts",
+      "track": "cpp",
+      "title": "Functions, overloads, templates, and concepts",
+      "concept": "Overload resolution, deduction, constraints and checked generic arithmetic",
+      "section": "C++ foundations",
+      "native": false
+    },
+    {
+      "directory": "cpp/05-classes-invariants-raii",
+      "track": "cpp",
+      "title": "Classes, invariants, and RAII",
+      "concept": "Construction, encapsulation and deterministic cleanup",
+      "section": "Ownership and objects",
+      "native": false
+    },
+    {
+      "directory": "cpp/06-copy-move-rule-of-zero",
+      "track": "cpp",
+      "title": "Copy, move, and the rule of zero",
+      "concept": "Value semantics, moved-from objects and transfer boundaries",
+      "section": "Ownership and objects",
+      "native": false
+    },
+    {
+      "directory": "cpp/07-ownership-smart-pointers",
+      "track": "cpp",
+      "title": "Ownership, smart pointers, and weak observers",
+      "concept": "Exclusive transfer, shared lifetime and non-owning caches",
+      "section": "Ownership and objects",
+      "native": false
+    },
+    {
+      "directory": "cpp/08-polymorphism-composition",
+      "track": "cpp",
+      "title": "Polymorphism and composition",
+      "concept": "Substitution, virtual destruction and owned behavior",
+      "section": "Ownership and objects",
+      "native": false
+    },
+    {
+      "directory": "cpp/09-errors-exceptions-guarantees",
+      "track": "cpp",
+      "title": "Errors, exceptions, and resource guarantees",
+      "concept": "Error categories, stack unwinding and strong state guarantees",
+      "section": "Reliable programs",
+      "native": false
+    },
+    {
+      "directory": "cpp/10-iterators-algorithms-ranges",
+      "track": "cpp",
+      "title": "Iterators, algorithms, ranges, and invalidation",
+      "concept": "Half-open iteration, erase patterns and lazy borrowed views",
+      "section": "C++ foundations",
+      "native": false
+    },
+    {
+      "directory": "cpp/11-translation-units-build-testing",
+      "track": "cpp",
+      "title": "Translation units, linkage, builds, and tests",
+      "concept": "Declarations, definitions, ODR and executable contracts",
+      "section": "Reliable programs",
+      "native": false
+    },
+    {
+      "directory": "cpp/12-threads-synchronization-memory-model",
+      "track": "cpp",
+      "title": "Threads, synchronization, and the memory model",
+      "concept": "Data races, happens-before, bounded workers and exception transport",
+      "section": "Reliable programs",
+      "native": false
+    },
+    {
+      "directory": "cpp/13-performance-allocation-undefined-behavior",
+      "track": "cpp",
+      "title": "Performance, allocation, and undefined behavior",
+      "concept": "Locality, capacity reuse, measurement and valid optimization",
+      "section": "Reliable programs",
+      "native": false
     }
   ]
 }

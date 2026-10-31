@@ -55,7 +55,6 @@ Value keys suit coordinates, composite lookups, deduplication, and cache entries
 
 Do not use a Python hash as a persistent identifier or cryptographic digest. Some built-in hashes vary between processes; equal hash integers also do not prove value equality. Test dictionary lookup and equality consistency rather than a specific numeric hash. Include an unsupported comparison type and equal separately constructed keys in tests. Equality with side effects or surprising cross-type behavior can break the expectations on which collection lookup relies.
 
-Further reading: [Comparison dispatch](https://docs.python.org/3.12/reference/datamodel.html#object.__eq__) and [hash contracts](https://docs.python.org/3.12/reference/datamodel.html#object.__hash__).
 
 ## Practice
 

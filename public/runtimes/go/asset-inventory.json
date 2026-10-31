@@ -1,0 +1,158 @@
+{
+  "packages": {
+    "@wasm-oj/browser": "0.2.5",
+    "@wasm-oj/toolchain-go": "0.2.0"
+  },
+  "assets": [
+    {
+      "path": "adapter.mjs",
+      "bytes": 363017,
+      "sha256": "981f6316999fe7a40567ba9a2e56ce59290222ccf22530b0ad4de3bec4115420"
+    },
+    {
+      "path": "assets/compiler.worker-Cpp5Hq8T.js",
+      "bytes": 143087,
+      "sha256": "8d8d29ed52c198d441997ca661806dfba46c53d35b4c0f640a003721ad535e8f"
+    },
+    {
+      "path": "assets/go-stage.worker-BIUc7Tsv.js",
+      "bytes": 39805,
+      "sha256": "86666e2e39a726fa5c1fae0bfa5273b456b79215d4abf43d42225fc979733259"
+    },
+    {
+      "path": "assets/index-CMYYN-aK.mjs",
+      "bytes": 48694,
+      "sha256": "d5e0424d9de8173c0c7bc6a6b704aecde620d3f424050e0e6a079d863a44d58b"
+    },
+    {
+      "path": "assets/interactive-side.worker-pP6UC6gL.js",
+      "bytes": 21488,
+      "sha256": "2d046ee80b70df36e09935fd3998b0c1beee07f7f36927f8df5cafc4bd025fcf"
+    },
+    {
+      "path": "assets/java-stage.worker-COWR2SIP.js",
+      "bytes": 20678,
+      "sha256": "e24e88de34b96a39b39c71f5dc1bf06a8763bae9f6a4e7e387a1d0212116ad5e"
+    },
+    {
+      "path": "assets/runner.worker-BEbZIYKj.js",
+      "bytes": 283605,
+      "sha256": "cff064f8a58522b67cd5c91bb43c5d14466d36e39117fac352192f31eca52a44"
+    },
+    {
+      "path": "assets/runtime-core_bg-CKk6CPFH.wasm",
+      "bytes": 14612510,
+      "sha256": "077aa936a3382a242eee7222fc17369769cb5ad265303d730ffc45ee192367e9"
+    },
+    {
+      "path": "assets/rustc-stage.worker-CXdxGODv.js",
+      "bytes": 69985,
+      "sha256": "09fa6d8f266d1be7604bad451f59edf5e9bfb2deb67f8fe3db25fd19f998418a"
+    },
+    {
+      "path": "assets/wasmer-thread.worker-DKlJE3cb.js",
+      "bytes": 43129,
+      "sha256": "301e164851ca743ce00bc9e8e33d7a616f9349d1c87c6b86766520d8433a3b7c"
+    },
+    {
+      "path": "assets/wasmer_js_bg-lccPpAdN.wasm",
+      "bytes": 6598804,
+      "sha256": "49a6646209f5ab5e7c737eac33407d87d9a9959ac83e5ecaaab9261b2323589e"
+    },
+    {
+      "path": "go-toolchain-descriptor.json",
+      "bytes": 1089,
+      "sha256": "53f8275f7bfac277a882854871c8bb3ed6a396ff139b10ce0644fd86cf7c6dd1"
+    },
+    {
+      "path": "licenses/browser/LICENSE",
+      "bytes": 1069,
+      "sha256": "ae9d93137ddf162fa78fdf15f2ce301eb1a7731faa52469800974d9a7956f218"
+    },
+    {
+      "path": "licenses/browser/THIRD_PARTY_NOTICES.md",
+      "bytes": 18378,
+      "sha256": "479a159a52c61c40f2d257a04234a4c4dbe85eb083606bc612555a2b48698f18"
+    },
+    {
+      "path": "licenses/browser/licenses/es-module-lexer-MIT.txt",
+      "bytes": 1085,
+      "sha256": "8a4b6c44eebfb026d23719a348145a661a555568dbfdc11618ff2d0dd9306b00"
+    },
+    {
+      "path": "licenses/browser/licenses/fflate-MIT.txt",
+      "bytes": 1070,
+      "sha256": "766daa9b2ab0ab2698c769f334a6d72c42437b0a7d0d0dfd5c13c64b3120117b"
+    },
+    {
+      "path": "licenses/browser/licenses/quickjs-node-stdlib-LICENSES.txt",
+      "bytes": 12822,
+      "sha256": "38e42dcb48e476e4e836552c814c911eb5464d80b56b970d87aa07b88c7b28f8"
+    },
+    {
+      "path": "licenses/browser/licenses/runtime-core-dependencies.html",
+      "bytes": 279780,
+      "sha256": "b5c72c34e4d413d783af7559a86cfb95d2f4dfc20c2f5e966d86668fe681edec"
+    },
+    {
+      "path": "licenses/browser/licenses/runtime-core-dependencies.json",
+      "bytes": 76219,
+      "sha256": "00675a1be3d2d79f789b1ecea139b3bf049d9d89aafe1a5b75c8f3f7ef724d4a"
+    },
+    {
+      "path": "licenses/browser/licenses/wasmer-sdk-MIT.txt",
+      "bytes": 1097,
+      "sha256": "76dc7d305458d07478bc62669fe53dbfd3b94b95c5e00fbb45af1f492cbd7284"
+    },
+    {
+      "path": "licenses/browser/licenses/wasmer-sdk-dependencies.html",
+      "bytes": 317379,
+      "sha256": "ec4b0175b4d1affb0f97996cb6661ec6fa1c5959dbce637d89b39cf3559b079a"
+    },
+    {
+      "path": "licenses/browser/licenses/wasmer-sdk-dependencies.json",
+      "bytes": 75300,
+      "sha256": "4fb0d9e02e29f98b5c0ec047fa041cce870d98b9fdfecf2c02436a19842d0977"
+    },
+    {
+      "path": "licenses/browser/package.json",
+      "bytes": 1261,
+      "sha256": "011d263a8a2b392759a67ad30410df02455f8b7af91672dd213c5b97f839c065"
+    },
+    {
+      "path": "licenses/go/LICENSE",
+      "bytes": 1069,
+      "sha256": "ae9d93137ddf162fa78fdf15f2ce301eb1a7731faa52469800974d9a7956f218"
+    },
+    {
+      "path": "licenses/go/THIRD_PARTY_NOTICES.md",
+      "bytes": 18378,
+      "sha256": "479a159a52c61c40f2d257a04234a4c4dbe85eb083606bc612555a2b48698f18"
+    },
+    {
+      "path": "licenses/go/licenses/go-BSD-3-Clause.txt",
+      "bytes": 1453,
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    },
+    {
+      "path": "licenses/go/package.json",
+      "bytes": 1488,
+      "sha256": "ba34cbda97b140f29ef8c6888b585b2ea4ef60ff912b2f0cd869440975cce423"
+    },
+    {
+      "path": "toolchains/go-1.26.5-wasip1.manifest.json",
+      "bytes": 67888,
+      "sha256": "5d784e9ca640b9525e84b598c0beb97ca110ae908568ca45f6441a441d99a262"
+    },
+    {
+      "path": "toolchains/go-1.26.5-wasip1.stdlib.gz.bin",
+      "bytes": 29300578,
+      "sha256": "aeffc384fdc624544f174ba5fc3c22395717fdbc3c4387d677d20855b6be80d8"
+    },
+    {
+      "path": "toolchains/go-1.26.5-wasip1.webc.gz.bin",
+      "bytes": 12412445,
+      "sha256": "70a7e359884b09b2e1a622d6ac5cd6e31c334aab519e6dd80dff5e040a9e09e4"
+    }
+  ]
+}

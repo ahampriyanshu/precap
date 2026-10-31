@@ -7,9 +7,17 @@ import { cheatsheets, getCheatsheetArticle } from "@/lib/cheatsheets";
 import { guides } from "@/lib/guides";
 import { guideUrl } from "@/lib/guide-utils";
 
+const legacySheets: Record<string, string> = {
+  frontend: "frontend",
+  backend: "backend",
+  devops: "devops",
+};
 export const dynamicParams = false;
 export function generateStaticParams() {
-  return cheatsheets.map((sheet) => ({ sheet: sheet.slug }));
+  return [
+    ...cheatsheets.map((sheet) => ({ sheet: sheet.slug })),
+    ...Object.keys(legacySheets).map((sheet) => ({ sheet })),
+  ];
 }
 type Props = { params: Promise<{ sheet: string }> };
 export async function generateMetadata({ params }: Props) {
@@ -19,7 +27,20 @@ export async function generateMetadata({ params }: Props) {
     : {};
 }
 export default async function CheatsheetPage({ params }: Props) {
-  const article = getCheatsheetArticle((await params).sheet);
+  const { sheet } = await params;
+  if (legacySheets[sheet]) {
+    const destination = `/guides/${legacySheets[sheet]}/`;
+    return (
+      <main className="redirect-notice">
+        <meta httpEquiv="refresh" content={`0;url=${destination}`} />
+        <h1>This topic has a curriculum</h1>
+        <p>
+          <a href={destination}>Open the playlist</a>
+        </p>
+      </main>
+    );
+  }
+  const article = getCheatsheetArticle(sheet);
   if (!article) notFound();
   const guide = guides.find((entry) => entry.slug === article.sheet.guide.slug);
   const part = guide?.parts.find(
@@ -49,7 +70,7 @@ export default async function CheatsheetPage({ params }: Props) {
             className="reference-context-link"
             href={guideUrl(guide.slug, article.sheet.guide.part)}
           >
-            Read the {part.label || part.title} recap
+            Read {part.label || part.title}
           </Link>
           <ArticleOutline sections={article.sections} />
           <Content

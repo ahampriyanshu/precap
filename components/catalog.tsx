@@ -1,12 +1,191 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Check, ChevronDown, Search } from "lucide-react";
-import { Brand } from "./brand";
+import { Check, ChevronDown, Search, X } from "lucide-react";
+import { SiteHeader } from "./site-header";
+import { ConceptIllustration } from "./concept-illustration";
+import { hasConceptArt } from "@/lib/concept-art";
 import { useProgress } from "@/hooks/use-progress";
+import { usePreferredLanguage } from "@/hooks/use-preferred-language";
 import { guideUrl, cheatsheetUrl } from "@/lib/guide-utils";
-import type { Chapter, Guide, Cheatsheet } from "@/lib/types";
-import { courses, tracks } from "@/lib/courses";
+import type { Chapter, Guide, Cheatsheet, Track } from "@/lib/types";
+import { languages, languageInfo, chapterForLanguage } from "@/lib/languages";
+import { courses } from "@/lib/courses";
+import { systemDesignBasics } from "@/lib/learning-path";
+
+function ChapterLink({
+  chapter,
+  completed,
+}: {
+  chapter: Chapter;
+  completed: Set<string>;
+}) {
+  return (
+    <Link className="catalog-chapter" href={`/learn/${chapter.id}/`}>
+      <span
+        className={`chapter-number ${completed.has(chapter.id) ? "is-complete" : ""}`}
+      >
+        {completed.has(chapter.id) ? <Check size={13} /> : chapter.number}
+      </span>
+      <span>
+        <strong>{chapter.title}</strong>
+        <small>{chapter.concept}</small>
+      </span>
+      {chapter.native && (
+        <span className="local-badge">
+          Local {languageInfo[chapter.language || "python"].label}
+        </span>
+      )}
+    </Link>
+  );
+}
+function Course({
+  items,
+  completed,
+  title,
+  track,
+}: {
+  items: Chapter[];
+  completed: Set<string>;
+  title: string;
+  track: Track;
+}) {
+  if (!items.length) return null;
+  const done = items.filter((chapter) => completed.has(chapter.id)).length;
+  const resume =
+    items.find((chapter) => !completed.has(chapter.id)) || items[0];
+  const sections = [...new Set(items.map((chapter) => chapter.section))];
+  return (
+    <article className={`path-course track-${track}`}>
+      <div className="path-course-heading">
+        <h3>{title}</h3>
+        <span>{items.length} lessons</span>
+      </div>
+      {track !== "lld" && track !== "hld" && (
+        <p>{courses[track].description}</p>
+      )}
+      <div className="path-course-actions">
+        <Link className="text-link course-start" href={`/learn/${resume.id}/`}>
+          {done ? "Continue" : "Start learning"}
+        </Link>
+        <span>
+          {done} {track === "hld" ? "reviewed" : "completed"}
+        </span>
+      </div>
+      <div
+        className="progress-track"
+        role="progressbar"
+        aria-label={`${title}: ${done} of ${items.length} lessons ${track === "hld" ? "reviewed" : "completed"}`}
+        aria-valuemin={0}
+        aria-valuemax={items.length}
+        aria-valuenow={done}
+      >
+        <span style={{ width: `${(done / items.length) * 100}%` }} />
+      </div>
+      <details className="course-contents">
+        <summary>
+          Browse lessons <ChevronDown size={14} aria-hidden="true" />
+        </summary>
+        <div className="chapter-groups">
+          {sections.map((section) => (
+            <details className="chapter-group" key={section}>
+              <summary>
+                <ChevronDown size={14} />
+                <span>{section}</span>
+                <span className="group-count">
+                  {items.filter((c) => c.section === section).length}
+                </span>
+              </summary>
+              <div>
+                {items
+                  .filter((c) => c.section === section)
+                  .map((chapter) => (
+                    <ChapterLink
+                      key={chapter.id}
+                      chapter={chapter}
+                      completed={completed}
+                    />
+                  ))}
+              </div>
+            </details>
+          ))}
+        </div>
+      </details>
+    </article>
+  );
+}
+function GuideCard({
+  guide,
+  search = false,
+}: {
+  guide: Guide;
+  search?: boolean;
+}) {
+  const tracks =
+    guide.moduleLabel === "Track"
+      ? [...new Set(guide.parts.map((part) => part.module).filter(Boolean))]
+      : [];
+  return (
+    <article
+      className={`guide-card ${tracks.length && !search ? "guide-card-tracks" : ""}`}
+    >
+      {!search && hasConceptArt(guide.slug) && (
+        <ConceptIllustration concept={guide.slug} className="playlist-art" />
+      )}
+      <div className="playlist-meta">
+        {tracks.length
+          ? `${tracks.length} ${tracks.length === 1 ? "track" : "tracks"} · `
+          : ""}
+        {guide.parts.length} {guide.parts.length === 1 ? "lesson" : "lessons"}
+      </div>
+      <h3>{guide.title}</h3>
+      <p>{guide.description}</p>
+      {!search && !!tracks.length && (
+        <ul className="guide-track-list" aria-label={`${guide.title} tracks`}>
+          {tracks.map((track, index) => (
+            <li key={track}>
+              <Link href={`/guides/${guide.slug}/#module-${index + 1}`}>
+                <span>{track}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+      <Link className="text-link playlist-open" href={`/guides/${guide.slug}/`}>
+        Open playlist
+      </Link>
+      {search && (
+        <ol className="guide-parts search-parts">
+          {guide.parts.map((part) => (
+            <li key={part.slug}>
+              <Link href={guideUrl(guide.slug, part.slug)}>
+                <span className="guide-part-title">{part.title}</span>
+              </Link>
+            </li>
+          ))}
+        </ol>
+      )}
+    </article>
+  );
+}
+function Sheets({ sheets }: { sheets: Cheatsheet[] }) {
+  return (
+    <div className="cheatsheet-list">
+      {sheets.map((sheet) => (
+        <Link
+          className="cheatsheet-row"
+          href={cheatsheetUrl(sheet.slug)}
+          key={sheet.slug}
+        >
+          <span>
+            <strong>{sheet.title}</strong>
+            <small>{sheet.description}</small>
+          </span>
+        </Link>
+      ))}
+    </div>
+  );
+}
 
 export function Catalog({
   chapters,
@@ -18,7 +197,30 @@ export function Catalog({
   cheatsheets: Cheatsheet[];
 }) {
   const [query, setQuery] = useState("");
+  const { language, setLanguage } = usePreferredLanguage();
+  const practiceChapters = useMemo(
+    () =>
+      chapters
+        .filter(
+          (chapter) =>
+            chapter.track === "hld" ||
+            (!!language && [language, "dsa", "lld"].includes(chapter.track)),
+        )
+        .map((chapter) =>
+          language ? chapterForLanguage(chapter, language) : chapter,
+        ),
+    [chapters, language],
+  );
+  const { completed, started } = useProgress(practiceChapters);
   const searchRef = useRef<HTMLInputElement>(null);
+  const choiceRef = useRef<HTMLDivElement>(null);
+  const startRef = useRef<HTMLAnchorElement>(null);
+  const chosenFromHero = useRef(false);
+  useEffect(() => {
+    if (!chosenFromHero.current || !language) return;
+    chosenFromHero.current = false;
+    startRef.current?.focus({ preventScroll: true });
+  }, [language]);
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
       if (
@@ -39,288 +241,362 @@ export function Catalog({
     document.addEventListener("keydown", focusSearch);
     return () => document.removeEventListener("keydown", focusSearch);
   }, []);
-  const { completed } = useProgress(chapters);
+  const chooseLanguage = () => {
+    choiceRef.current?.scrollIntoView({ block: "center" });
+    choiceRef.current?.querySelector("button")?.focus();
+  };
   const term = query.trim().toLowerCase();
-  const matches = (chapter: Chapter) =>
+  const matchingChapters = practiceChapters.filter((chapter) =>
     `${courses[chapter.track].title} ${chapter.title} ${chapter.concept}`
       .toLowerCase()
-      .includes(term);
+      .includes(term),
+  );
   const visibleGuides = guides
     .map((guide) => ({
       ...guide,
       parts: guide.parts.filter((part) =>
-        `${guide.title} ${guide.description} ${part.title} ${part.description} ${part.keywords.join(" ")}`
+        `${guide.title} ${guide.description} ${part.module || ""} ${part.title} ${part.description} ${part.keywords.join(" ")}`
           .toLowerCase()
           .includes(term),
       ),
     }))
     .filter((guide) => guide.parts.length);
-  const visibleCheatsheets = cheatsheets.filter((sheet) =>
+  const visibleSheets = cheatsheets.filter((sheet) =>
     `${sheet.title} ${sheet.description} ${sheet.keywords.join(" ")}`
       .toLowerCase()
       .includes(term),
   );
-  const visibleTracks = tracks.filter((track) =>
-    chapters.some((chapter) => chapter.track === track && matches(chapter)),
+  const selected = practiceChapters.filter(
+    (chapter) => chapter.track !== "hld",
   );
+  const resume =
+    selected.find(
+      (chapter) => started.has(chapter.id) && !completed.has(chapter.id),
+    ) ||
+    selected.find((chapter) => !completed.has(chapter.id)) ||
+    selected[0];
+  const anyStarted = selected.some((chapter) => started.has(chapter.id));
+  const items = (track: Track) =>
+    practiceChapters.filter((chapter) => chapter.track === track);
   return (
-    <div className="catalog">
+    <div className="catalog path-catalog">
       <a className="skip-link" href="#main-content">
         Skip to topics
       </a>
-      <header className="site-header">
-        <Brand />
-        <nav className="site-links" aria-label="Main navigation">
-          <a className="text-link" href="#guides">
-            Field guides
-          </a>
-          <a className="text-link" href="#cheatsheets">
-            Cheatsheets
-          </a>
-          <a className="text-link" href="#courses">
-            Practice
-          </a>
-        </nav>
-      </header>
+      <SiteHeader />
       <main className="catalog-main" id="main-content" tabIndex={-1}>
-        <section className="catalog-intro">
-          <p className="intro-kicker">
-            A refresher for senior & staff engineers
-          </p>
-          <h1>
-            A clear head for
-            <br />
-            the next interview.
-          </h1>
-          <p className="intro-copy">
-            Revisit the decisions behind software that ships.
-            <br className="desktop-break" /> The tradeoffs, failure modes, and
-            judgment worth keeping fresh.
-          </p>
-        </section>
-        <section id="guides" className="guides-section">
-          <div className="section-heading">
-            <div>
-              <h2>Field guides</h2>
-              <p className="section-description">
-                Connected recaps of production decisions and their tradeoffs.
-              </p>
-            </div>
-            <label className="search-field">
-              <Search size={16} />
-              <input
-                ref={searchRef}
-                aria-label="Search topics"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Find a topic or tool…"
-              />
-              <kbd>/</kbd>
-            </label>
-          </div>
-          {!!visibleGuides.length && (
-            <div className="guide-grid">
-              {visibleGuides.map((guide) => (
-                <article className="guide-card" key={guide.slug}>
-                  <h3>{guide.title}</h3>
-                  <p>{guide.description}</p>
-                  <ol className="guide-parts">
-                    {guide.parts.map((part) => (
-                      <li key={part.slug}>
-                        <Link href={guideUrl(guide.slug, part.slug)}>
-                          {guide.sequential !== false &&
-                            guide.parts.length > 1 && (
-                              <span
-                                className="guide-part-number"
-                                aria-hidden="true"
-                              >
-                                {guides
-                                  .find((item) => item.slug === guide.slug)!
-                                  .parts.findIndex(
-                                    (item) => item.slug === part.slug,
-                                  ) + 1}
-                              </span>
-                            )}
-                          <span className="guide-part-title">
-                            {part.label || part.title}
-                          </span>
-                          <ArrowRight size={15} />
-                        </Link>
-                      </li>
-                    ))}
-                  </ol>
-                </article>
-              ))}
-            </div>
-          )}
-          {term && !visibleGuides.length && (
-            <p className="no-matches">
-              No field guides match “{query.trim()}”.
+        <section className="path-hero">
+          <div className="hero-copy">
+            <p className="intro-kicker">
+              Interview prep for experienced engineers
             </p>
-          )}
-        </section>
-        <section id="cheatsheets" className="cheatsheets-section">
-          <div className="section-heading">
-            <div>
-              <h2>Cheatsheets</h2>
-              <p className="section-description">
-                Commands and workflows, linked to the decisions behind them.
-              </p>
-            </div>
+            <h1>Engineering, revisited.</h1>
+            <p className="intro-copy">
+              A refresher for your next interview. Revisit the code, the
+              tradeoffs, and the systems you know how to build.
+            </p>
           </div>
-          <div className="cheatsheet-list">
-            {visibleCheatsheets.map((sheet) => (
-              <Link
-                className="cheatsheet-row"
-                href={cheatsheetUrl(sheet.slug)}
-                key={sheet.slug}
+          <ConceptIllustration
+            concept="engineering-desk"
+            className="hero-scene"
+            priority
+          />
+          <div className="hero-language" ref={choiceRef}>
+            {language && resume ? (
+              <>
+                <p className="hero-language-heading">
+                  Your {languageInfo[language].label} track
+                </p>
+                <p>Pick up where you left off, or explore the path below.</p>
+                <Link
+                  ref={startRef}
+                  className="button primary hero-start"
+                  href={`/learn/${resume.id}/`}
+                >
+                  {anyStarted ? "Continue your track" : "Start your track"}
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="hero-language-heading">
+                  Choose your programming language
+                </p>
+                <p>Start with what you know. You can change it any time.</p>
+                <div
+                  className="hero-language-options"
+                  role="group"
+                  aria-label="Choose your programming language"
+                >
+                  {languages.map((value) => (
+                    <button
+                      key={value}
+                      onClick={() => {
+                        chosenFromHero.current = true;
+                        setLanguage(value);
+                      }}
+                    >
+                      {languageInfo[value].label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          <nav className="hero-navigation" aria-label="Explore Precap">
+            <a href="#courses">Coding & design</a>
+            <a href="#guides">Engineering guides</a>
+            <a href="#cheatsheets">Tool cheatsheets</a>
+          </nav>
+        </section>
+        <div className="path-section-heading" id="courses">
+          <div>
+            <h2>{term ? "Search topics" : "The core path"}</h2>
+            <p>
+              From implementation to architecture. Start where you need the
+              refresher.
+            </p>
+          </div>
+          <label className="search-field">
+            <Search size={16} aria-hidden="true" />
+            <input
+              ref={searchRef}
+              aria-label="Search topics"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Find a topic or tool…"
+            />
+            {query ? (
+              <button
+                aria-label="Clear search"
+                onClick={() => {
+                  setQuery("");
+                  searchRef.current?.focus();
+                }}
               >
-                <span>
-                  <strong>{sheet.title}</strong>
-                  <small>{sheet.description}</small>
-                </span>
-                <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-            ))}
-          </div>
-          {term && !visibleCheatsheets.length && (
-            <p className="no-matches">No cheatsheets match “{query.trim()}”.</p>
-          )}
-        </section>
-        <section id="courses" className="courses-section">
-          <div className="section-heading">
-            <div>
-              <h2>Coding & design practice</h2>
-              <p className="section-description">
-                Code a solution or diagram an architecture.
+                <X size={14} />
+              </button>
+            ) : (
+              <kbd>/</kbd>
+            )}
+          </label>
+        </div>
+        {term ? (
+          <section
+            className="catalog-search-results"
+            aria-label="Search results"
+          >
+            {!language && (
+              <p className="search-language-note">
+                Choose a programming language above to include coding lessons.
               </p>
-            </div>
-          </div>
-          <div className="track-grid">
-            {visibleTracks.map((track) => {
-              const items = chapters.filter(
-                (chapter) => chapter.track === track,
-              );
-              const done = items.filter((chapter) =>
-                completed.has(chapter.id),
-              ).length;
-              const sections = [
-                ...new Set(items.map((chapter) => chapter.section)),
-              ];
-              const resume =
-                items.find((chapter) => !completed.has(chapter.id)) ?? items[0];
-              return (
-                <article key={track} className={`track-card track-${track}`}>
-                  <div className="track-card-heading">
-                    <div className="track-meta">
-                      <span>{items.length} lessons</span>
-                      <span>
-                        {done} {track === "hld" ? "reviewed" : "completed"}
-                      </span>
-                    </div>
-                    <h3>{courses[track].title}</h3>
-                    <p>{courses[track].description}</p>
-                    <Link
-                      className="text-link course-start"
-                      href={`/learn/${resume.id}/`}
-                    >
-                      {track === "hld"
-                        ? "Browse design briefs"
-                        : done
-                          ? "Continue course"
-                          : "Browse lessons"}
-                      <ArrowRight size={15} />
-                    </Link>
-                    <div
-                      className="progress-track"
-                      role="progressbar"
-                      aria-valuemin={0}
-                      aria-valuemax={items.length}
-                      aria-valuenow={done}
-                      aria-label={`${courses[track].title}: ${done} of ${items.length} lessons ${track === "hld" ? "reviewed" : "completed"}`}
-                    >
-                      <span
-                        style={{ width: `${(done / items.length) * 100}%` }}
+            )}
+            {[...new Set(matchingChapters.map((chapter) => chapter.track))].map(
+              (track) => (
+                <section className={`search-course track-${track}`} key={track}>
+                  <h3>{courses[track].title}</h3>
+                  {matchingChapters
+                    .filter((chapter) => chapter.track === track)
+                    .map((chapter) => (
+                      <ChapterLink
+                        chapter={chapter}
+                        completed={completed}
+                        key={chapter.id}
+                      />
+                    ))}
+                </section>
+              ),
+            )}
+            {!!visibleGuides.length && (
+              <div className="guide-grid">
+                {visibleGuides.map((guide) => (
+                  <GuideCard key={guide.slug} guide={guide} search />
+                ))}
+              </div>
+            )}
+            <Sheets sheets={visibleSheets} />
+            {!matchingChapters.length &&
+              !visibleGuides.length &&
+              !visibleSheets.length && (
+                <p className="search-empty" role="status">
+                  No matching topics. Try another topic, tool, or course name.
+                </p>
+              )}
+          </section>
+        ) : (
+          <>
+            <ol
+              className="learning-path"
+              aria-label="Interview preparation path"
+            >
+              <li className="path-step">
+                <div className="path-step-content">
+                  <ConceptIllustration
+                    concept="machine-coding"
+                    className="path-art"
+                  />
+                  <div className="path-step-heading">
+                    <span className="path-marker" aria-hidden="true">
+                      01
+                    </span>
+                    <h2>Machine coding</h2>
+                    <p>
+                      Refresh your language, then work through data structures
+                      and algorithms.
+                    </p>
+                  </div>
+                  {language ? (
+                    <div className="machine-courses">
+                      <Course
+                        track={language}
+                        items={items(language)}
+                        title={`${languageInfo[language].label} fundamentals`}
+                        completed={completed}
+                      />
+                      <Course
+                        track="dsa"
+                        items={items("dsa")}
+                        title="Data structures & algorithms"
+                        completed={completed}
                       />
                     </div>
+                  ) : (
+                    <button
+                      className="text-link path-choose"
+                      onClick={chooseLanguage}
+                    >
+                      Choose a language to start
+                    </button>
+                  )}
+                </div>
+              </li>
+              <li className="path-step">
+                <div className="path-step-content">
+                  <ConceptIllustration
+                    concept="system-basics"
+                    className="path-art"
+                  />
+                  <div className="path-step-heading">
+                    <span className="path-marker" aria-hidden="true">
+                      02
+                    </span>
+                    <h2>System design basics</h2>
+                    <p>
+                      Revisit the mechanisms that shape a distributed system
+                      before designing one.
+                    </p>
                   </div>
-                  <div className="chapter-groups">
-                    {sections.map((section) => {
-                      const lessons = items.filter(
-                        (chapter) =>
-                          chapter.section === section && matches(chapter),
-                      );
-                      if (!lessons.length) return null;
-                      return (
-                        <details
-                          className="chapter-group"
-                          key={section}
-                          open={term ? true : undefined}
-                        >
-                          <summary>
-                            <ChevronDown size={15} />
-                            <span>{section}</span>
-                            <span className="group-count">
-                              {lessons.length}
+                  <details className="foundation-lessons">
+                    <summary>
+                      Explore {systemDesignBasics.length} foundation lessons{" "}
+                      <ChevronDown size={15} />
+                    </summary>
+                    <ol>
+                      {systemDesignBasics.map((lesson, index) => (
+                        <li key={lesson.slug}>
+                          <Link href={guideUrl("backend", lesson.slug)}>
+                            <span className="foundation-number">
+                              {String(index + 1).padStart(2, "0")}
                             </span>
-                          </summary>
-                          <div>
-                            {lessons.map((chapter) => (
-                              <Link
-                                className="catalog-chapter"
-                                key={chapter.id}
-                                href={`/learn/${chapter.id}/`}
-                              >
-                                <span
-                                  className={`chapter-number ${completed.has(chapter.id) ? "is-complete" : ""}`}
-                                >
-                                  {completed.has(chapter.id) ? (
-                                    <Check size={13} />
-                                  ) : (
-                                    chapter.number
-                                  )}
-                                </span>
-                                <span>
-                                  <strong>{chapter.title}</strong>
-                                  <small>{chapter.concept}</small>
-                                </span>
-                                {chapter.native && (
-                                  <span className="local-badge">
-                                    Local Python
-                                  </span>
-                                )}
-                                <ArrowRight
-                                  className="chapter-link-arrow"
-                                  size={14}
-                                />
-                              </Link>
-                            ))}
-                          </div>
-                        </details>
-                      );
-                    })}
+                            <span>
+                              <strong>{lesson.label}</strong>
+                              <small>{lesson.focus}</small>
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </details>
+                </div>
+              </li>
+              <li className="path-step">
+                <div className="path-step-content">
+                  <ConceptIllustration
+                    concept="low-level-design"
+                    className="path-art"
+                  />
+                  <div className="path-step-heading">
+                    <span className="path-marker" aria-hidden="true">
+                      03
+                    </span>
+                    <h2>Low-level design</h2>
+                    <p>
+                      Turn requirements into objects, interfaces, and invariants
+                      that hold under change.
+                    </p>
                   </div>
-                </article>
-              );
-            })}
-          </div>
-          {!visibleTracks.length && (
-            <p className="no-matches">
-              No practice lessons match “{query.trim()}”.
-            </p>
-          )}
-        </section>
-        {term &&
-          !visibleGuides.length &&
-          !visibleCheatsheets.length &&
-          !visibleTracks.length && (
-            <p className="search-empty" role="status">
-              Try another topic, tool, or course name.
-            </p>
-          )}
+                  {language ? (
+                    <Course
+                      track="lld"
+                      items={items("lld")}
+                      title="Design exercises"
+                      completed={completed}
+                    />
+                  ) : (
+                    <button
+                      className="text-link path-choose"
+                      onClick={chooseLanguage}
+                    >
+                      Choose a language for LLD
+                    </button>
+                  )}
+                </div>
+              </li>
+              <li className="path-step">
+                <div className="path-step-content">
+                  <ConceptIllustration
+                    concept="high-level-design"
+                    className="path-art"
+                  />
+                  <div className="path-step-heading">
+                    <span className="path-marker" aria-hidden="true">
+                      04
+                    </span>
+                    <h2>High-level design</h2>
+                    <p>
+                      Draw service boundaries, data flows, and failure paths.
+                      Defend your tradeoffs.
+                    </p>
+                  </div>
+                  <Course
+                    track="hld"
+                    items={items("hld")}
+                    title="Architecture practice"
+                    completed={completed}
+                  />
+                </div>
+              </li>
+            </ol>
+            <section id="guides" className="supplementary-section">
+              <div className="section-heading">
+                <div>
+                  <h2>The engineering bookshelf</h2>
+                  <p className="section-description">
+                    A few subjects worth keeping close.
+                  </p>
+                </div>
+              </div>
+              <div className="guide-grid">
+                {guides.map((guide) => (
+                  <GuideCard guide={guide} key={guide.slug} />
+                ))}
+              </div>
+            </section>
+            <section id="cheatsheets" className="path-cheatsheets">
+              <div className="section-heading">
+                <div>
+                  <h2>Tool cheatsheets</h2>
+                  <p className="section-description">
+                    Keep the commands close. Save your memory for the decisions.
+                  </p>
+                </div>
+              </div>
+              <Sheets sheets={cheatsheets} />
+            </section>
+          </>
+        )}
         <footer className="catalog-footer">
           <span>precap · Keep your experience in focus.</span>
-          <span>Practice code and progress stay in this browser.</span>
+          <span>Your code and progress stay in this browser.</span>
         </footer>
       </main>
     </div>

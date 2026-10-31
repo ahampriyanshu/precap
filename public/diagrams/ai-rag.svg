@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+<title id="title">Grounded answers depend on a versioned evidence pipeline</title><desc id="desc">The ingestion lane extracts source revisions into chunks and indexes. The answering lane authenticates a query, performs hybrid retrieval, reranks, packs evidence, and validates the generated answer.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#526176"/></marker></defs>
+<rect width="900" height="480" rx="18" fill="#f8fafc"/>
+<g font-family="system-ui,-apple-system,sans-serif">
+<text x="28" y="36" fill="#172033" font-size="21" font-weight="650">Grounded answers depend on a versioned evidence pipeline</text>
+<text x="28" y="78" fill="#526176" font-size="13" text-anchor="start">INGESTION</text>
+<rect x="28" y="95" width="190" height="92" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="123.0" y="122" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Source revision</text>
+<text x="123.0" y="146" text-anchor="middle" fill="#526176" font-size="15">content + ACL + version</text>
+<rect x="264" y="95" width="190" height="92" rx="10" fill="#dbeafe" stroke="#cbd5e1"/>
+<text x="359.0" y="122" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Extract + chunk</text>
+<text x="359.0" y="146" text-anchor="middle" fill="#526176" font-size="15">retain headings/units</text>
+<rect x="500" y="95" width="190" height="92" rx="10" fill="#ccfbf1" stroke="#cbd5e1"/>
+<text x="595.0" y="122" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Publish indexes</text>
+<text x="595.0" y="146" text-anchor="middle" fill="#526176" font-size="15">lexical + dense vectors</text>
+<path d="M218 141 L264 141" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M454 141 L500 141" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="720" y="122" fill="#172033" font-size="15" text-anchor="start">Visibility checkpoint</text>
+<text x="720" y="147" fill="#526176" font-size="15" text-anchor="start">and deletion ledger</text>
+<text x="28" y="233" fill="#526176" font-size="13" text-anchor="start">ANSWERING</text>
+<rect x="28" y="253" width="154" height="94" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="105.0" y="280" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Scope query</text>
+<text x="105.0" y="304" text-anchor="middle" fill="#526176" font-size="15">authenticated</text>
+<text x="105.0" y="326" text-anchor="middle" fill="#526176" font-size="15">principal + filters</text>
+<rect x="218" y="253" width="188" height="94" rx="10" fill="#dbeafe" stroke="#cbd5e1"/>
+<text x="312.0" y="280" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Hybrid candidates</text>
+<text x="312.0" y="304" text-anchor="middle" fill="#526176" font-size="15">lexical + vector</text>
+<text x="312.0" y="326" text-anchor="middle" fill="#526176" font-size="15">deduplicate</text>
+<rect x="442" y="253" width="188" height="94" rx="10" fill="#ccfbf1" stroke="#cbd5e1"/>
+<text x="536.0" y="280" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Rerank + pack</text>
+<text x="536.0" y="304" text-anchor="middle" fill="#526176" font-size="15">budget + dependencies</text>
+<text x="536.0" y="326" text-anchor="middle" fill="#526176" font-size="15">source provenance</text>
+<rect x="666" y="253" width="206" height="94" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="769.0" y="280" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Generate + validate</text>
+<text x="769.0" y="304" text-anchor="middle" fill="#526176" font-size="15">support, source scope</text>
+<text x="769.0" y="326" text-anchor="middle" fill="#526176" font-size="15">answer or abstain</text>
+<path d="M182 300 L218 300" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M406 300 L442 300" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M630 300 L666 300" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M595 187 V214 H312 V253" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="28" y="395" fill="#172033" font-size="16" text-anchor="start">Authorization applies before candidate text reaches downstream models.</text>
+<text x="28" y="423" fill="#526176" font-size="15" text-anchor="start">A source ID must resolve to the supplied revision and support the claim; existence alone is insufficient.</text>
+<text x="28" y="451" fill="#526176" font-size="15" text-anchor="start">Diagnose the first lost invariant: ingestion → candidates → prompt evidence → supported result.</text>
+</g></svg>

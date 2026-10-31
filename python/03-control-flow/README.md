@@ -22,7 +22,7 @@ except ValueError:
 print(accepted)
 ```
 
-The output is `length mismatch` and `[('east', 8)]`. Validation is lazy: the first pair was already processed before the mismatch was discovered. If partial updates are forbidden, stage results before committing them, or validate reusable input lengths first. Checking two lists' lengths is cheap; doing so for arbitrary streams may require buffering. See [`zip` semantics](https://docs.python.org/3.12/library/functions.html#zip).
+The output is `length mismatch` and `[('east', 8)]`. Validation is lazy: the first pair was already processed before the mismatch was discovered. If partial updates are forbidden, stage results before committing them, or validate reusable input lengths first. Checking two lists' lengths is cheap; doing so for arbitrary streams may require buffering.
 
 ## Worked example
 

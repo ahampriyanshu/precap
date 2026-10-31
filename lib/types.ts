@@ -1,6 +1,7 @@
 import type { CodeHighlights } from "./code-theme";
 
-export type Track = "dsa" | "python" | "lld" | "hld";
+export type Language = "python" | "javascript" | "go" | "java" | "cpp";
+export type Track = Language | "dsa" | "lld" | "hld";
 export type Cheatsheet = {
   slug: string;
   title: string;
@@ -9,6 +10,7 @@ export type Cheatsheet = {
   guide: { slug: string; part: string };
 };
 export type GuidePart = {
+  module?: string;
   cheatsheet?: string;
   label?: string;
   aliases?: { guide?: string; slug: string; section?: string }[];
@@ -18,6 +20,8 @@ export type GuidePart = {
   keywords: string[];
 };
 export type Guide = {
+  moduleLabel?: "Module" | "Track";
+  indexAliases?: string[];
   sequential?: boolean;
   slug: string;
   title: string;
@@ -34,6 +38,9 @@ export type GuideArticle = {
 };
 export type Stage = "prototype" | "final";
 export type Chapter = {
+  baseId: string;
+  language: Language | null;
+  languages: Language[];
   id: string;
   track: Track;
   slug: string;
@@ -45,6 +52,9 @@ export type Chapter = {
   practiceKind: "code" | "diagram";
 };
 export type Lesson = Chapter & {
+  files: Record<string, string>;
+  starterFilename: string;
+  testFilename: string;
   content: string;
   highlights: CodeHighlights;
   practice: string;
@@ -71,4 +81,4 @@ export type SavedWork = {
   localCompleted?: boolean;
 };
 export type RunState =
-  "idle" | "loading" | "running" | "done" | "stopped" | "error";
+  "idle" | "loading" | "compiling" | "running" | "done" | "stopped" | "error";

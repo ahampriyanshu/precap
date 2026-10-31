@@ -51,7 +51,7 @@ end
 return 1
 ```
 
-Return 1 means admitted; 0 means denied without increment. The quota service supplies a validated positive limit and milliseconds remaining until its trusted window boundary, and uses a separate key per window. Expiry reclaims the old counter; it does not define client identity or choose the clock. The [Redis scripting contract](https://redis.io/docs/latest/develop/programmability/eval-intro/) provides atomic execution on the serving instance, while replication, persistence, and failover require separate guarantees. Keep the script bounded; it blocks other work while running.
+Return 1 means admitted; 0 means denied without increment. The quota service supplies a validated positive limit and milliseconds remaining until its trusted window boundary, and uses a separate key per window. Expiry reclaims the old counter; it does not define client identity or choose the clock. The script executes atomically on the serving instance; replication, persistence, and failover require separate guarantees. Keep the script bounded; it blocks other work while running.
 
 The RPC can return decision, remaining allowance, policy version, and reset time. Denials produce HTTP 429 and retry guidance. All gateways share the same window definition. Never accept a caller’s timestamp as quota authority.
 

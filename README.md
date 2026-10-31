@@ -2,24 +2,19 @@
 
 A compact refresher for senior and staff engineers before interviews. Revisit the reasoning behind deploying, operating, and evolving software, alongside coding and system design practice.
 
-## Field guides
+## Playlists
 
-Engineering groups independent one-page recaps for Frontend Engineering, Backend Engineering, and DevOps. Frontend and Backend follow the fundamentals in dependency order: explain the mechanism, show a focused example, then connect its limits to the next approach. Frontend moves from HTML/CSS/JavaScript and browser rendering to navigation, SSR/SSG/ISR, delivery, and auditing. Backend moves from the request lifecycle and execution to APIs, storage, concurrency, and production operation. The other guide areas have two connected reads. Guides are reading-only.
+Frontend Engineering, Backend Engineering, AI Engineering, and DevOps each have a dedicated curriculum index, grouped modules, and sequential lessons. Lessons introduce the problem and mechanism, then develop implementation, failure behavior, and production tradeoffs with code and local SVG diagrams. Last Mile Prep combines Incident Triage, Product Management, and Telemetry & Observability into three tracks, with ten focused lessons on operating and evolving the product. It covers requirements and audience, A/B evidence, feature-flag releases, deprecation, and operational/product telemetry tools. Reading pages do not load an editor or Python runtime.
 
-| Area | Reading |
-| --- | --- |
-| Engineering | [Frontend Engineering](guides/engineering/frontend.md) · [Backend Engineering](guides/engineering/backend.md) · [DevOps](guides/engineering/devops.md) |
-| Telemetry & observability | [Follow a failure across the system](guides/observability/signals.md) · [Turn telemetry into reliability decisions](guides/observability/reliability.md) |
-| Product management | [Choose the problem before the solution](guides/product-management/discovery.md) · [Ship, measure, and make the next call](guides/product-management/delivery.md) |
-| LLMs & AI | [Put the model in the right place](guides/llms-and-ai/designing.md) · [Evaluate, launch, and operate it](guides/llms-and-ai/operating.md) |
+`guides.json` defines playlist metadata and module order. Sources live in `guides/<playlist>/<lesson>.md`; indexes export at `/guides/<playlist>/` and lessons at `/guides/<playlist>/<lesson>/`. Homepage search includes every lesson's metadata without displaying the entire curriculum by default. Legacy Engineering, AI, Observability, and Product Management bookmarks redirect to the current indexes or lessons with or without JavaScript.
 
-`guides.json` defines the catalog; `sequential: false` groups independent recaps without part numbering or next-part navigation. Optional part labels keep navigation concise, and aliases can preserve old guide paths. Content lives in `guides/<area>/<part>.md`. The site exports these at `/guides/<area>/<part>/`. Coding and design lessons retain their `/learn/` routes and `curriculum.json` manifest.
+Lesson prose contains no external links or reference sections. Internal links are reserved for navigation and useful tool references. Diagrams have meaningful alt text and keyboard-scrollable frames on narrow screens. Code uses the shared GitHub Dark syntax theme, generated at build time.
 
 ## Cheatsheets
 
-[Frontend patterns and debugging](cheatsheets/frontend.md), [Backend patterns and debugging](cheatsheets/backend.md), and [DevOps commands and workflows](cheatsheets/devops.md) provide focused patterns, diagnostics, and operational flows for their corresponding recap. Every workflow links to its matching recap section, and every recap section links back to its commands. The homepage and reference sidebar expose this section; topic search includes its tool and workflow keywords.
+Tool-specific references cover Git, Docker, Kubernetes, AWS CLI, Terraform, Helm, and Linux/networking. Each contains commands from basic inspection to a concrete operational workflow and links to its conceptual lesson. There are no general Frontend, Backend, AI, or DevOps cheatsheets. The old broad cheatsheet URLs redirect to curriculum indexes.
 
-`cheatsheets.json` defines the reference catalog; Markdown lives in `cheatsheets/<slug>.md` and exports at `/cheatsheets/<slug>/`. Legacy DevOps URLs redirect to the relevant section of the DevOps recap under Engineering. Long pages have a collapsible section index.
+`cheatsheets.json` defines the tool catalog, with sources in `cheatsheets/<tool>.md` and routes at `/cheatsheets/<tool>/`. Main lessons include tool-sheet links where a command reference is useful; they do not repeat a backlink after every section.
 
 ## Website
 
@@ -34,31 +29,61 @@ Use Node.js 20.9 or later. Read a lesson first, then select **Open practice** fo
 
 Coding drafts and progress save in this browser. HLD opens an Excalidraw canvas with a design brief and notes; diagrams (including embedded images), notes, and explicit self-review status save per lesson in IndexedDB on this device. Export a `.excalidraw` file to keep an editable copy; Excalidraw’s menu imports drawings and exports images. HLD has no Python execution or automated grading. Diagram progress is marked **Reviewed** by the learner and clears when the design or notes change.
 
-Download a coding exercise to keep a copy of its README, your code and its tests. Python runs on your device in a fresh Pyodide WebAssembly worker for every attempt. Runtime assets and fonts are hosted with the site. Stop terminates the worker; execution is bounded to 15 seconds after loading. Native thread/process exercises offer a download for local Python; asyncio and garbage collection exercises run in the browser.
+The homepage follows Machine coding → System design basics → LLD → HLD. The navbar remembers the programming language across pages and tabs; new visitors choose in the hero. Fundamentals and coding links follow that choice. System design basics curates eight existing backend lessons; full engineering playlists and tool cheatsheets remain below the main path.
 
-## Local Python practice
+Choose Python, JavaScript, Go, Java, or C++ for DSA and LLD. The language selector preserves the current problem and reading/practice mode; drafts and progress belong to that problem and language. Fundamentals are separate curricula: 20 Python, 14 JavaScript, 13 Go, 14 Java, and 13 C++ lessons. All 28 DSA and 15 LLD problems are available in all five languages.
 
-Use Python 3.11 or later; exercises need only the standard library.
+Download a coding exercise to keep a copy of its README, your current code, tests, and required helper files. Python runs on your device in a fresh Pyodide WebAssembly worker for every attempt. Runtime assets and fonts are hosted with the site. Stop terminates the worker; execution is bounded to 15 seconds after loading. Native thread/process exercises offer a download for local Python; asyncio and garbage collection exercises run in the browser. JavaScript runs in a fresh module worker using the same checks as its Node.js suite; asynchronous checks are awaited, and Stop terminates the worker. Go, Java, and C++ compile and run the selected stage in the browser. The same exercise tests produce individual check results; compiler errors, crashes, incomplete suites, and timeouts cannot mark completion. Source stays in browser memory. Downloads remain available for local practice.
+
+## Browser compilers
+
+Go uses a pinned Go 1.26.5 WASI toolchain. Java uses Java 17 through CheerpJ 4.3 and Eclipse ECJ 3.42.0. C++ uses Clang 22, C++20, and a WASIX runtime with exceptions and threads. Compiler assets load on demand when Run is first pressed, with progress during loading, compilation, and execution. The initial download is substantial; versioned assets are cached by the browser. Compilation and runtime setup have separate deadlines from execution. Stop cancels the compiler/program, and the next attempt gets a fresh guest filesystem or classloader. Editing, switching languages, and leaving practice also cancel the active attempt.
+
+Go goroutines use a cooperative browser scheduler. Browser tests check concurrency behavior, but cannot establish race freedom. Use the optional downloaded package with native `go run -race main.go exercise.go --stage final` when checking data races. Java compiler errors preserve filenames and line/column coordinates; runtime exception stacks can omit source lines in the browser JVM. Java threads run inside the browser JVM; C++ thread exercises use browser workers and shared WebAssembly memory. Four Python native thread/process lessons retain their local execution flow.
+
+Java's core runtime loads from the pinned CheerpJ vendor CDN; the compiler/helper JAR is served by precap. The current setup uses CheerpJ's personal-project terms, as confirmed for this project, with visible credit in Java practice. Company use or self-hosting that core requires reviewing its license. No code is sent to the vendor. Pinned source provenance and license notices are under `public/runtimes/<language>/`; optional regeneration tooling is under `scripts/browser-runtime-*`. Those tools have separate requirements and are not needed for `npm ci`, build, or normal use. The Go tooling requires Node 24.18 or later in the 24.x line; the application remains compatible with Node 20.9+.
+
+`npm run build` verifies vendored asset sizes and SHA-256 digests before building. Do not format generated compiler bundles. Regenerate the inventory after an intentional runtime update and repeat the browser corpus checks.
+
+Browser compilation requires a modern browser with WebAssembly, workers, and shared memory; C++ additionally requires JavaScript Promise Integration (`WebAssembly.Suspending`, supported in current Chromium), served over HTTPS or localhost. Both `npm start` and Next's development server supply isolation headers. A static deployment must return these headers for documents, workers, runtime assets, and error responses:
+
+```http
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Embedder-Policy: require-corp
+Cross-Origin-Resource-Policy: same-origin
+```
+
+Serve `.wasm` as `application/wasm` and `.mjs`/`.js` as JavaScript. Use revalidation for adapter/worker entry points; only content-addressed runtime URLs should be immutable. `scripts/http-policy.mjs` is the reference configuration. An incompatible host produces a setup error in practice instead of attempting remote compilation.
+
+## Local coding practice
+
+`run.py` needs Python 3.11+ and selects the correct source files and runtime. The target language needs its own toolchain: Node.js 20+, Go 1.22+ (also compatible with Go 1.20), JDK 17+, or a C++20 compiler. Exercises use only each language's standard library.
 
 ```bash
 python3 run.py --list
 python3 run.py --check
-python3 run.py python/01-primitive-types --stage prototype
-python3 run.py python/01-primitive-types --stage final
+python3 run.py --list --language javascript
+python3 run.py dsa/01-arrays-and-linear-scans --language javascript --stage prototype
+python3 run.py lld/01-parking-lot --language go --stage final
+python3 run.py java/01-values-references-and-null --language java --stage prototype
+python3 run.py dsa/03-kmp-string-search --language cpp --stage final
 ```
 
-Each coding directory has one README.md, an unfinished exercise.py, and tests in main.py. HLD directories contain a design lesson and Excalidraw brief in README.md; use the website’s design canvas for those. Read the Practice section for the exact API. Complete the prototype first, then the final implementation. Tests check behavior and edge cases; they do not prove an algorithm's complexity. No answer keys are included. From a lesson directory, run `python3 main.py --stage prototype` or `python3 main.py --stage final`.
+Fundamentals live in `<language>/<lesson>/`. Original Python DSA/LLD directories retain their existing files; other implementations live in `variants/<language>/<track>/<lesson>/`. `curriculum.json` defines the course order, and `lib/languages.ts` defines filenames and execution commands. Each package contains one README, unfinished starter code, and executable tests. The C++ frequency-map lesson includes a required Unicode helper header, also included in downloads.
+
+Read the Practice contract for that language's API, numeric bounds, string semantics, and validation policy. Complete the prototype first, then final. Tests check behavior and boundaries; they do not prove algorithmic complexity. No answer keys are included. `--all` defaults to Python; `--all --language LANG` runs that language's fundamentals and DSA/LLD variants. HLD remains a diagram exercise in Excalidraw.
 
 ## Development checks
 
 ```bash
+python3 -B tests/run_cli_test.py
 npm run typecheck
 npm run format:check
 npm test
 npm run test:browser     # after npm run build
 ```
 
-Browser tests use installed Chrome on macOS; set CHROME_PATH elsewhere. Set PORT to choose the preview port. Any static host with directory-index support can serve out/; serve .wasm files as application/wasm.
+Browser tests use installed Chrome on macOS; set CHROME_PATH elsewhere. Set PORT to choose the preview port. A static host can serve out/ with directory-index support and the browser compiler headers and MIME types described above.
 
 ## Python
 

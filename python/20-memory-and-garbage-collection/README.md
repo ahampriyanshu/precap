@@ -67,7 +67,6 @@ Look for retained paths before forcing collection: unbounded dictionaries, callb
 
 Where supported, start `tracemalloc` before the operation, take snapshots around repeatable work, and compare with `after.compare_to(before, "lineno")`. Warm up imports and caches before measuring steady-state behavior. Allocation traces identify Python allocations rather than all native-library or operating-system memory, and shallow `sys.getsizeof` does not recursively total a graph. Exact byte counts vary by runtime. Some browser builds omit allocation tracing; the weak-reference examples do not require it.
 
-Further reading: [Object lifetime](https://docs.python.org/3.12/reference/datamodel.html#objects-values-and-types), [cyclic collection](https://docs.python.org/3/library/gc.html), [weak references](https://docs.python.org/3/library/weakref.html), and [allocation tracing](https://docs.python.org/3.12/library/tracemalloc.html).
 
 ## Practice
 

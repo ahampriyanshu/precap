@@ -2,6 +2,13 @@
 import { useMemo } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
+import { javascript } from "@codemirror/lang-javascript";
+import { go } from "@codemirror/lang-go";
+import { java } from "@codemirror/lang-java";
+import { cpp } from "@codemirror/lang-cpp";
+import { languageInfo } from "@/lib/languages";
+import type { Language } from "@/lib/types";
+const syntax = { python, javascript, go, java, cpp };
 import { EditorView, keymap } from "@codemirror/view";
 import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { tags } from "@lezer/highlight";
@@ -46,15 +53,17 @@ export default function CodeEditor({
   onChange,
   onRun,
   readOnly = false,
+  language = "python",
 }: {
   code: string;
+  language?: Language;
   onChange?: (value: string) => void;
   onRun?: () => void;
   readOnly?: boolean;
 }) {
   const extensions = useMemo(
     () => [
-      python(),
+      syntax[language](),
       syntaxHighlighting(highlighting),
       EditorView.lineWrapping,
       keymap.of([
@@ -67,13 +76,15 @@ export default function CodeEditor({
         },
       ]),
       EditorView.contentAttributes.of({
-        "aria-label": onChange ? "Python code editor" : "Python test source",
+        "aria-label": onChange
+          ? `${languageInfo[language].label} code editor`
+          : `${languageInfo[language].label} test source`,
         "aria-readonly": String(readOnly),
         tabindex: "0",
         spellcheck: "false",
       }),
     ],
-    [onRun, onChange, readOnly],
+    [onRun, onChange, readOnly, language],
   );
   return (
     <CodeMirror

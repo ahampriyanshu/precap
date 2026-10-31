@@ -63,7 +63,7 @@ A million connections, message writes, and receiving-device fanout need independ
 
 ## Real-world usage
 
-Team messaging and support chat need both durable history and live delivery. [Slack’s engineering account](https://slack.engineering/real-time-messaging/) describes separate gateway, channel, and presence responsibilities; it supports this separation without specifying the exact storage and cursor protocol above.
+Team messaging and support chat need both durable history and live delivery. Separate connection gateways, channel delivery, and presence so each can scale and recover according to its lifecycle.
 
 ## Practice
 

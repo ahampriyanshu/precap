@@ -24,7 +24,7 @@ except ValueError:
 print(json.loads('{"enabled": false}')["enabled"])
 ```
 
-The outputs are `{"latency_ms": NaN}`, `non-finite measurement rejected`, and `False`. Serialization success under the defaults does not guarantee another language's parser accepts the output. `allow_nan=False` is an encoder policy; enforcing a strict decoder policy needs separate handling, including `parse_constant`. Schema validation remains another step. See the documented [JSON interoperability limits](https://docs.python.org/3.12/library/json.html#standard-compliance-and-interoperability).
+The outputs are `{"latency_ms": NaN}`, `non-finite measurement rejected`, and `False`. Serialization success under the defaults does not guarantee another language's parser accepts the output. `allow_nan=False` is an encoder policy; enforcing a strict decoder policy needs separate handling, including `parse_constant`. Schema validation remains another step.
 
 ## Practical choices and mistakes
 

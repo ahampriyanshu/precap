@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" role="img" aria-labelledby="title desc">
+<title id="title">A voice session is a synchronized turn state machine</title><desc id="desc">Audio capture and endpointing lead to interpretation and tools, then streamed synthesis and playback. New user speech starts a new turn and cancels stale generation and buffered playback. Persisted external effects remain separately reconciled.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#526176"/></marker></defs>
+<rect width="900" height="420" rx="18" fill="#f8fafc"/>
+<g font-family="system-ui,-apple-system,sans-serif">
+<text x="28" y="36" fill="#172033" font-size="21" font-weight="650">A voice session is a synchronized turn state machine</text>
+<rect x="28" y="83" width="180" height="105" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="118.0" y="110" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Capture + endpoint</text>
+<text x="118.0" y="134" text-anchor="middle" fill="#526176" font-size="15">timestamped frames</text>
+<text x="118.0" y="156" text-anchor="middle" fill="#526176" font-size="15">speech / silence</text>
+<rect x="245" y="83" width="180" height="105" rx="10" fill="#dbeafe" stroke="#cbd5e1"/>
+<text x="335.0" y="110" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Interpret turn</text>
+<text x="335.0" y="134" text-anchor="middle" fill="#526176" font-size="15">ASR or audio model</text>
+<text x="335.0" y="156" text-anchor="middle" fill="#526176" font-size="15">task + current state</text>
+<rect x="462" y="83" width="180" height="105" rx="10" fill="#ccfbf1" stroke="#cbd5e1"/>
+<text x="552.0" y="110" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Reason + tools</text>
+<text x="552.0" y="134" text-anchor="middle" fill="#526176" font-size="15">permissions + deadlines</text>
+<text x="552.0" y="156" text-anchor="middle" fill="#526176" font-size="15">durable effects</text>
+<rect x="679" y="83" width="193" height="105" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="775.5" y="110" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Speech + playback</text>
+<text x="775.5" y="134" text-anchor="middle" fill="#526176" font-size="15">sequence + turn IDs</text>
+<text x="775.5" y="156" text-anchor="middle" fill="#526176" font-size="15">bounded jitter buffer</text>
+<path d="M208 136 L245 136" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M425 136 L462 136" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M642 136 L679 136" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="264" width="300" height="87" rx="10" fill="#ccfbf1" stroke="#cbd5e1"/>
+<text x="178.0" y="291" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">User begins a new turn</text>
+<text x="178.0" y="315" text-anchor="middle" fill="#526176" font-size="15">increment active turn; stop stale output</text>
+<path d="M328 307 H350 V352 H850 V188" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 4"/>
+<text x="367" y="289" fill="#172033" font-size="16" text-anchor="start">Cancel generation and buffered playback.</text>
+<text x="367" y="317" fill="#526176" font-size="15" text-anchor="start">Track what was actually heard.</text>
+<text x="28" y="386" fill="#526176" font-size="15" text-anchor="start">Cancellation does not roll back a booking or payment already committed by a tool service.</text>
+</g></svg>

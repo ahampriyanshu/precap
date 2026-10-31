@@ -40,7 +40,7 @@ on_total = (unit_price * 3).quantize(cent, rounding=ROUND_HALF_UP)
 print(per_item, on_total)
 ```
 
-The output is `3.03 3.02`. Rounding each item and rounding the total implement different policies; neither choice follows merely from selecting `Decimal`. Constructing from a float preserves that float's approximation. Decimal arithmetic also has a precision context, so it does not remove every rounding decision. See the [decimal model](https://docs.python.org/3.12/library/decimal.html).
+The output is `3.03 3.02`. Rounding each item and rounding the total implement different policies; neither choice follows merely from selecting `Decimal`. Constructing from a float preserves that float's approximation. Decimal arithmetic also has a precision context, so it does not remove every rounding decision.
 
 `bool("False")` is `True` because nonempty text is truthy. Parse textual flags explicitly. Booleans also participate in integer arithmetic, so an API accepting counts must decide whether `True` is valid input. Use `is None` for absence and `==` for value comparisons. String methods return new strings; they do not mutate their receiver.
 

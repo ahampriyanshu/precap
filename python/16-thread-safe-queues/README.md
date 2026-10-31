@@ -62,7 +62,6 @@ Call `task_done` exactly once per successful `get`, normally in `finally`. Ackno
 
 Do not use `empty` or `qsize` as a promise that the next operation will succeed: another worker can change the queue immediately. A positive `maxsize` bounds queued items, not all in-flight work or payload bytes. `SimpleQueue` omits capacity and task tracking when those features are unnecessary. Use process-aware facilities across processes. This lesson requires native Python.
 
-Further reading: [Queue task tracking and capacity](https://docs.python.org/3.12/library/queue.html#queue.Queue.task_done).
 
 ## Practice
 

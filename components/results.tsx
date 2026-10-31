@@ -11,11 +11,15 @@ import {
 import type { Report, RunState } from "@/lib/types";
 
 export function Results({
+  language = "Python",
+  message = "",
   state,
   report,
   output,
   error,
 }: {
+  language?: string;
+  message?: string;
   state: RunState;
   report: Report | null;
   output: string;
@@ -25,7 +29,8 @@ export function Results({
   useEffect(() => {
     if (state === "loading") setTab("checks");
   }, [state]);
-  const busy = state === "loading" || state === "running";
+  const busy =
+    state === "loading" || state === "compiling" || state === "running";
   const passed =
     report?.checks.filter((c) => c.status === "passed").length ?? 0;
   const failed =
@@ -71,19 +76,26 @@ export function Results({
       >
         {tab === "output" ? (
           <pre className="console-output">
-            {output || "Output from print() will appear here."}
+            {output || "Printed output will appear here."}
           </pre>
         ) : busy ? (
           <div className="result-placeholder running-placeholder">
             <LoaderCircle className="spin" size={20} />
             <div>
               <strong>
-                {state === "loading" ? "Loading Python…" : "Running checks…"}
+                {message ||
+                  (state === "loading"
+                    ? `Loading ${language}…`
+                    : state === "compiling"
+                      ? `Compiling ${language}…`
+                      : "Running checks…")}
               </strong>
               <p>
                 {state === "loading"
-                  ? "The first run takes a moment. Everything runs on your device."
-                  : "Your code is running in a separate browser worker."}
+                  ? "The first run downloads the runtime. Everything runs on your device."
+                  : state === "compiling"
+                    ? "Compiling on your device in a separate browser worker."
+                    : "Your code is running in a separate browser worker."}
               </p>
             </div>
           </div>
@@ -103,7 +115,9 @@ export function Results({
               <span>
                 {report.passed
                   ? "All checks passed."
-                  : `${failed} ${failed === 1 ? "check needs" : "checks need"} another look.`}
+                  : failed > 0
+                    ? `${failed} ${failed === 1 ? "check needs" : "checks need"} another look.`
+                    : "The suite did not complete successfully."}
               </span>
             </div>
             {report.checks.map((check, index) => {

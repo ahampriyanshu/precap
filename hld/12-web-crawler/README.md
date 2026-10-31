@@ -58,13 +58,13 @@ The transaction/conditional-store implementation, robots loading, and network fe
 
 Workers enforce connect/read deadlines and maximum bytes, then report completion with the current attempt token. A stale completion cannot release a replacement’s lease. Lease expiry recovers crashes but may overlap a worker still fetching, so tolerate occasional repeated GETs. Retry temporary errors after delayed eligibility, honor relevant `Retry-After` guidance, and exhaust a bounded retry budget. High priority affects selection within an origin, not permission to overwhelm it.
 
-Recheck robots at dispatch because policies can change in the queue. [RFC 9309](https://www.rfc-editor.org/rfc/rfc9309.html) describes policy handling and explicitly separates robots rules from access authorization.
+Recheck robots at dispatch because policies can change in the queue.
 
 Fetchers also cross a security boundary. Restrict protocols, reject private/link-local destinations, recheck DNS and redirects, and avoid forwarding credentials. Observe per-host errors, oldest backlog, robots failures, duplicate admission, response bytes, and retry volume. Global concurrency trades coverage speed against bandwidth and recovery cost; origin budgets protect individual sites.
 
 ## Real-world usage
 
-Search indexing, public-data collection, and link checking use frontiers with different freshness and coverage goals. [Google's crawl-budget guide](https://developers.google.com/crawling/docs/crawl-budget) distinguishes what a crawler wants to fetch from what a host can sustain. This supports reasoning about demand and capacity separately; the hypothetical scheduler here is not a reconstruction of Googlebot.
+Search indexing, public-data collection, and link checking use frontiers with different freshness and coverage goals. Distinguish desired crawl coverage from the request rate each host can sustain; those are separate demand and capacity decisions.
 
 ## Practice
 

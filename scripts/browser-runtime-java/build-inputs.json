@@ -1,0 +1,47 @@
+{
+  "ecj": {
+    "file": "ecj-3.42.0.jar",
+    "version": "3.42.0",
+    "url": "https://repo.maven.apache.org/maven2/org/eclipse/jdt/ecj/3.42.0/ecj-3.42.0.jar",
+    "bytes": 3327035,
+    "sha256": "29f6d3918ee02db4400c103bc25dd90a22491c3a395867d9393070cb96a7dd29",
+    "license": "EPL-2.0"
+  },
+  "bootstrap": {
+    "file": "zero2leetcode-java-runner-20260803.jar",
+    "url": "https://raw.githubusercontent.com/cyberspace-cs/zero2Leetcode/193ea2aa099ba4b442809341d8fd3bb155137bab/assets/vendor/zero2leetcode-java-runner-20260803.jar",
+    "bytes": 5963733,
+    "sha256": "7b35ec169ada2e9ed4ef2cbc95730d0e632946e6908d06f4b35809726835302d",
+    "sourceRevision": "193ea2aa099ba4b442809341d8fd3bb155137bab",
+    "source": "https://github.com/cyberspace-cs/zero2Leetcode/tree/193ea2aa099ba4b442809341d8fd3bb155137bab/tools/java-browser-runner",
+    "license": "MIT (as declared in the upstream README)"
+  },
+  "apiSignatures": {
+    "prefix": "META-INF/java17-api/",
+    "index": "META-INF/java17-api.index",
+    "entries": 4692,
+    "targetJavaVersion": 17,
+    "sourceJdk": "Eclipse Temurin 21.0.12+8",
+    "sourceCtSymSha256": "5448ac59687b76a2f2a08f87b59b2deeae5cdc904914b5674510114e7adf84b3",
+    "sourceRevision": "04806bcb1d50b35efc1c22a4d3b082c9a9a47563",
+    "source": "https://github.com/adoptium/jdk21u/tree/04806bcb1d50b35efc1c22a4d3b082c9a9a47563",
+    "license": "GPL-2.0 WITH Classpath-exception-2.0"
+  },
+  "compilerOptions": [
+    "-source",
+    "17",
+    "-target",
+    "17",
+    "-encoding",
+    "UTF-8",
+    "-proc:none",
+    "-g:lines,source"
+  ],
+  "runtime": {
+    "javaVersion": 17,
+    "cheerpjVersion": "4.3",
+    "loader": "https://cjrtnc.leaningtech.com/4.3/loader.js",
+    "license": "CheerpJ Community License; Core loaded from official CDN only",
+    "licenseUrl": "https://cheerpj.com/docs/licensing"
+  }
+}

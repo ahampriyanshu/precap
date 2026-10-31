@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8" /><title>Build Java browser bridge</title>
+<script>
+  const worker = new Worker("./bootstrap-worker.js");
+  let finish;
+  worker.onmessage = ({ data }) => {
+    if (data.type === "ready") window.ready = true;
+    if (data.type === "error") {
+      if (finish) {
+        finish.reject(new Error(data.message));
+        finish = undefined;
+      } else window.buildError = data.message;
+    }
+    if (data.type === "result") {
+      finish.resolve(data.result);
+      finish = undefined;
+    }
+  };
+  window.compileBridge = (source) =>
+    new Promise((resolve, reject) => {
+      finish = { resolve, reject };
+      worker.postMessage({ source });
+    });
+</script>

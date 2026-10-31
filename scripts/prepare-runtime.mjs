@@ -1,3 +1,4 @@
+import "./verify-browser-runtimes.mjs";
 import {
   copyFile,
   cp,

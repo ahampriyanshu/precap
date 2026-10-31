@@ -1,0 +1,17 @@
+{
+  "name": "precap-browser-runtime-go-tools",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.18.0 <25"
+  },
+  "scripts": {
+    "build": "node prepare-go-assets.mjs"
+  },
+  "dependencies": {
+    "@wasm-oj/browser": "0.2.5",
+    "@wasm-oj/toolchain-go": "0.2.0",
+    "esbuild": "0.25.12"
+  }
+}

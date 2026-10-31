@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ArticleOutline } from "@/components/article-outline";
 import { cheatsheets } from "@/lib/cheatsheets";
 import { Content } from "@/components/content";
@@ -35,9 +34,9 @@ export default async function GuidePage({ params }: Props) {
     return (
       <main className="redirect-notice">
         <meta httpEquiv="refresh" content={`0;url=${destination}`} />
-        <h1>This recap has moved</h1>
+        <h1>This lesson has moved</h1>
         <p>
-          <a href={destination}>Continue to the complete recap</a>
+          <a href={destination}>Continue to the lesson</a>
         </p>
       </main>
     );
@@ -68,7 +67,7 @@ export default async function GuidePage({ params }: Props) {
             {article.guide.title}
             {sequential && article.guide.parts.length > 1
               ? ` · Part ${article.position + 1} of ${article.guide.parts.length}`
-              : " · Complete recap"}
+              : " · Lesson"}
           </p>
           <h1>{article.part.title}</h1>
           <p className="lesson-focus">{article.part.description}</p>
@@ -97,7 +96,6 @@ export default async function GuidePage({ params }: Props) {
                 .map((entry) => (
                   <Link key={entry.slug} href={guideUrl(guide, entry.slug)}>
                     {entry.label || entry.title}
-                    <ArrowRight size={15} />
                   </Link>
                 ))}
             </nav>
@@ -107,12 +105,13 @@ export default async function GuidePage({ params }: Props) {
               <span>
                 Continue<strong>{next.title}</strong>
               </span>
-              <ArrowRight size={19} />
             </Link>
           ) : (
-            <Link className="guide-back" href="/#guides">
-              <ArrowLeft size={15} />
-              Back to field guides
+            <Link
+              className="guide-back"
+              href={`/guides/${article.guide.slug}/`}
+            >
+              Back to playlist
             </Link>
           )}
         </div>

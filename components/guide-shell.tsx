@@ -1,8 +1,9 @@
 "use client";
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Brand } from "./brand";
+import { LanguageSelect } from "./language-select";
 import { useNavigationMenu } from "@/hooks/use-navigation-menu";
 import { guideUrl, cheatsheetUrl } from "@/lib/guide-utils";
 import type { Guide, Cheatsheet } from "@/lib/types";
@@ -61,35 +62,49 @@ export function GuideShell({
           </button>
         </div>
         <Link className="all-courses" href="/">
-          <ArrowLeft size={14} /> All topics
+          All topics
         </Link>
         <div className="sidebar-list guide-navigation">
-          <nav aria-label="Field guides">
-            <h2 className="guide-nav-label">Field guides</h2>
+          <nav aria-label="Playlists">
+            <h2 className="guide-nav-label">Playlists</h2>
             {guides.map((item) => (
-              <section className="guide-nav-group" key={item.slug}>
-                <h3>{item.title}</h3>
+              <details
+                className="guide-nav-group"
+                key={item.slug}
+                open={item.slug === guide.slug}
+              >
+                <summary>{item.title}</summary>
+                <Link
+                  className="playlist-overview-link"
+                  href={`/guides/${item.slug}/`}
+                  onClick={() => setMenu(false)}
+                >
+                  Playlist overview
+                </Link>
                 {item.parts.map((entry, index) => {
                   const active =
                     !cheatsheet &&
                     item.slug === guide.slug &&
                     entry.slug === partSlug;
                   return (
-                    <Link
-                      className={`nav-chapter ${active ? "active" : ""}`}
-                      key={entry.slug}
-                      href={guideUrl(item.slug, entry.slug)}
-                      aria-current={active ? "page" : undefined}
-                      onClick={() => setMenu(false)}
-                    >
-                      {item.sequential !== false && item.parts.length > 1 && (
+                    <div key={entry.slug}>
+                      {entry.module &&
+                        entry.module !== item.parts[index - 1]?.module && (
+                          <p className="nav-module">{entry.module}</p>
+                        )}
+                      <Link
+                        className={`nav-chapter ${active ? "active" : ""}`}
+                        href={guideUrl(item.slug, entry.slug)}
+                        aria-current={active ? "page" : undefined}
+                        onClick={() => setMenu(false)}
+                      >
                         <span className="nav-number">{index + 1}</span>
-                      )}
-                      <span>{entry.label || entry.title}</span>
-                    </Link>
+                        <span>{entry.label || entry.title}</span>
+                      </Link>
+                    </div>
                   );
                 })}
-              </section>
+              </details>
             ))}
           </nav>
           <nav className="cheatsheet-navigation" aria-label="Cheatsheets">
@@ -110,7 +125,7 @@ export function GuideShell({
           </nav>
         </div>
         <Link className="sidebar-footer guide-practice-link" href="/#courses">
-          Coding & design practice <ArrowRight size={13} />
+          Coding & design practice
         </Link>
       </aside>
       <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
@@ -123,7 +138,11 @@ export function GuideShell({
             >
               <Menu size={19} />
             </button>
-            <span>{cheatsheet ? "Cheatsheets" : guide.title}</span>
+            {cheatsheet ? (
+              <span>Cheatsheets</span>
+            ) : (
+              <Link href={`/guides/${guide.slug}/`}>{guide.title}</Link>
+            )}
             <span className="breadcrumb-slash">/</span>
             <span className="breadcrumb-title">
               {cheatsheet?.title || part.title}
@@ -133,11 +152,11 @@ export function GuideShell({
             <div className="chapter-pager">
               {previous && (
                 <Link
-                  className="icon-button"
+                  className="pager-link"
                   href={guideUrl(guide.slug, previous.slug)}
                   aria-label="Previous part"
                 >
-                  <ArrowLeft size={17} />
+                  Previous
                 </Link>
               )}
               <span>
@@ -145,11 +164,11 @@ export function GuideShell({
               </span>
               {next && (
                 <Link
-                  className="icon-button"
+                  className="pager-link"
                   href={guideUrl(guide.slug, next.slug)}
                   aria-label="Next part"
                 >
-                  <ArrowRight size={17} />
+                  Next
                 </Link>
               )}
             </div>
@@ -159,7 +178,7 @@ export function GuideShell({
               className="reference-header-link"
               href={guideUrl(guide.slug, partSlug)}
             >
-              Read recap
+              Read lesson
             </Link>
           ) : part.cheatsheet ? (
             <Link
@@ -169,6 +188,7 @@ export function GuideShell({
               Cheatsheet
             </Link>
           ) : null}
+          <LanguageSelect />
         </header>
         {children}
       </main>

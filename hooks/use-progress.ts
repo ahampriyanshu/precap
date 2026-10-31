@@ -18,7 +18,8 @@ export function useProgress(chapters: Chapter[]) {
         if (chapter.practiceKind === "diagram") continue;
         const saved = loadWork(chapter.id);
         if (saved) begun.add(chapter.id);
-        if (saved?.final || saved?.localCompleted) complete.add(chapter.id);
+        if (saved?.final || (chapter.native && saved?.localCompleted))
+          complete.add(chapter.id);
       }
       if (chapters.some((chapter) => chapter.practiceKind === "diagram")) {
         const progress = await loadDiagramProgress().catch(() => []);

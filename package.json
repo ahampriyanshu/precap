@@ -5,13 +5,18 @@
   "scripts": {
     "dev": "node scripts/prepare-runtime.mjs && next dev --hostname 127.0.0.1",
     "build": "node scripts/prepare-runtime.mjs && next build",
+    "deploy": "node scripts/deploy.mjs",
     "start": "node scripts/serve.mjs",
     "typecheck": "tsc --noEmit",
-    "format:check": "prettier --check app components hooks lib scripts tests public/python.worker.js package.json guides.json cheatsheets.json tsconfig.json next.config.ts playwright.config.ts",
+    "format:check": "prettier --check app components hooks lib scripts tests public/python.worker.js public/javascript.worker.js public/javascript-runtime.mjs public/compiled.worker.js public/compiled-runtime.mjs public/compiled-protocol.mjs package.json guides.json cheatsheets.json tsconfig.json next.config.ts playwright.config.ts",
     "test": "node --test tests/*.test.mjs",
     "test:browser": "playwright test"
   },
   "dependencies": {
+    "@codemirror/lang-cpp": "6.0.3",
+    "@codemirror/lang-go": "6.0.1",
+    "@codemirror/lang-java": "6.0.2",
+    "@codemirror/lang-javascript": "6.2.5",
     "@codemirror/lang-python": "^6.2.1",
     "@codemirror/language": "6.13.1",
     "@codemirror/view": "^6.38.6",

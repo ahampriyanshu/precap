@@ -2,6 +2,9 @@ import "server-only";
 import { createHighlighterCoreSync } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 import githubDark from "shiki/themes/github-dark-default.mjs";
+import go from "shiki/langs/go.mjs";
+import java from "shiki/langs/java.mjs";
+import cpp from "shiki/langs/cpp.mjs";
 import python from "shiki/langs/python.mjs";
 import javascript from "shiki/langs/javascript.mjs";
 import typescript from "shiki/langs/typescript.mjs";
@@ -52,10 +55,26 @@ const promql = {
   ],
 };
 
+const logql = {
+  ...promql,
+  name: "logql",
+  scopeName: "source.logql",
+  patterns: [
+    ...promql.patterns,
+    {
+      name: "keyword.control.logql",
+      match: "\\b(?:json|logfmt|line_format|label_format|unwrap|drop|keep)\\b",
+    },
+  ],
+};
+
 const highlighter = createHighlighterCoreSync({
   themes: [githubDark],
   langs: [
     python,
+    go,
+    java,
+    cpp,
     javascript,
     typescript,
     jsx,
@@ -74,6 +93,7 @@ const highlighter = createHighlighterCoreSync({
     groovy,
     ini,
     promql,
+    logql,
   ],
   engine: createJavaScriptRegexEngine(),
 });

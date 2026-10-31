@@ -37,7 +37,7 @@ Client -> Metadata API -> Upload manifest / ready metadata
 Staging byte storage -> Published object -> Download client
 ```
 
-Use `POST /uploads`, numbered part writes, completion, and abort. The manifest records owner, target key, expected size or part count, checksums, and state. Completion validates part identity, order, size, and assembled integrity. A checksum detects corruption, not authorization or safe content. S3’s [multipart documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html) illustrates independent part transfer and ordered completion.
+Use `POST /uploads`, numbered part writes, completion, and abort. The manifest records owner, target key, expected size or part count, checksums, and state. Completion validates part identity, order, size, and assembled integrity. A checksum detects corruption, not authorization or safe content.
 
 Once immutable bytes are finalized and verified, a relational metadata variant can publish their exact version:
 
@@ -62,7 +62,7 @@ Direct transfer reduces application bandwidth but adds capability expiry and lif
 
 Multipart storage suits backups, video assets, and large exports. Measure part retries, checksum failures, completion latency, ready-record/object mismatches, orphan bytes, and cleanup age. Apply per-tenant byte quotas and limits on active uploads, not just request counts. Never treat a user-provided filename as a trusted filesystem path.
 
-Amazon S3's [multipart documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html) describes independent part uploads, ordered completion, integrity checking, and cleanup obligations.
+Multipart uploads need independent part transfers, ordered completion, integrity checking, and cleanup of abandoned transfers.
 
 ## Practice
 

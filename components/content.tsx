@@ -43,15 +43,30 @@ export function Content({
               {children}
             </h2>
           ),
-          a: ({ children, href }) => (
-            <a
-              href={href}
-              target={href?.startsWith("http") ? "_blank" : undefined}
-              rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
-            >
-              {children}
-            </a>
-          ),
+          a: ({ children, href }) =>
+            href &&
+            ((href.startsWith("/") && !href.startsWith("//")) ||
+              href.startsWith("#")) ? (
+              <a href={href}>{children}</a>
+            ) : (
+              <>{children}</>
+            ),
+          img: ({ src, alt }) =>
+            typeof src === "string" && src.startsWith("/diagrams/") ? (
+              <span
+                className="diagram-frame"
+                role="region"
+                aria-label={`Diagram: ${alt || "mechanism illustration"}`}
+                tabIndex={0}
+              >
+                <img
+                  src={src}
+                  alt={alt || ""}
+                  loading="lazy"
+                  className="lesson-diagram"
+                />
+              </span>
+            ) : null,
         }}
       >
         {markdown}

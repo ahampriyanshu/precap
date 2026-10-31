@@ -46,7 +46,7 @@ except TypeError:
 
 The output is `['stable', 'changed']` followed by `list field is unhashable`. No field was rebound: the referenced list changed internally. A frozen dataclass with equality normally receives a generated hash, but calculating it still requires hashable field values. Prefer tuples of immutable values when stable value semantics are required. `unsafe_hash=True` does not make mutable identity safe; it only requests a method whose correctness remains the author's responsibility.
 
-Use `field(default_factory=...)` for per-instance mutable defaults, and put non-default fields before defaulted fields in an ordinary generated initializer. A factory controls new-instance defaults, not copies: replacing a record with `dataclasses.replace` normally reuses unchanged field objects. Use `__post_init__` for a documented construction rule, remembering that later mutations of a mutable field can bypass that initial check. See [frozen dataclass semantics](https://docs.python.org/3.12/library/dataclasses.html#frozen-instances).
+Use `field(default_factory=...)` for per-instance mutable defaults, and put non-default fields before defaulted fields in an ordinary generated initializer. A factory controls new-instance defaults, not copies: replacing a record with `dataclasses.replace` normally reuses unchanged field objects. Use `__post_init__` for a documented construction rule, remembering that later mutations of a mutable field can bypass that initial check.
 
 ## Practical uses and tradeoffs
 
@@ -54,7 +54,6 @@ Dataclasses suit configuration records, parsed rows, and named results with a st
 
 Type hints such as `str | None`, `list[int]`, and `Callable` express absence, element types, and callbacks for static tools. The generated initializer does not parse external input or enforce those annotations. Decide whether runtime validation belongs in the parser, constructor, or public API, and avoid assuming that an annotated object must have passed it. A type checker can catch some invalid calls before execution; tests and boundary validation still check behavior and values.
 
-Further reading: [Dataclasses reference](https://docs.python.org/3.12/library/dataclasses.html); [Typing reference](https://docs.python.org/3.12/library/typing.html).
 
 ## Practice
 

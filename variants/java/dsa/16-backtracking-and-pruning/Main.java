@@ -1,0 +1,55 @@
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+
+public class Main {
+    static int passed, failed;
+    static boolean prototype;
+    interface Checked { void run() throws Exception; }
+    static void test(String name, Checked body) {
+        try { body.run(); passed++; System.out.println("PASS " + name); }
+        catch (Throwable error) { failed++; System.out.println("FAIL " + name + ": " + error); }
+    }
+    static void eq(Object actual, Object expected) {
+        if(actual instanceof Map<?,?> a && expected instanceof Map<?,?> b && !new ArrayList<>(a.keySet()).equals(new ArrayList<>(b.keySet()))) throw new AssertionError("map key order differs");
+        if (!Objects.deepEquals(actual, expected)) throw new AssertionError("expected " + show(expected) + ", got " + show(actual));
+    }
+    static String show(Object value) { return Arrays.deepToString(new Object[]{value}); }
+    static void yes(boolean condition) { if (!condition) throw new AssertionError("condition was false"); }
+    static void error(Class<? extends Throwable> kind, Checked body) throws Exception {
+        try { body.run(); } catch (Throwable e) { if (kind.isInstance(e)) return; throw new AssertionError("expected " + kind.getSimpleName() + ", got " + e,e); }
+        throw new AssertionError("expected " + kind.getSimpleName());
+    }
+    @SafeVarargs static <T> List<T> list(T... values) { return new ArrayList<>(Arrays.asList(values)); }
+    static <K,V> Map<K,V> map(Object... values) {
+        Map<K,V> result=new LinkedHashMap<>();
+        for(int i=0;i<values.length;i+=2) { @SuppressWarnings("unchecked") K k=(K)values[i]; @SuppressWarnings("unchecked") V v=(V)values[i+1]; result.put(k,v); }
+        return result;
+    }
+    static void suites() throws Exception {
+        test("must undo the first choice", () -> { List<List<String>> a0=list(list("A","B"),list("A")); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),list("B","A")); } finally { eq(show(new Object[]{a0}),before); } });
+        test("impossible", () -> { List<List<String>> a0=list(list("A"),list("A")); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),null); } finally { eq(show(new Object[]{a0}),before); } });
+        test("no positions", () -> { List<List<String>> a0=list(); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),list()); } finally { eq(show(new Object[]{a0}),before); } });
+        test("no allowed choice", () -> { List<List<String>> a0=list(list()); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),null); } finally { eq(show(new Object[]{a0}),before); } });
+        test("allowed choices 0", () -> { List<List<String>> a0=list(); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),list()); } finally { eq(show(new Object[]{a0}),before); } });
+        test("allowed choices 1", () -> { List<List<String>> a0=list(list("D","D","B")); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),list("B")); } finally { eq(show(new Object[]{a0}),before); } });
+        test("allowed choices 2", () -> { List<List<String>> a0=list(list("B"),list("B","D","A")); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),list("B","A")); } finally { eq(show(new Object[]{a0}),before); } });
+        test("allowed choices 3", () -> { List<List<String>> a0=list(list("B"),list(),list("D","B")); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),null); } finally { eq(show(new Object[]{a0}),before); } });
+        test("allowed choices 4", () -> { List<List<String>> a0=list(list("D"),list("D","D","B","B"),list("C"),list("B","A")); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),list("D","B","C","A")); } finally { eq(show(new Object[]{a0}),before); } });
+        test("allowed choices 5", () -> { List<List<String>> a0=list(list("D","C","A","B"),list("B","B","A","D"),list("D"),list("C","B","D","A"),list("D")); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),null); } finally { eq(show(new Object[]{a0}),before); } });
+        test("allowed choices 6", () -> { List<List<String>> a0=list(list(),list("A","A","B"),list("A","C","B"),list(),list("C","A","C","C"),list("A")); String before=show(new Object[]{a0}); try { eq(prototype ? Exercise.prototype(a0) : Exercise.solve(a0),null); } finally { eq(show(new Object[]{a0}),before); } });
+
+        if(!prototype) test("final scale and structure boundary", () -> { List<List<String>> a=new ArrayList<>();for(int i=0;i<200;i++)a.add(list("x"+i));var out=Exercise.solve(a);eq(out.size(),200);eq(out.get(199),"x199"); });
+    }
+    public static void main(String[] args) throws Exception {
+        String stage="final";
+        if(args.length!=0) {
+            if(args.length!=2 || !args[0].equals("--stage")) { System.err.println("Usage: java Main --stage prototype|final"); System.exit(2); }
+            stage=args[1];
+        }
+        if(!stage.equals("prototype") && !stage.equals("final")) { System.err.println("Unknown stage: " + stage); System.exit(2); }
+        prototype=stage.equals("prototype"); suites();
+        System.out.println("RESULT stage="+stage+" passed="+passed+" failed="+failed);
+        if(failed>0 || passed==0) System.exit(1);
+    }
+}

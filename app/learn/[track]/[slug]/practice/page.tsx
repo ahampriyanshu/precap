@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Workspace } from "@/components/workspace";
-import { chapters, getLesson } from "@/lib/curriculum";
+import { chapters, chaptersForLanguage, getLesson } from "@/lib/curriculum";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -24,6 +24,11 @@ export default async function PracticePage({
   const lesson = getLesson(track, slug);
   if (!lesson) notFound();
   return (
-    <Workspace key={lesson.id} lesson={lesson} chapters={chapters} practice />
+    <Workspace
+      key={lesson.id}
+      lesson={lesson}
+      chapters={chaptersForLanguage(lesson.language || "python")}
+      practice
+    />
   );
 }

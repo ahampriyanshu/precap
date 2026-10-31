@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc">
+<title id="title">The runtime owns permissions, effects, and recovery</title><desc id="desc">Durable state feeds a model proposal, which must pass validation and policy before a bounded tool runs. The observation is persisted before another step. Final claims require outcome checks. A tool result cannot bypass policy.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#526176"/></marker></defs>
+<rect width="900" height="470" rx="18" fill="#f8fafc"/>
+<g font-family="system-ui,-apple-system,sans-serif">
+<text x="28" y="36" fill="#172033" font-size="21" font-weight="650">The runtime owns permissions, effects, and recovery</text>
+<rect x="28" y="89" width="186" height="100" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="121.0" y="116" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Durable task state</text>
+<text x="121.0" y="140" text-anchor="middle" fill="#526176" font-size="15">identity + budgets</text>
+<text x="121.0" y="162" text-anchor="middle" fill="#526176" font-size="15">events + typed state</text>
+<rect x="250" y="89" width="186" height="100" rx="10" fill="#dbeafe" stroke="#cbd5e1"/>
+<text x="343.0" y="116" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Model proposal</text>
+<text x="343.0" y="140" text-anchor="middle" fill="#526176" font-size="15">next tool or final</text>
+<text x="343.0" y="162" text-anchor="middle" fill="#526176" font-size="15">not an authority</text>
+<rect x="472" y="89" width="186" height="100" rx="10" fill="#ccfbf1" stroke="#cbd5e1"/>
+<text x="565.0" y="116" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Policy + validation</text>
+<text x="565.0" y="140" text-anchor="middle" fill="#526176" font-size="15">scope + arguments</text>
+<text x="565.0" y="162" text-anchor="middle" fill="#526176" font-size="15">effect + approval</text>
+<rect x="694" y="89" width="178" height="100" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="783.0" y="116" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Bounded tool</text>
+<text x="783.0" y="140" text-anchor="middle" fill="#526176" font-size="15">stable operation ID</text>
+<text x="783.0" y="162" text-anchor="middle" fill="#526176" font-size="15">deadline + limits</text>
+<path d="M214 139 L250 139" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M436 139 L472 139" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M658 139 L694 139" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="472" y="263" width="186" height="92" rx="10" fill="white" stroke="#cbd5e1"/>
+<text x="565.0" y="290" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Persist observation</text>
+<text x="565.0" y="314" text-anchor="middle" fill="#526176" font-size="15">reconcile pending effects</text>
+<text x="565.0" y="336" text-anchor="middle" fill="#526176" font-size="15">record authoritative state</text>
+<path d="M783 189 V309 H658" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M472 309 H121 V189" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="28" y="252" fill="#172033" font-size="16" text-anchor="start">Resume from committed events.</text>
+<text x="28" y="279" fill="#526176" font-size="15" text-anchor="start">Do not replay external writes blindly.</text>
+<rect x="694" y="263" width="178" height="92" rx="10" fill="#ccfbf1" stroke="#cbd5e1"/>
+<text x="783.0" y="290" text-anchor="middle" fill="#172033" font-size="17" font-weight="650">Final outcome</text>
+<text x="783.0" y="314" text-anchor="middle" fill="#526176" font-size="15">verify task contract</text>
+<text x="783.0" y="336" text-anchor="middle" fill="#526176" font-size="15">accept or incomplete</text>
+<path d="M565 189 V222 H783 V263" fill="none" stroke="#526176" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 4"/>
+<text x="28" y="410" fill="#526176" font-size="15" text-anchor="start">Process loss after dispatch requires reconciliation, not an assumption that nothing happened.</text>
+<text x="28" y="438" fill="#526176" font-size="15" text-anchor="start">An expired lease, canceled stream, or fluent success message does not undo an external effect.</text>
+</g></svg>

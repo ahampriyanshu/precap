@@ -1,0 +1,57 @@
+Precap Java 17 browser runtime
+
+CheerpJ Core 4.3
+  Loaded only from https://cjrtnc.leaningtech.com/4.3/loader.js.
+  CheerpJ Core is not included in this directory or redistributed by this app.
+  Personal and FOSS use of its official CDN is permitted by the Community License.
+  Self-hosting Core requires a separate commercial license. Preserve visible
+  CheerpJ attribution in the application.
+  Project: https://cheerpj.com/
+  Terms: https://cheerpj.com/docs/licensing
+
+Eclipse Compiler for Java 3.42.0
+  License: Eclipse Public License 2.0.
+  Original compiler class bytes are retained unchanged from Maven Central.
+  JAR signature metadata is removed because this bundle adds API signatures
+  and the Precap helper. The original artifact identity is in manifest.json.
+  Project: https://github.com/eclipse-jdt/eclipse.jdt.core
+  Original artifact:
+  https://repo.maven.apache.org/maven2/org/eclipse/jdt/ecj/3.42.0/ecj-3.42.0.jar
+  Original license: licenses/ecj-EPL-2.0.txt
+
+Java 17 API signatures
+  License: GNU GPL version 2 with Classpath Exception.
+  The 4,692 Java 17 API signatures and index are retained unchanged from the
+  pinned Zero2Leetcode bootstrap JAR. They were extracted from Eclipse Temurin
+  21.0.12+8 lib/ct.sym, using release H entries and omitting module descriptors.
+  These are compiler type signatures; the Temurin JVM is not embedded here.
+  OpenJDK source revision:
+  https://github.com/adoptium/jdk21u/tree/04806bcb1d50b35efc1c22a4d3b082c9a9a47563
+  Original license/notices:
+    licenses/java-api-GPL-2.0-with-Classpath-exception.txt
+    licenses/java-api-ADDITIONAL_LICENSE_INFO.txt
+    licenses/java-api-ASSEMBLY_EXCEPTION.txt
+    licenses/temurin-NOTICE.txt
+  Complete original module notices and provenance:
+  https://github.com/cyberspace-cs/zero2Leetcode/tree/193ea2aa099ba4b442809341d8fd3bb155137bab/third_party/temurin-21.0.12%2B8
+
+Browser compiler helper
+  Derived from cyberspace-cs/zero2Leetcode at revision:
+  193ea2aa099ba4b442809341d8fd3bb155137bab
+  The upstream README declares "MIT License © 2026". That revision has no
+  standalone MIT license file. The unmodified original README declaration and
+  original third-party notice file are preserved in licenses/.
+  Source:
+  https://github.com/cyberspace-cs/zero2Leetcode/tree/193ea2aa099ba4b442809341d8fd3bb155137bab/tools/java-browser-runner
+  Changes: multi-file source compilation, explicit stage arguments, separate
+  compile/run APIs, English diagnostics with original filenames and line
+  numbers, source/line debug attributes, and System.exit interception.
+  Modified helper source and portable build recipe:
+  scripts/browser-runtime-java/PrecapJavaRunner.java
+  scripts/browser-runtime-java/README.md
+
+Asset hashes and exact source identities are recorded in manifest.json.
+User programs compile and run inside a dedicated browser worker. There is no
+server execution endpoint and no native Java compiler process in this path.
+The compiler JAR URL includes its SHA-256 so future builds receive distinct
+cache identities. The worker verifies those bytes before loading the JAR.

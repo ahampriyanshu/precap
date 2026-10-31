@@ -55,7 +55,7 @@ while next_offset in completed:
 commit(group, generation, partition, next_offset)  # Now 12.
 ```
 
-A crash before 10 finishes replays both 10 and 11. Repetition is the cost of avoiding loss. The broker must reject an obsolete generation’s commit, and the business destination needs idempotency if replay could repeat effects. [Kafka’s design documentation](https://kafka.apache.org/40/design/design/) explains the additional cooperation required for effects outside the log.
+A crash before 10 finishes replays both 10 and 11. Repetition is the cost of avoiding loss. The broker must reject an obsolete generation’s commit, and the business destination needs idempotency if replay could repeat effects.
 
 Expose append, bounded poll, and commit APIs; persist records under `(topic, partition, offset)` and progress under `(group, topic, partition)`. Commit stores the next offset to read, not merely the most recently observed result. Stable partition placement orders appends per key; if business effects themselves must be ordered, serialize those effects too. Concurrent completion can otherwise invert them.
 
