@@ -54,6 +54,7 @@ try {
   run("git init", outDir);
   run(`git config user.name "${userName}"`, outDir);
   run(`git config user.email "${userEmail}"`, outDir);
+  run("git config http.postBuffer 524288000", outDir);
   run("git checkout -B gh-pages", outDir);
   run("git add -A", outDir);
   run(
