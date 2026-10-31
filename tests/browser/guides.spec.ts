@@ -115,7 +115,10 @@ test("mobile curriculum navigation contains focus and supports switching playlis
   await expect(
     dialog.getByRole("button", { name: "Close navigation", exact: true }),
   ).toBeFocused();
-  await dialog.locator("summary").filter({ hasText: "AI Engineering" }).click();
+  await dialog
+    .locator("summary")
+    .filter({ hasText: "Agentic Engineering" })
+    .click();
   const ai = guides.find((guide) => guide.slug === "ai-engineering")!;
   await dialog
     .locator(`a[href="/guides/ai-engineering/${ai.parts[0].slug}/"]`)

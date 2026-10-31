@@ -536,7 +536,7 @@
     },
     {
       "slug": "ai-engineering",
-      "title": "AI Engineering",
+      "title": "Agentic Engineering",
       "description": "From learning, tokens, and attention to retrieval, adaptation, GPU serving, evaluated agents, and production systems.",
       "parts": [
         {
