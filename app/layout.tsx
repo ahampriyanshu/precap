@@ -6,11 +6,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "precap — a refresher for senior engineers",
+    default: "Precap",
     template: "%s · precap",
   },
-  description:
-    "Refresh the decisions behind shipping software, reliability, product, and AI. Compact guides for senior and staff engineers, alongside coding and system design practice.",
+  description: "Deadline Driven Preparation",
   icons: { icon: "/icon.svg" },
 };
 
