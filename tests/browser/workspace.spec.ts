@@ -101,7 +101,7 @@ test("LLD is discoverable and teaches the design before opening browser practice
   await expect(
     page.getByRole("heading", { name: "Low-level design", exact: true }),
   ).toBeVisible();
-  await expect(course).toContainText("15 lessons");
+  await expect(course).toContainText("15 completed");
   await page
     .getByRole("textbox", { name: "Search topics" })
     .fill("parking lot");
@@ -170,7 +170,7 @@ test("HLD is discoverable and opens an architecture canvas after the lesson", as
   await expect(
     page.getByRole("heading", { name: "High-level design", exact: true }),
   ).toBeVisible();
-  await expect(course).toContainText("15 lessons");
+  await expect(course).toContainText("15 reviewed");
   await page
     .getByRole("textbox", { name: "Search topics" })
     .fill("URL Shortener");

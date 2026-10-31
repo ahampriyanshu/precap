@@ -59,7 +59,6 @@ function Course({
     <article className={`path-course track-${track}`}>
       <div className="path-course-heading">
         <h3>{title}</h3>
-        <span>{items.length} lessons</span>
       </div>
       {track !== "lld" && track !== "hld" && (
         <p>{courses[track].description}</p>
