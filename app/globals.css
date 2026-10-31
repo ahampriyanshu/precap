@@ -2295,19 +2295,19 @@ input::placeholder {
 
 /* The same programming-language preference is available throughout the site. */
 .language-select {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   flex-shrink: 0;
   gap: 8px;
   border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--white);
-  padding: 9px 11px;
+  border-radius: 5px;
+  background: #fff;
+  padding: 8px 12px;
   color: var(--accent);
-}
-.language-select-label {
-  font-size: 11px;
-  color: var(--muted);
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 .language-select select {
   appearance: none;
@@ -2315,15 +2315,14 @@ input::placeholder {
   border-radius: 0;
   color: var(--ink);
   background: transparent;
-  font: 500 12px var(--sans);
-  padding: 0;
-  min-width: 58px;
-  max-width: 145px;
+  font: 550 13px/1.2 var(--sans);
+  padding: 0 4px 0 0;
   cursor: pointer;
 }
 .language-select:focus-within {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  border-color: #898989;
+  box-shadow: 0 0 0 2px #ececec;
+  outline: none;
 }
 .language-select select:focus-visible {
   outline: none;
@@ -2348,27 +2347,16 @@ input::placeholder {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
-@media (max-width: 900px) {
-  .studio-header .language-select-label {
-    display: none;
-  }
-}
 @media (max-width: 600px) {
-  .language-select-label {
-    display: none;
-  }
   .language-select {
     gap: 6px;
-    padding: 8px;
+    padding: 6px 10px;
   }
   .studio-header {
     gap: 10px;
   }
   .studio-header .chapter-pager,
   .studio-header .reference-header-link {
-    display: none;
-  }
-  .studio-header .language-select > svg:first-child {
     display: none;
   }
   .studio-header .language-select select {
@@ -3039,18 +3027,6 @@ input::placeholder {
 }
 .sidebar-brand .brand {
   font: 400 30px/1 var(--serif);
-}
-.language-select {
-  border-radius: 2px;
-  border: 0;
-  background: white;
-}
-.language-select-label {
-  font-size: 12px;
-  color: var(--ink);
-}
-.language-select select {
-  font-size: 14px;
 }
 @media (max-width: 1050px) {
   .catalog-main,

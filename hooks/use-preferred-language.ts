@@ -5,13 +5,14 @@ import type { Language } from "@/lib/types";
 
 const key = "precap:practice-language:v1";
 const event = "precap:language";
-let memory: Language | null = null;
+const defaultLanguage: Language = "python";
+let memory: Language = defaultLanguage;
 let volatile = false;
-function snapshot(): Language | null {
+function snapshot(): Language {
   if (volatile) return memory;
   try {
     const stored = localStorage.getItem(key);
-    return stored && isLanguage(stored) ? stored : null;
+    return stored && isLanguage(stored) ? stored : defaultLanguage;
   } catch {
     return memory;
   }
@@ -41,6 +42,10 @@ export function setPreferredLanguage(language: Language) {
   window.dispatchEvent(new Event(event));
 }
 export function usePreferredLanguage() {
-  const language = useSyncExternalStore(subscribe, snapshot, () => null);
+  const language = useSyncExternalStore(
+    subscribe,
+    snapshot,
+    () => defaultLanguage,
+  );
   return { language, setLanguage: setPreferredLanguage };
 }

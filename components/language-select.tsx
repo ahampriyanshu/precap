@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Code2, ChevronDown } from "lucide-react";
-import type { Chapter } from "@/lib/types";
+import { ChevronDown } from "lucide-react";
+import type { Chapter, Language } from "@/lib/types";
 import {
   languages,
   languageInfo,
@@ -9,6 +9,7 @@ import {
   isSharedTrack,
 } from "@/lib/languages";
 import { usePreferredLanguage } from "@/hooks/use-preferred-language";
+import { LanguageLogo } from "./language-logo";
 
 export function LanguageSelect({
   lesson,
@@ -21,13 +22,19 @@ export function LanguageSelect({
 }) {
   const router = useRouter();
   const { language, setLanguage } = usePreferredLanguage();
+  const currentLanguage: Language =
+    (lesson?.language && isLanguage(lesson.language)
+      ? lesson.language
+      : null) ||
+    language ||
+    "python";
+
   return (
     <label className="language-select">
-      <Code2 size={15} aria-hidden="true" />
-      <span className="language-select-label">Language</span>
+      <LanguageLogo language={currentLanguage} size={15} />
       <select
         aria-label="Programming language"
-        value={lesson?.language || language || ""}
+        value={currentLanguage}
         onChange={(event) => {
           const value = event.target.value;
           if (!isLanguage(value)) return;
@@ -42,9 +49,6 @@ export function LanguageSelect({
             router.push(`/learn/${target}/${practice ? "practice/" : ""}`);
         }}
       >
-        <option value="" disabled>
-          Choose language
-        </option>
         {languages.map((value) => (
           <option key={value} value={value}>
             {languageInfo[value].label}
