@@ -272,9 +272,6 @@ export function Catalog({
       <main className="catalog-main" id="main-content" tabIndex={-1}>
         <section className="path-hero">
           <div className="hero-copy">
-            <p className="intro-kicker">
-              Interview prep for experienced engineers
-            </p>
             <h1>Engineering, revisited.</h1>
             <p className="intro-copy">
               A refresher for your next interview. Revisit the code, the
