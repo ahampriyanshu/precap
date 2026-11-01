@@ -27,7 +27,6 @@
     "@fontsource-variable/dm-sans": "5.3.0",
     "@fontsource/instrument-serif": "5.3.0",
     "@lezer/highlight": "1.2.5",
-    "@proj-airi/font-departure-mono": "0.14.1",
     "@uiw/react-codemirror": "4.25.12",
     "fflate": "^0.8.2",
     "lucide-react": "^0.468.0",
