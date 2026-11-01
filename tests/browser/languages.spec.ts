@@ -256,7 +256,9 @@ test("old native completion flags retain drafts without counting browser course 
       page.getByRole("button", { name: "Run checks" }),
     ).toBeEnabled();
     await expect(
-      page.locator(".sidebar-list .nav-number.is-complete"),
+      page.locator(
+        ".sidebar-list .guide-nav-group[open] .nav-number.is-complete",
+      ),
     ).toHaveCount(1);
     await expect(
       page.locator('.nav-chapter[aria-current="page"] .nav-number.is-complete'),
@@ -627,7 +629,7 @@ test("browser compiler desktop evidence and mobile language controls remain usab
   });
   await expect(sidebar).toBeVisible();
   await expect(
-    sidebar.getByRole("textbox", { name: "Search course lessons" }),
+    page.getByRole("textbox", { name: "Search course lessons" }),
   ).toBeVisible();
   await expect(sidebar.locator(".nav-chapter").first()).toBeVisible();
   await page.screenshot({

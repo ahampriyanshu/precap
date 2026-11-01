@@ -1,8 +1,10 @@
 "use client";
+
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { Brand } from "./brand";
+import { Menu } from "lucide-react";
+import { AppSidebar } from "./app-sidebar";
+import { NavbarSearch } from "./navbar-search";
 import { LanguageSelect } from "./language-select";
 import { useNavigationMenu } from "@/hooks/use-navigation-menu";
 import { guideUrl, cheatsheetUrl } from "@/lib/guide-utils";
@@ -32,99 +34,23 @@ export function GuideShell({
   const navigationLabel = cheatsheet
     ? "Cheatsheet navigation"
     : "Guide navigation";
+
   return (
     <div className="workspace-shell guide-mode">
       <a className="skip-link" href="#main-panel">
         Skip to {cheatsheet ? "cheatsheet" : "guide"}
       </a>
-      {menu && (
-        <button
-          className="sidebar-backdrop"
-          onClick={() => setMenu(false)}
-          aria-label={`Close ${navigationLabel.toLowerCase()}`}
-        />
-      )}
-      <aside
-        ref={sidebarRef}
-        className={`sidebar ${menu ? "is-open" : ""}`}
-        role={menu ? "dialog" : undefined}
-        aria-modal={menu || undefined}
-        aria-label={navigationLabel}
-      >
-        <div className="sidebar-brand">
-          <Brand />
-          <button
-            className="icon-button nav-close"
-            onClick={() => setMenu(false)}
-            aria-label="Close navigation"
-          >
-            <X size={18} />
-          </button>
-        </div>
-        <div className="sidebar-list guide-navigation">
-          <nav aria-label="Playlists">
-            <h2 className="guide-nav-label">Playlists</h2>
-            {guides.map((item) => (
-              <details
-                className="guide-nav-group"
-                key={item.slug}
-                open={item.slug === guide.slug}
-              >
-                <summary>{item.title}</summary>
-                <Link
-                  className="playlist-overview-link"
-                  href={`/guides/${item.slug}/`}
-                  onClick={() => setMenu(false)}
-                >
-                  Playlist overview
-                </Link>
-                {item.parts.map((entry, index) => {
-                  const active =
-                    !cheatsheet &&
-                    item.slug === guide.slug &&
-                    entry.slug === partSlug;
-                  return (
-                    <div key={entry.slug}>
-                      {entry.module &&
-                        entry.module !== item.parts[index - 1]?.module && (
-                          <p className="nav-module">{entry.module}</p>
-                        )}
-                      <Link
-                        className={`nav-chapter ${active ? "active" : ""}`}
-                        href={guideUrl(item.slug, entry.slug)}
-                        aria-current={active ? "page" : undefined}
-                        onClick={() => setMenu(false)}
-                      >
-                        <span className="nav-number">{index + 1}</span>
-                        <span>{entry.label || entry.title}</span>
-                      </Link>
-                    </div>
-                  );
-                })}
-              </details>
-            ))}
-          </nav>
-          <nav className="cheatsheet-navigation" aria-label="Cheatsheets">
-            <h2 className="guide-nav-label">Cheatsheets</h2>
-            {cheatsheets.map((sheet) => (
-              <Link
-                className={`nav-chapter ${cheatsheet?.slug === sheet.slug ? "active" : ""}`}
-                key={sheet.slug}
-                href={cheatsheetUrl(sheet.slug)}
-                aria-current={
-                  cheatsheet?.slug === sheet.slug ? "page" : undefined
-                }
-                onClick={() => setMenu(false)}
-              >
-                <span>{sheet.title}</span>
-              </Link>
-            ))}
-          </nav>
-        </div>
-        <Link className="sidebar-footer guide-practice-link" href="/#courses">
-          Coding & design practice
-        </Link>
-      </aside>
+
+      <AppSidebar
+        currentGuide={guide.slug}
+        currentPart={partSlug}
+        currentCheatsheet={cheatsheet?.slug}
+        navigationLabel={navigationLabel}
+        menu={menu}
+        setMenu={setMenu}
+        sidebarRef={sidebarRef}
+      />
+
       <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
         <header className="studio-header">
           <div className="studio-breadcrumb">
@@ -142,9 +68,12 @@ export function GuideShell({
             )}
             <span className="breadcrumb-slash">/</span>
             <span className="breadcrumb-title">
-              {cheatsheet?.title || part.title}
+              {cheatsheet?.title || part?.title || ""}
             </span>
           </div>
+
+          <NavbarSearch />
+
           {!cheatsheet && sequential && guide.parts.length > 1 && (
             <div className="chapter-pager">
               {previous && (
@@ -177,7 +106,7 @@ export function GuideShell({
             >
               Read lesson
             </Link>
-          ) : part.cheatsheet ? (
+          ) : part?.cheatsheet ? (
             <Link
               className="reference-header-link"
               href={cheatsheetUrl(part.cheatsheet)}
