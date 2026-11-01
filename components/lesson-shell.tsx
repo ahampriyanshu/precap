@@ -31,42 +31,44 @@ export function LessonShell({
         Skip to {practice ? "practice" : "lesson"}
       </a>
 
-      <AppSidebar
-        lesson={lesson}
-        chapters={chapters}
-        practice={practice}
-        currentTrack={lesson.track}
-        currentSlug={lesson.slug}
-        preferredLanguage={lesson.language}
-        completedSet={completed}
-        navigationLabel="Lesson navigation"
-        menu={menu}
-        setMenu={setMenu}
-        sidebarRef={sidebarRef}
+      <SiteHeader
+        onMenuClick={() => setMenu(true)}
+        menuAriaLabel="Open lesson navigation"
+        searchAriaLabel="Search course lessons"
+        breadcrumb={
+          <>
+            {practice ? (
+              <Link className="back-to-lesson" href={`/learn/${lesson.id}/`}>
+                Back to lesson
+              </Link>
+            ) : (
+              <span>{courses[lesson.track].title}</span>
+            )}
+            <span className="breadcrumb-slash">/</span>
+            <span className="breadcrumb-title">{lesson.title}</span>
+          </>
+        }
       />
 
-      <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
-        <SiteHeader
-          className="studio-header"
-          onMenuClick={() => setMenu(true)}
-          menuAriaLabel="Open lesson navigation"
-          searchAriaLabel="Search course lessons"
-          breadcrumb={
-            <>
-              {practice ? (
-                <Link className="back-to-lesson" href={`/learn/${lesson.id}/`}>
-                  Back to lesson
-                </Link>
-              ) : (
-                <span>{courses[lesson.track].title}</span>
-              )}
-              <span className="breadcrumb-slash">/</span>
-              <span className="breadcrumb-title">{lesson.title}</span>
-            </>
-          }
+      <div className="workspace-body">
+        <AppSidebar
+          lesson={lesson}
+          chapters={chapters}
+          practice={practice}
+          currentTrack={lesson.track}
+          currentSlug={lesson.slug}
+          preferredLanguage={lesson.language}
+          completedSet={completed}
+          navigationLabel="Lesson navigation"
+          menu={menu}
+          setMenu={setMenu}
+          sidebarRef={sidebarRef}
         />
-        {children}
-      </main>
+
+        <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

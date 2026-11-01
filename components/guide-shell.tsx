@@ -35,38 +35,40 @@ export function GuideShell({
         Skip to {cheatsheet ? "cheatsheet" : "guide"}
       </a>
 
-      <AppSidebar
-        currentGuide={guide.slug}
-        currentPart={partSlug}
-        currentCheatsheet={cheatsheet?.slug}
-        navigationLabel={navigationLabel}
-        menu={menu}
-        setMenu={setMenu}
-        sidebarRef={sidebarRef}
+      <SiteHeader
+        onMenuClick={() => setMenu(true)}
+        menuAriaLabel={`Open ${navigationLabel.toLowerCase()}`}
+        searchAriaLabel="Search course lessons"
+        breadcrumb={
+          <>
+            {cheatsheet ? (
+              <span>Cheatsheets</span>
+            ) : (
+              <Link href={`/guides/${guide.slug}/`}>{guide.title}</Link>
+            )}
+            <span className="breadcrumb-slash">/</span>
+            <span className="breadcrumb-title">
+              {cheatsheet?.title || part?.title || ""}
+            </span>
+          </>
+        }
       />
 
-      <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
-        <SiteHeader
-          className="studio-header"
-          onMenuClick={() => setMenu(true)}
-          menuAriaLabel={`Open ${navigationLabel.toLowerCase()}`}
-          searchAriaLabel="Search course lessons"
-          breadcrumb={
-            <>
-              {cheatsheet ? (
-                <span>Cheatsheets</span>
-              ) : (
-                <Link href={`/guides/${guide.slug}/`}>{guide.title}</Link>
-              )}
-              <span className="breadcrumb-slash">/</span>
-              <span className="breadcrumb-title">
-                {cheatsheet?.title || part?.title || ""}
-              </span>
-            </>
-          }
+      <div className="workspace-body">
+        <AppSidebar
+          currentGuide={guide.slug}
+          currentPart={partSlug}
+          currentCheatsheet={cheatsheet?.slug}
+          navigationLabel={navigationLabel}
+          menu={menu}
+          setMenu={setMenu}
+          sidebarRef={sidebarRef}
         />
-        {children}
-      </main>
+
+        <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

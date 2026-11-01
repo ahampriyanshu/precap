@@ -61,9 +61,6 @@ test("topic search, clear GC content, saved code, Python failures and reset", as
   await page.keyboard.press("/");
   const search = page.getByRole("textbox", { name: "Search topics" });
   await expect(search).toBeFocused();
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption("python");
   await search.fill("garbage collection");
   await expect(page.locator(".track-python .catalog-chapter")).toHaveCount(1);
   await page.locator(".track-python .catalog-chapter").click();
@@ -94,9 +91,6 @@ test("LLD is discoverable and teaches the design before opening browser practice
   page,
 }) => {
   await page.goto("/");
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption("python");
   const course = page.locator(".track-lld");
   await expect(
     page.getByRole("heading", { name: "Low-level design", exact: true }),

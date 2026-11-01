@@ -4,12 +4,15 @@ import AxeBuilder from "@axe-core/playwright";
 test("first visit asks for a language and presents the ordered interview path", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/learn/dsa/01-arrays-and-linear-scans/");
   const language = page.getByRole("combobox", {
     name: "Programming language",
     exact: true,
   });
   await expect(language).toHaveValue("python");
+  await language.selectOption("go");
+  await expect(page).toHaveURL("/learn/dsa/01-arrays-and-linear-scans/go/");
+  await page.goto("/");
   await expect(page.locator(".site-header a")).toHaveCount(1);
   await expect(page.locator(".learning-path > li h2")).toHaveText([
     "Machine coding",
@@ -17,9 +20,6 @@ test("first visit asks for a language and presents the ordered interview path", 
     "Low-level design",
     "High-level design",
   ]);
-  await expect(page.locator(".track-python")).toBeVisible();
-  await language.selectOption("go");
-  await expect(language).toHaveValue("go");
   await expect(page.locator(".track-go")).toBeVisible();
   for (const section of ["courses", "guides", "cheatsheets"]) {
     await page.goto(`/#${section}`);
@@ -40,7 +40,7 @@ test("first visit asks for a language and presents the ordered interview path", 
     "/learn/lld/01-parking-lot/go/",
   );
   await page.reload();
-  await expect(language).toHaveValue("go");
+  await expect(page.locator(".track-go")).toBeVisible();
   await expect(page.locator(".supplementary-section .guide-card")).toHaveCount(
     4,
   );
@@ -54,7 +54,7 @@ test("language preference stays in sync across navbar, guides, tabs and practice
   page,
   context,
 }) => {
-  await page.goto("/");
+  await page.goto("/guides/backend/");
   await page
     .getByRole("combobox", { name: "Programming language", exact: true })
     .selectOption("python");
@@ -69,6 +69,7 @@ test("language preference stays in sync across navbar, guides, tabs and practice
   await expect(
     page.getByRole("combobox", { name: "Programming language", exact: true }),
   ).toHaveValue("java");
+  await page.goto("/");
   await expect(page.locator(".track-java")).toBeVisible();
   await page.goto("/learn/lld/01-parking-lot/go/practice/");
   await page
@@ -94,7 +95,7 @@ test("language preference stays in sync across navbar, guides, tabs and practice
   await expect(
     page.getByRole("textbox", { name: "Go code editor", exact: true }),
   ).toContainText("preserved Go draft");
-  await page.goto("/");
+  await page.goto("/guides/frontend/");
   await expect(
     page.getByRole("combobox", { name: "Programming language", exact: true }),
   ).toHaveValue("go");
@@ -108,13 +109,17 @@ test("invalid or unavailable preference storage keeps first-visit choice usable 
     localStorage.setItem("precap:practice-language:v1", "invalid-language");
   });
   await page.setViewportSize({ width: 320, height: 820 });
-  await page.goto("/");
-  const language = page.getByRole("combobox", {
+  await page.goto("/learn/dsa/01-arrays-and-linear-scans/");
+  await page.getByRole("button", { name: "Open lesson navigation" }).click();
+  const sidebar = page.getByRole("dialog", { name: "Lesson navigation" });
+  const language = sidebar.getByRole("combobox", {
     name: "Programming language",
     exact: true,
   });
   await expect(language).toHaveValue("python");
   await language.selectOption("cpp");
+  await expect(page).toHaveURL("/learn/dsa/01-arrays-and-linear-scans/cpp/");
+  await page.goto("/");
   await expect(page.locator(".track-cpp")).toBeVisible();
   expect(
     await page.evaluate(
@@ -141,13 +146,17 @@ test("source choice remains usable when preference writes are blocked", async ({
       return set.call(this, key, value);
     };
   });
-  await page.goto("/");
+  await page.goto("/learn/dsa/01-arrays-and-linear-scans/");
   await page
     .getByRole("combobox", { name: "Programming language", exact: true })
     .selectOption("javascript");
+  await expect(page).toHaveURL(
+    "/learn/dsa/01-arrays-and-linear-scans/javascript/",
+  );
   await expect(
     page.getByRole("combobox", { name: "Programming language", exact: true }),
   ).toHaveValue("javascript");
+  await page.goto("/");
   await expect(page.locator(".track-javascript")).toBeVisible();
   await page
     .locator('.supplementary-section a[href="/guides/frontend/"]')

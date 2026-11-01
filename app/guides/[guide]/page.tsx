@@ -46,7 +46,6 @@ export default async function PlaylistPage({ params }: Props) {
         Skip to curriculum
       </a>
       <SiteHeader
-        showBrand={true}
         searchAriaLabel="Search course lessons"
         breadcrumb={<span className="breadcrumb-title">{guide.title}</span>}
       />

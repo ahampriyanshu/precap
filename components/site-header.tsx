@@ -5,7 +5,6 @@ import { NavbarSearch } from "./navbar-search";
 
 export interface SiteHeaderProps {
   breadcrumb?: ReactNode;
-  showBrand?: boolean;
   onMenuClick?: () => void;
   menuAriaLabel?: string;
   query?: string;
@@ -18,7 +17,6 @@ export interface SiteHeaderProps {
 
 export function SiteHeader({
   breadcrumb,
-  showBrand,
   onMenuClick,
   menuAriaLabel = "Open navigation",
   query,
@@ -28,8 +26,6 @@ export function SiteHeader({
   showDropdown,
   className = "",
 }: SiteHeaderProps = {}) {
-  const shouldShowBrand = showBrand ?? !breadcrumb;
-
   return (
     <header className={`site-header ${className}`.trim()}>
       <div className="header-left">
@@ -43,11 +39,13 @@ export function SiteHeader({
             <Menu size={19} />
           </button>
         )}
-        {shouldShowBrand && <Brand />}
-        {shouldShowBrand && breadcrumb && (
-          <span className="breadcrumb-slash">/</span>
+        <Brand />
+        {breadcrumb && (
+          <div className="studio-breadcrumb">
+            <span className="breadcrumb-slash">/</span>
+            {breadcrumb}
+          </div>
         )}
-        {breadcrumb && <div className="studio-breadcrumb">{breadcrumb}</div>}
       </div>
 
       <NavbarSearch

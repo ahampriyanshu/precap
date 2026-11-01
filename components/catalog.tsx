@@ -3,7 +3,6 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { SiteHeader } from "./site-header";
-import { LanguageSelect } from "./language-select";
 import { ConceptIllustration } from "./concept-illustration";
 import { hasConceptArt } from "@/lib/concept-art";
 import { useProgress } from "@/hooks/use-progress";
@@ -272,9 +271,6 @@ export function Catalog({
         <section className="path-hero">
           <div className="hero-copy">
             <h1>Deadline Driven Preparation</h1>
-            <div className="hero-language-wrapper">
-              <LanguageSelect />
-            </div>
           </div>
         </section>
         <div id="courses" className="curriculum-container">

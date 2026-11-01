@@ -96,28 +96,28 @@ export function stopCpp() {}
 test("all five fundamentals and language-specific shared routes are discoverable", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/guides/frontend/");
   for (const language of languages) {
     const chapter = manifest.find((item) => item.track === language);
     expect(chapter, `${language} fundamentals missing`).toBeTruthy();
     await page
       .getByRole("combobox", { name: "Programming language", exact: true })
       .selectOption(language);
+    await page.goto("/");
     await expect(
       page.locator(`.track-${language}`).getByRole("heading", {
         name: `${labels[language]} fundamentals`,
         exact: true,
       }),
     ).toBeVisible();
+    await page.goto("/guides/frontend/");
   }
   const select = page.getByRole("combobox", {
     name: "Programming language",
     exact: true,
   });
-  if (!(await select.isVisible())) {
-    await page.getByRole("button", { name: "Open lesson navigation" }).click();
-  }
   await select.selectOption("javascript");
+  await page.goto("/");
   await expect(page.locator(".track-dsa .course-start")).toHaveAttribute(
     "href",
     `${base}javascript/`,
@@ -126,13 +126,6 @@ test("all five fundamentals and language-specific shared routes are discoverable
     "href",
     `/learn/${lld.directory}/javascript/`,
   );
-  await page.reload();
-  await expect(
-    page.getByRole("combobox", {
-      name: "Programming language",
-      exact: true,
-    }),
-  ).toHaveValue("javascript");
   await page.locator(".track-dsa .course-start").click();
   await expect(page).toHaveURL(route("javascript", false));
   await page.getByRole("link", { name: "Open practice", exact: true }).click();

@@ -23,9 +23,6 @@ test("home searches full curricula without expanding every lesson by default", a
   await expect(page.locator(".playlist-open")).toHaveCount(guides.length);
   await expect(page.locator(".guide-parts a")).toHaveCount(0);
   await expect(page.locator(".learning-path > li")).toHaveCount(4);
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption("python");
   await expect(page.locator(".path-course")).toHaveCount(4);
   const search = page.getByRole("textbox", { name: "Search topics" });
   await page.keyboard.press("/");
