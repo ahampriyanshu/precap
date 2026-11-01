@@ -4,8 +4,8 @@
   --ink: #171717;
   --muted: #555555;
   --line: #e5e5e5;
-  --accent: #88621e;
-  --accent-light: #faf6ed;
+  --accent: #000000;
+  --accent-light: #f5f5f5;
   --sidebar: #ffffff;
   --serif:
     "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
@@ -400,7 +400,7 @@ input::placeholder {
   border: 1px solid #deded2;
   border-radius: 3px;
   padding: 3px 5px;
-  color: #716241;
+  color: #000000;
   font-size: 9px;
   white-space: nowrap;
 }
@@ -555,7 +555,7 @@ input::placeholder {
 }
 .nav-local {
   display: block;
-  color: #716342;
+  color: #000000;
   font-size: 10px;
   margin-top: 4px;
 }
@@ -1111,7 +1111,7 @@ input::placeholder {
   color: var(--accent);
 }
 .reset-popover button:last-child {
-  color: #915539;
+  color: #000000;
 }
 .run-toolbar {
   min-height: 49px;
@@ -1165,14 +1165,14 @@ input::placeholder {
   font-size: 9px;
 }
 .stop-button {
-  color: #825336;
-  border: 1px solid #dccbbc;
+  color: #000000;
+  border: 1px solid var(--line);
   padding: 8px 13px;
   font-size: 12px;
-  background: #fbf6f1;
+  background: #ffffff;
 }
 .native-tag {
-  color: #7b653f;
+  color: #000000;
   font: 10px var(--mono);
 }
 .code-area {
@@ -1220,8 +1220,8 @@ input::placeholder {
   color: #626262;
 }
 .result-count.bad {
-  color: #8a5439;
-  background: #f3e9df;
+  color: #000000;
+  background: #f0f0f0;
 }
 .result-duration {
   color: var(--muted);
@@ -1271,7 +1271,7 @@ input::placeholder {
 }
 .execution-error {
   padding: 20px 22px;
-  color: #855736;
+  color: #000000;
 }
 .error-heading {
   font-size: 13px;
@@ -1295,7 +1295,7 @@ input::placeholder {
   color: #616161;
 }
 .run-summary.failed {
-  color: #825231;
+  color: #000000;
 }
 .check-row {
   padding: 0 22px;
@@ -1309,7 +1309,7 @@ input::placeholder {
   padding: 10px 0;
   font-size: 11px;
   line-height: 1.7;
-  color: #7b6b3d;
+  color: #000000;
   cursor: pointer;
 }
 .check-row summary::-webkit-details-marker {
@@ -1327,7 +1327,7 @@ input::placeholder {
 }
 .check-failed summary,
 .check-error summary {
-  color: #8a5436;
+  color: #000000;
 }
 .check-chevron {
   margin-left: auto;
@@ -1339,8 +1339,8 @@ input::placeholder {
   font: 11px/1.8 var(--mono);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  color: #7e5030;
-  background: #f8f1e9;
+  color: #000000;
+  background: #f5f5f5;
   border-radius: 4px;
   padding: 14px;
   margin: 0 0 12px;
@@ -1348,23 +1348,23 @@ input::placeholder {
 .native-panel {
   padding: 18px 23px;
   border-top: 1px solid var(--line);
-  background: #f8f8f0;
+  background: #f7f7f7;
   flex-shrink: 0;
 }
 .native-heading {
   display: flex;
   gap: 13px;
   align-items: flex-start;
-  color: #7a6a45;
+  color: #000000;
 }
 .native-heading strong {
   font-size: 13px;
   font-weight: 550;
-  color: #655530;
+  color: #000000;
 }
 .native-heading p {
   font-size: 12px;
-  color: #736344;
+  color: var(--muted);
   line-height: 1.8;
   margin: 7px 0 13px;
   max-width: 740px;
@@ -1372,11 +1372,11 @@ input::placeholder {
 .native-panel > code {
   display: block;
   font: 11px var(--mono);
-  color: #68552d;
+  color: #000000;
   padding: 10px 12px;
-  border: 1px solid #e4ddcc;
+  border: 1px solid var(--line);
   border-radius: 4px;
-  background: #fcfbf6;
+  background: #ffffff;
 }
 .native-actions {
   display: flex;
@@ -1410,7 +1410,7 @@ input::placeholder {
   gap: 7px;
 }
 .save-warning {
-  color: #8f5231;
+  color: #000000;
 }
 .not-found {
   max-width: 680px;
@@ -1929,9 +1929,9 @@ input::placeholder {
 }
 .diagram-storage-message {
   padding: 12px 17px;
-  background: #fff7e8;
-  color: #744b20;
-  border-bottom: 1px solid #ead9b6;
+  background: #f5f5f5;
+  color: #000000;
+  border-bottom: 1px solid var(--line);
   font-size: 12px;
   line-height: 1.6;
 }
@@ -2411,7 +2411,7 @@ input::placeholder {
   font-size: inherit;
 }
 
-/* Illustrated field guide: white paper, black ink, one golden-brown spot color. */
+/* Illustrated field guide: white paper, black ink, pure black spot color. */
 .brand {
   font: 400 31px/1 var(--serif);
   letter-spacing: -1.2px;
@@ -2549,7 +2549,7 @@ input::placeholder {
   border-radius: 2px;
 }
 .button.primary:hover {
-  background: #705019;
+  background: #000000;
 }
 .text-link:hover {
   color: var(--accent);

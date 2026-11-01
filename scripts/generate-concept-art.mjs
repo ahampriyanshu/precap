@@ -8,7 +8,7 @@ const destination = fileURLToPath(
 );
 fs.mkdirSync(destination, { recursive: true });
 const ink = "#171717";
-const accent = "#88621e";
+const accent = "#000000";
 const path = (d, attrs = "") => `<path d="${d}" ${attrs}/>`;
 const rect = (x, y, w, h, attrs = "") =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" ${attrs}/>`;
