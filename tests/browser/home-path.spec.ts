@@ -74,13 +74,23 @@ test("language preference stays in sync across navbar, guides, tabs and practice
   await page
     .getByRole("textbox", { name: "Go code editor", exact: true })
     .fill("// preserved Go draft\n");
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption("cpp");
+  const selectCpp = page.getByRole("combobox", {
+    name: "Programming language",
+    exact: true,
+  });
+  if (!(await selectCpp.isVisible())) {
+    await page.getByRole("button", { name: "Open lesson navigation" }).click();
+  }
+  await selectCpp.selectOption("cpp");
   await expect(page).toHaveURL("/learn/lld/01-parking-lot/cpp/practice/");
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption("go");
+  const selectGo = page.getByRole("combobox", {
+    name: "Programming language",
+    exact: true,
+  });
+  if (!(await selectGo.isVisible())) {
+    await page.getByRole("button", { name: "Open lesson navigation" }).click();
+  }
+  await selectGo.selectOption("go");
   await expect(
     page.getByRole("textbox", { name: "Go code editor", exact: true }),
   ).toContainText("preserved Go draft");
@@ -170,9 +180,14 @@ test("foundation links use real lessons and language changes preserve noncoding 
     .selectOption("java");
   await expect(page).toHaveURL("/learn/hld/01-url-shortener/");
   await page.goto("/learn/go/01-types-zero-values-and-control/practice/");
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption("java");
+  const selectPracticeJava = page.getByRole("combobox", {
+    name: "Programming language",
+    exact: true,
+  });
+  if (!(await selectPracticeJava.isVisible())) {
+    await page.getByRole("button", { name: "Open lesson navigation" }).click();
+  }
+  await selectPracticeJava.selectOption("java");
   await expect(page).toHaveURL(
     "/learn/java/01-values-references-and-null/practice/",
   );

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
+import { LanguageSelect } from "@/components/language-select";
 import { ConceptIllustration } from "@/components/concept-illustration";
 import { hasConceptArt } from "@/lib/concept-art";
 import { guides } from "@/lib/guides";
@@ -62,12 +63,15 @@ export default async function PlaylistPage({ params }: Props) {
             </p>
             <h1>{guide.title}</h1>
             <p className="intro-copy">{guide.description}</p>
-            <Link
-              className="text-link"
-              href={guideUrl(guide.slug, guide.parts[0].slug)}
-            >
-              Start with {guide.parts[0].title}
-            </Link>
+            <div className="playlist-intro-actions">
+              <Link
+                className="text-link"
+                href={guideUrl(guide.slug, guide.parts[0].slug)}
+              >
+                Start with {guide.parts[0].title}
+              </Link>
+              <LanguageSelect />
+            </div>
           </div>
           {hasConceptArt(guide.slug) && (
             <ConceptIllustration concept={guide.slug} />

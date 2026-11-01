@@ -283,13 +283,14 @@ export function Catalog({
               className="catalog-search-results"
               aria-label="Search results"
             >
-            {!language && (
-              <p className="search-language-note">
-                Choose a programming language above to include coding lessons.
-              </p>
-            )}
-            {[...new Set(matchingChapters.map((chapter) => chapter.track))].map(
-              (track) => (
+              {!language && (
+                <p className="search-language-note">
+                  Choose a programming language above to include coding lessons.
+                </p>
+              )}
+              {[
+                ...new Set(matchingChapters.map((chapter) => chapter.track)),
+              ].map((track) => (
                 <section className={`search-course track-${track}`} key={track}>
                   <h3>{courses[track].title}</h3>
                   {matchingChapters
@@ -302,169 +303,171 @@ export function Catalog({
                       />
                     ))}
                 </section>
-              ),
-            )}
-            {!!visibleGuides.length && (
-              <div className="guide-grid">
-                {visibleGuides.map((guide) => (
-                  <GuideCard key={guide.slug} guide={guide} search />
-                ))}
-              </div>
-            )}
-            <Sheets sheets={visibleSheets} />
-            {!matchingChapters.length &&
-              !visibleGuides.length &&
-              !visibleSheets.length && (
-                <p className="search-empty" role="status">
-                  No matching topics. Try another topic, tool, or course name.
-                </p>
+              ))}
+              {!!visibleGuides.length && (
+                <div className="guide-grid">
+                  {visibleGuides.map((guide) => (
+                    <GuideCard key={guide.slug} guide={guide} search />
+                  ))}
+                </div>
               )}
-          </section>
-        ) : (
-          <>
-            <ol
-              className="learning-path"
-              aria-label="Interview preparation path"
-            >
-              <li className="path-step">
-                <div className="path-step-content">
-                  <ConceptIllustration
-                    concept="machine-coding"
-                    className="path-art"
-                  />
-                  <div className="path-step-heading">
-                    <h2>Machine coding</h2>
-                    <p>
-                      Refresh your language, then work through data structures
-                      and algorithms.
-                    </p>
-                  </div>
-                  {language ? (
-                    <div className="machine-courses">
-                      <Course
-                        track={language}
-                        items={items(language)}
-                        title={`${languageInfo[language].label} fundamentals`}
-                        completed={completed}
-                      />
-                      <Course
-                        track="dsa"
-                        items={items("dsa")}
-                        title="Data structures & algorithms"
-                        completed={completed}
-                      />
+              <Sheets sheets={visibleSheets} />
+              {!matchingChapters.length &&
+                !visibleGuides.length &&
+                !visibleSheets.length && (
+                  <p className="search-empty" role="status">
+                    No matching topics. Try another topic, tool, or course name.
+                  </p>
+                )}
+            </section>
+          ) : (
+            <>
+              <ol
+                className="learning-path"
+                aria-label="Interview preparation path"
+              >
+                <li className="path-step">
+                  <div className="path-step-content">
+                    <ConceptIllustration
+                      concept="machine-coding"
+                      className="path-art"
+                    />
+                    <div className="path-step-heading">
+                      <h2>Machine coding</h2>
+                      <p>
+                        Refresh your language, then work through data structures
+                        and algorithms.
+                      </p>
                     </div>
-                  ) : (
-                    <button
-                      className="text-link path-choose"
-                      onClick={chooseLanguage}
-                    >
-                      Choose a language to start
-                    </button>
-                  )}
-                </div>
-              </li>
-              <li className="path-step">
-                <div className="path-step-content">
-                  <ConceptIllustration
-                    concept="system-basics"
-                    className="path-art"
-                  />
-                  <div className="path-step-heading">
-                    <h2>System design basics</h2>
-                    <p>
-                      Revisit the mechanisms that shape a distributed system
-                      before designing one.
-                    </p>
+                    {language ? (
+                      <div className="machine-courses">
+                        <Course
+                          track={language}
+                          items={items(language)}
+                          title={`${languageInfo[language].label} fundamentals`}
+                          completed={completed}
+                        />
+                        <Course
+                          track="dsa"
+                          items={items("dsa")}
+                          title="Data structures & algorithms"
+                          completed={completed}
+                        />
+                      </div>
+                    ) : (
+                      <button
+                        className="text-link path-choose"
+                        onClick={chooseLanguage}
+                      >
+                        Choose a language to start
+                      </button>
+                    )}
                   </div>
-                  <div className="path-course-actions">
-                    <Link
-                      className="button primary course-start"
-                      href={guideUrl("backend", systemDesignBasics[0].slug)}
-                    >
-                      Start
-                    </Link>
-                    <span>{systemDesignBasics.length} foundation lessons</span>
+                </li>
+                <li className="path-step">
+                  <div className="path-step-content">
+                    <ConceptIllustration
+                      concept="system-basics"
+                      className="path-art"
+                    />
+                    <div className="path-step-heading">
+                      <h2>System design basics</h2>
+                      <p>
+                        Revisit the mechanisms that shape a distributed system
+                        before designing one.
+                      </p>
+                    </div>
+                    <div className="path-course-actions">
+                      <Link
+                        className="button primary course-start"
+                        href={guideUrl("backend", systemDesignBasics[0].slug)}
+                      >
+                        Start
+                      </Link>
+                      <span>
+                        {systemDesignBasics.length} foundation lessons
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li className="path-step">
-                <div className="path-step-content">
-                  <ConceptIllustration
-                    concept="low-level-design"
-                    className="path-art"
-                  />
-                  <div className="path-step-heading">
-                    <h2>Low-level design</h2>
-                    <p>
-                      Turn requirements into objects, interfaces, and invariants
-                      that hold under change.
-                    </p>
+                </li>
+                <li className="path-step">
+                  <div className="path-step-content">
+                    <ConceptIllustration
+                      concept="low-level-design"
+                      className="path-art"
+                    />
+                    <div className="path-step-heading">
+                      <h2>Low-level design</h2>
+                      <p>
+                        Turn requirements into objects, interfaces, and
+                        invariants that hold under change.
+                      </p>
+                    </div>
+                    {language ? (
+                      <Course
+                        track="lld"
+                        items={items("lld")}
+                        title="Design exercises"
+                        completed={completed}
+                      />
+                    ) : (
+                      <button
+                        className="text-link path-choose"
+                        onClick={chooseLanguage}
+                      >
+                        Choose a language for LLD
+                      </button>
+                    )}
                   </div>
-                  {language ? (
+                </li>
+                <li className="path-step">
+                  <div className="path-step-content">
+                    <ConceptIllustration
+                      concept="high-level-design"
+                      className="path-art"
+                    />
+                    <div className="path-step-heading">
+                      <h2>High-level design</h2>
+                      <p>
+                        Draw service boundaries, data flows, and failure paths.
+                        Defend your tradeoffs.
+                      </p>
+                    </div>
                     <Course
-                      track="lld"
-                      items={items("lld")}
-                      title="Design exercises"
+                      track="hld"
+                      items={items("hld")}
+                      title="Architecture practice"
                       completed={completed}
                     />
-                  ) : (
-                    <button
-                      className="text-link path-choose"
-                      onClick={chooseLanguage}
-                    >
-                      Choose a language for LLD
-                    </button>
-                  )}
+                  </div>
+                </li>
+              </ol>
+              <section id="guides" className="supplementary-section">
+                <div className="section-heading">
+                  <div>
+                    <h2>The engineering bookshelf</h2>
+                  </div>
                 </div>
-              </li>
-              <li className="path-step">
-                <div className="path-step-content">
-                  <ConceptIllustration
-                    concept="high-level-design"
-                    className="path-art"
-                  />
-                  <div className="path-step-heading">
-                    <h2>High-level design</h2>
-                    <p>
-                      Draw service boundaries, data flows, and failure paths.
-                      Defend your tradeoffs.
+                <div className="guide-grid">
+                  {guides.map((guide) => (
+                    <GuideCard guide={guide} key={guide.slug} />
+                  ))}
+                </div>
+              </section>
+              <section id="cheatsheets" className="path-cheatsheets">
+                <div className="section-heading">
+                  <div>
+                    <h2>Tool cheatsheets</h2>
+                    <p className="section-description">
+                      Keep the commands close. Save your memory for the
+                      decisions.
                     </p>
                   </div>
-                  <Course
-                    track="hld"
-                    items={items("hld")}
-                    title="Architecture practice"
-                    completed={completed}
-                  />
                 </div>
-              </li>
-            </ol>
-            <section id="guides" className="supplementary-section">
-              <div className="section-heading">
-                <div>
-                  <h2>The engineering bookshelf</h2>
-                </div>
-              </div>
-              <div className="guide-grid">
-                {guides.map((guide) => (
-                  <GuideCard guide={guide} key={guide.slug} />
-                ))}
-              </div>
-            </section>
-            <section id="cheatsheets" className="path-cheatsheets">
-              <div className="section-heading">
-                <div>
-                  <h2>Tool cheatsheets</h2>
-                  <p className="section-description">
-                    Keep the commands close. Save your memory for the decisions.
-                  </p>
-                </div>
-              </div>
-              <Sheets sheets={cheatsheets} />
-            </section>
-          </>
-        )}
+                <Sheets sheets={cheatsheets} />
+              </section>
+            </>
+          )}
         </div>
         <footer className="catalog-footer">
           <span>
