@@ -44,7 +44,11 @@ export default async function PlaylistPage({ params }: Props) {
       <a className="skip-link" href="#main-content">
         Skip to curriculum
       </a>
-      <SiteHeader />
+      <SiteHeader
+        showBrand={true}
+        searchAriaLabel="Search course lessons"
+        breadcrumb={<span className="breadcrumb-title">{guide.title}</span>}
+      />
       <main className="catalog-main" id="main-content" tabIndex={-1}>
         <header className="playlist-intro">
           <div className="playlist-intro-copy">

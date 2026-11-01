@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Check, Search, X } from "lucide-react";
+import { Check } from "lucide-react";
 import { SiteHeader } from "./site-header";
+import { LanguageSelect } from "./language-select";
 import { ConceptIllustration } from "./concept-illustration";
 import { hasConceptArt } from "@/lib/concept-art";
 import { useProgress } from "@/hooks/use-progress";
@@ -225,27 +226,6 @@ export function Catalog({
     [chapters, language],
   );
   const { completed, started } = useProgress(practiceChapters);
-  const searchRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    const focusSearch = (event: KeyboardEvent) => {
-      if (
-        event.key === "/" &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !event.altKey &&
-        !(
-          event.target instanceof HTMLElement &&
-          (event.target.isContentEditable ||
-            /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName))
-        )
-      ) {
-        event.preventDefault();
-        searchRef.current?.focus();
-      }
-    };
-    document.addEventListener("keydown", focusSearch);
-    return () => document.removeEventListener("keydown", focusSearch);
-  }, []);
   const chooseLanguage = () => {
     const select = document.querySelector<HTMLSelectElement>(
       'select[aria-label="Programming language"]',
@@ -281,51 +261,28 @@ export function Catalog({
       <a className="skip-link" href="#main-content">
         Skip to topics
       </a>
-      <SiteHeader />
+      <SiteHeader
+        query={query}
+        onQueryChange={setQuery}
+        searchAriaLabel="Search topics"
+        searchPlaceholder="Find a topic or tool… (/)"
+        showDropdown={false}
+      />
       <main className="catalog-main" id="main-content" tabIndex={-1}>
         <section className="path-hero">
           <div className="hero-copy">
             <h1>Deadline Driven Preparation</h1>
+            <div className="hero-language-wrapper">
+              <LanguageSelect />
+            </div>
           </div>
-          <ConceptIllustration
-            concept="engineering-desk"
-            className="hero-scene"
-            priority
-          />
         </section>
-        <div className="path-section-heading" id="courses">
-          <div>
-            <h2>{term ? "Search topics" : "Curriculum"}</h2>
-          </div>
-          <label className="search-field">
-            <Search size={16} aria-hidden="true" />
-            <input
-              ref={searchRef}
-              aria-label="Search topics"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Find a topic or tool…"
-            />
-            {query ? (
-              <button
-                aria-label="Clear search"
-                onClick={() => {
-                  setQuery("");
-                  searchRef.current?.focus();
-                }}
-              >
-                <X size={14} />
-              </button>
-            ) : (
-              <kbd>/</kbd>
-            )}
-          </label>
-        </div>
-        {term ? (
-          <section
-            className="catalog-search-results"
-            aria-label="Search results"
-          >
+        <div id="courses" className="curriculum-container">
+          {term ? (
+            <section
+              className="catalog-search-results"
+              aria-label="Search results"
+            >
             {!language && (
               <p className="search-language-note">
                 Choose a programming language above to include coding lessons.
@@ -508,6 +465,7 @@ export function Catalog({
             </section>
           </>
         )}
+        </div>
         <footer className="catalog-footer">
           <span>
             made by{" "}

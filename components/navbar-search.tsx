@@ -6,8 +6,33 @@ import { useRouter } from "next/navigation";
 import { Search, X } from "lucide-react";
 import { searchItems } from "@/lib/navigation-data";
 
-export function NavbarSearch() {
-  const [query, setQuery] = useState("");
+export interface NavbarSearchProps {
+  query?: string;
+  onQueryChange?: (value: string) => void;
+  ariaLabel?: string;
+  placeholder?: string;
+  showDropdown?: boolean;
+}
+
+export function NavbarSearch({
+  query: controlledQuery,
+  onQueryChange,
+  ariaLabel = "Search course lessons",
+  placeholder = "Search lessons… (/)",
+  showDropdown = true,
+}: NavbarSearchProps = {}) {
+  const [internalQuery, setInternalQuery] = useState("");
+  const isControlled = controlledQuery !== undefined;
+  const query = isControlled ? controlledQuery : internalQuery;
+
+  const updateQuery = (value: string) => {
+    if (onQueryChange) {
+      onQueryChange(value);
+    } else {
+      setInternalQuery(value);
+    }
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -15,9 +40,10 @@ export function NavbarSearch() {
   const router = useRouter();
 
   const term = query.trim().toLowerCase();
-  const results = term
-    ? searchItems.filter((item) => item.searchText.includes(term)).slice(0, 8)
-    : [];
+  const results =
+    showDropdown && term
+      ? searchItems.filter((item) => item.searchText.includes(term)).slice(0, 8)
+      : [];
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -34,7 +60,7 @@ export function NavbarSearch() {
       ) {
         e.preventDefault();
         inputRef.current?.focus();
-        setIsOpen(true);
+        if (showDropdown) setIsOpen(true);
       } else if (e.key === "Escape") {
         setIsOpen(false);
         inputRef.current?.blur();
@@ -42,9 +68,10 @@ export function NavbarSearch() {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [showDropdown]);
 
   useEffect(() => {
+    if (!showDropdown) return;
     const handleClickOutside = (e: MouseEvent) => {
       if (
         containerRef.current &&
@@ -55,14 +82,14 @@ export function NavbarSearch() {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [showDropdown]);
 
   useEffect(() => {
     setSelectedIndex(0);
   }, [query]);
 
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
-    if (!results.length) return;
+    if (!showDropdown || !results.length) return;
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelectedIndex((prev) => (prev + 1) % results.length);
@@ -74,7 +101,7 @@ export function NavbarSearch() {
       const selected = results[selectedIndex];
       if (selected) {
         setIsOpen(false);
-        setQuery("");
+        updateQuery("");
         router.push(selected.url);
       }
     }
@@ -86,15 +113,17 @@ export function NavbarSearch() {
         <Search size={14} aria-hidden="true" />
         <input
           ref={inputRef}
-          aria-label="Search course lessons"
+          aria-label={ariaLabel}
           value={query}
           onChange={(e) => {
-            setQuery(e.target.value);
-            setIsOpen(true);
+            updateQuery(e.target.value);
+            if (showDropdown) setIsOpen(true);
           }}
-          onFocus={() => setIsOpen(true)}
+          onFocus={() => {
+            if (showDropdown) setIsOpen(true);
+          }}
           onKeyDown={handleInputKeyDown}
-          placeholder="Search lessons… (/)"
+          placeholder={placeholder}
         />
         {query ? (
           <button
@@ -102,7 +131,7 @@ export function NavbarSearch() {
             className="navbar-search-clear"
             aria-label="Clear search"
             onClick={() => {
-              setQuery("");
+              updateQuery("");
               inputRef.current?.focus();
             }}
           >
@@ -112,7 +141,7 @@ export function NavbarSearch() {
           <kbd className="navbar-search-kbd">/</kbd>
         )}
       </label>
-      {isOpen && term && (
+      {showDropdown && isOpen && term && (
         <div className="navbar-search-dropdown" role="listbox">
           {results.length > 0 ? (
             results.map((item, idx) => (
@@ -124,7 +153,7 @@ export function NavbarSearch() {
                 aria-selected={idx === selectedIndex}
                 onClick={() => {
                   setIsOpen(false);
-                  setQuery("");
+                  updateQuery("");
                 }}
               >
                 <span className="navbar-search-item-badge">

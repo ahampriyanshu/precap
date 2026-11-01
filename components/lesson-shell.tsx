@@ -2,13 +2,11 @@
 
 import Link from "next/link";
 import { type ReactNode } from "react";
-import { Menu } from "lucide-react";
 import { AppSidebar } from "./app-sidebar";
-import { NavbarSearch } from "./navbar-search";
+import { SiteHeader } from "./site-header";
 import { useNavigationMenu } from "@/hooks/use-navigation-menu";
 import { useProgress } from "@/hooks/use-progress";
 import type { Chapter } from "@/lib/types";
-import { LanguageSelect } from "./language-select";
 import { courses } from "@/lib/courses";
 
 export function LessonShell({
@@ -24,10 +22,6 @@ export function LessonShell({
 }) {
   const { menu, setMenu, sidebarRef } = useNavigationMenu();
   const { completed } = useProgress(chapters);
-  const siblings = chapters.filter((c) => c.track === lesson.track);
-  const position = siblings.findIndex((c) => c.id === lesson.id);
-  const previous = siblings[position - 1],
-    next = siblings[position + 1];
 
   return (
     <div
@@ -38,6 +32,9 @@ export function LessonShell({
       </a>
 
       <AppSidebar
+        lesson={lesson}
+        chapters={chapters}
+        practice={practice}
         currentTrack={lesson.track}
         currentSlug={lesson.slug}
         preferredLanguage={lesson.language}
@@ -49,60 +46,25 @@ export function LessonShell({
       />
 
       <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
-        <header className="studio-header">
-          <div className="studio-breadcrumb">
-            <button
-              className="icon-button nav-open"
-              onClick={() => setMenu(true)}
-              aria-label="Open lesson navigation"
-            >
-              <Menu size={19} />
-            </button>
-            {practice ? (
-              <Link className="back-to-lesson" href={`/learn/${lesson.id}/`}>
-                Back to lesson
-              </Link>
-            ) : (
-              <span>{courses[lesson.track].title}</span>
-            )}
-            <span className="breadcrumb-slash">/</span>
-            <span className="breadcrumb-title">{lesson.title}</span>
-          </div>
-
-          <NavbarSearch />
-
-          {!practice && (
-            <div className="chapter-pager">
-              {previous && (
-                <Link
-                  className="pager-link"
-                  href={`/learn/${previous.id}/`}
-                  aria-label="Previous lesson"
-                >
-                  Previous
+        <SiteHeader
+          className="studio-header"
+          onMenuClick={() => setMenu(true)}
+          menuAriaLabel="Open lesson navigation"
+          searchAriaLabel="Search course lessons"
+          breadcrumb={
+            <>
+              {practice ? (
+                <Link className="back-to-lesson" href={`/learn/${lesson.id}/`}>
+                  Back to lesson
                 </Link>
+              ) : (
+                <span>{courses[lesson.track].title}</span>
               )}
-              <span>
-                {position + 1} / {siblings.length}
-              </span>
-              {next && (
-                <Link
-                  className="pager-link"
-                  href={`/learn/${next.id}/`}
-                  aria-label="Next lesson"
-                >
-                  Next
-                </Link>
-              )}
-            </div>
-          )}
-
-          <LanguageSelect
-            lesson={lesson}
-            chapters={chapters}
-            practice={practice}
-          />
-        </header>
+              <span className="breadcrumb-slash">/</span>
+              <span className="breadcrumb-title">{lesson.title}</span>
+            </>
+          }
+        />
         {children}
       </main>
     </div>

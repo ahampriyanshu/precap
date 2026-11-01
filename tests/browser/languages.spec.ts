@@ -52,9 +52,14 @@ const draft = (language: Language) =>
     : `// isolated ${labels[language]} draft\n`;
 
 async function selectLanguage(page: Page, language: Language) {
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption(language);
+  const select = page.getByRole("combobox", {
+    name: "Programming language",
+    exact: true,
+  });
+  if (!(await select.isVisible())) {
+    await page.getByRole("button", { name: "Open lesson navigation" }).click();
+  }
+  await select.selectOption(language);
   await expect(page).toHaveURL(route(language));
   await expect(editor(page, language)).toBeEditable();
 }
@@ -105,9 +110,14 @@ test("all five fundamentals and language-specific shared routes are discoverable
       }),
     ).toBeVisible();
   }
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption("javascript");
+  const select = page.getByRole("combobox", {
+    name: "Programming language",
+    exact: true,
+  });
+  if (!(await select.isVisible())) {
+    await page.getByRole("button", { name: "Open lesson navigation" }).click();
+  }
+  await select.selectOption("javascript");
   await expect(page.locator(".track-dsa .course-start")).toHaveAttribute(
     "href",
     `${base}javascript/`,
@@ -607,19 +617,6 @@ test("browser compiler desktop evidence and mobile language controls remain usab
   await expect(page.getByRole("button", { name: "Run checks" })).toBeEnabled();
   await page.screenshot({ path: testInfo.outputPath("language-practice.png") });
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(
-    page.getByRole("combobox", { name: "Programming language", exact: true }),
-  ).toBeVisible();
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
-  const select = await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .boundingBox();
-  expect(select!.x).toBeGreaterThanOrEqual(0);
-  expect(select!.x + select!.width).toBeLessThanOrEqual(390);
   await page
     .getByRole("button", { name: "Open lesson navigation", exact: true })
     .click();
@@ -628,6 +625,22 @@ test("browser compiler desktop evidence and mobile language controls remain usab
     exact: true,
   });
   await expect(sidebar).toBeVisible();
+  await expect(
+    sidebar.getByRole("combobox", {
+      name: "Programming language",
+      exact: true,
+    }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  const select = await sidebar
+    .getByRole("combobox", { name: "Programming language", exact: true })
+    .boundingBox();
+  expect(select!.x).toBeGreaterThanOrEqual(0);
+  expect(select!.x + select!.width).toBeLessThanOrEqual(390);
   await expect(
     page.getByRole("textbox", { name: "Search course lessons" }),
   ).toBeVisible();
@@ -654,9 +667,14 @@ test("LLD keeps its selected language across lesson, practice, and next lesson",
   await page.getByRole("link", { name: "Open practice", exact: true }).click();
   await expect(page).toHaveURL(`/learn/${first.directory}/cpp/practice/`);
   await expect(editor(page, "cpp")).toBeEditable();
-  await page
-    .getByRole("combobox", { name: "Programming language", exact: true })
-    .selectOption("javascript");
+  const select = page.getByRole("combobox", {
+    name: "Programming language",
+    exact: true,
+  });
+  if (!(await select.isVisible())) {
+    await page.getByRole("button", { name: "Open lesson navigation" }).click();
+  }
+  await select.selectOption("javascript");
   await expect(page).toHaveURL(
     `/learn/${first.directory}/javascript/practice/`,
   );

@@ -4,7 +4,9 @@ import { useEffect, useState, type RefObject } from "react";
 import Link from "next/link";
 import { Check, ChevronDown, X } from "lucide-react";
 import { Brand } from "./brand";
+import { LanguageSelect } from "./language-select";
 import { courses } from "@/lib/courses";
+import type { Chapter } from "@/lib/types";
 import {
   SIDEBAR_TRACKS,
   navChaptersByTrack,
@@ -15,6 +17,9 @@ import {
 import { cheatsheetUrl, guideUrl } from "@/lib/guide-utils";
 
 export interface AppSidebarProps {
+  lesson?: Chapter;
+  chapters?: Chapter[];
+  practice?: boolean;
   currentTrack?: string;
   currentSlug?: string;
   currentGuide?: string;
@@ -29,6 +34,9 @@ export interface AppSidebarProps {
 }
 
 export function AppSidebar({
+  lesson,
+  chapters = [],
+  practice = false,
   currentTrack,
   currentSlug,
   currentGuide,
@@ -108,6 +116,14 @@ export function AppSidebar({
           </button>
         </div>
 
+        <div className="sidebar-language">
+          <LanguageSelect
+            lesson={lesson}
+            chapters={chapters}
+            practice={practice}
+          />
+        </div>
+
         <nav
           className="sidebar-list guide-navigation"
           aria-label={navigationLabel}
@@ -118,7 +134,7 @@ export function AppSidebar({
             {SIDEBAR_TRACKS.map((track) => {
               const groupKey = `track:${track}`;
               const isOpen = !!openGroups[groupKey];
-              const chapters = navChaptersByTrack[track] || [];
+              const trackChapters = navChaptersByTrack[track] || [];
               const trackTitle = courses[track]?.title || track;
 
               return (
@@ -137,7 +153,7 @@ export function AppSidebar({
                     <ChevronDown size={14} className="summary-chevron" />
                   </summary>
                   <div className="guide-nav-group-items">
-                    {chapters.map((chapter) => {
+                    {trackChapters.map((chapter) => {
                       const isActive =
                         currentTrack === track && currentSlug === chapter.slug;
                       const isComplete = completedSet?.has(chapter.id);
@@ -150,11 +166,11 @@ export function AppSidebar({
                           aria-current={isActive ? "page" : undefined}
                           onClick={() => setMenu(false)}
                         >
-                          <span
-                            className={`nav-number ${isComplete ? "is-complete" : ""}`}
-                          >
-                            {isComplete ? <Check size={13} /> : chapter.number}
-                          </span>
+                          {isComplete && (
+                            <span className="nav-number is-complete">
+                              <Check size={13} />
+                            </span>
+                          )}
                           <span>{chapter.title}</span>
                         </Link>
                       );
@@ -195,7 +211,7 @@ export function AppSidebar({
                     >
                       Playlist overview
                     </Link>
-                    {guide.parts.map((entry, index) => {
+                    {guide.parts.map((entry) => {
                       const isActive =
                         !currentCheatsheet &&
                         currentGuide === guide.slug &&
@@ -203,17 +219,15 @@ export function AppSidebar({
 
                       return (
                         <div key={entry.slug}>
-                          {entry.module &&
-                            entry.module !== guide.parts[index - 1]?.module && (
-                              <p className="nav-module">{entry.module}</p>
-                            )}
+                          {entry.module && (
+                            <p className="nav-module">{entry.module}</p>
+                          )}
                           <Link
                             className={`nav-chapter ${isActive ? "active" : ""}`}
                             href={guideUrl(guide.slug, entry.slug)}
                             aria-current={isActive ? "page" : undefined}
                             onClick={() => setMenu(false)}
                           >
-                            <span className="nav-number">{index + 1}</span>
                             <span>{entry.label || entry.title}</span>
                           </Link>
                         </div>
