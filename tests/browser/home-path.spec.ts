@@ -42,7 +42,7 @@ test("first visit asks for a language and presents the ordered interview path", 
   await page.reload();
   await expect(language).toHaveValue("go");
   await expect(page.locator(".supplementary-section .guide-card")).toHaveCount(
-    5,
+    4,
   );
   const audit = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
