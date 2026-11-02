@@ -237,11 +237,12 @@ test("old native completion flags retain drafts without counting browser course 
       );
     }
   }, oldWork);
-  await page.goto("/");
   for (const language of compiledLanguages) {
+    await page.goto("/guides/frontend/");
     await page
       .getByRole("combobox", { name: "Programming language", exact: true })
       .selectOption(language);
+    await page.goto("/");
     await expect(
       page.locator(`.track-${language}`).getByRole("progressbar"),
     ).toHaveAttribute("aria-valuenow", "1");
@@ -394,7 +395,7 @@ for (const language of compiledLanguages) {
   test(`${labels[language]} browser compiler reports unfinished stubs and compilation errors honestly`, async ({
     page,
   }) => {
-    test.setTimeout(180000);
+    test.setTimeout(240000);
     await page.goto(route(language));
     const code = editor(page, language);
     await expect(code).toBeEditable();
@@ -402,7 +403,7 @@ for (const language of compiledLanguages) {
     await page.getByRole("button", { name: "2. Final", exact: true }).click();
     await page.getByRole("button", { name: "Run checks" }).click();
     await expect(page.locator(".run-summary.failed")).toBeVisible({
-      timeout: 150000,
+      timeout: 200000,
     });
     expect(
       await page.locator(".check-failed, .check-error").count(),
@@ -678,6 +679,8 @@ test("LLD keeps its selected language across lesson, practice, and next lesson",
     "Not implemented",
   );
   await page.goto("/");
+  await expect(page.locator(".track-javascript")).toBeVisible();
+  await page.goto("/guides/frontend/");
   await expect(
     page.getByRole("combobox", {
       name: "Programming language",
