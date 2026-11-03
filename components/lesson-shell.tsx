@@ -55,6 +55,7 @@ export function LessonShell({
         <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
           <div className="studio-header">
             <div className="studio-breadcrumb">
+              <Link href="/">Home</Link>
               <span className="breadcrumb-slash">/</span>
               <span>{courses[lesson.track].title}</span>
               <span className="breadcrumb-slash">/</span>

@@ -55,6 +55,7 @@ export function GuideShell({
         <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
           <div className="studio-header">
             <div className="studio-breadcrumb">
+              <Link href="/">Home</Link>
               <span className="breadcrumb-slash">/</span>
               {cheatsheet ? (
                 <span>Cheatsheets</span>

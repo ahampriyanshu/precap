@@ -390,6 +390,10 @@ test("lesson renders breadcrumb and skip to challenge button in studio-header be
 
   // Breadcrumb on the left
   const breadcrumb = studioHeader.locator(".studio-breadcrumb");
+  await expect(breadcrumb.getByRole("link", { name: "Home" })).toHaveAttribute(
+    "href",
+    "/",
+  );
   await expect(breadcrumb).toContainText("Python");
   await expect(breadcrumb).toContainText("Primitive data types");
   await expect(breadcrumb.locator(".breadcrumb-slash")).toHaveCount(2);
