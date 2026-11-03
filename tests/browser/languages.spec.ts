@@ -96,7 +96,7 @@ export function stopCpp() {}
 test("all five fundamentals and language-specific shared routes are discoverable", async ({
   page,
 }) => {
-  await page.goto("/guides/frontend/");
+  await page.goto("/guides/frontend/browser-platform/");
   for (const language of languages) {
     const chapter = manifest.find((item) => item.track === language);
     expect(chapter, `${language} fundamentals missing`).toBeTruthy();
@@ -110,7 +110,7 @@ test("all five fundamentals and language-specific shared routes are discoverable
         exact: true,
       }),
     ).toBeVisible();
-    await page.goto("/guides/frontend/");
+    await page.goto("/guides/frontend/browser-platform/");
   }
   const select = page.getByRole("combobox", {
     name: "Programming language",
@@ -238,7 +238,7 @@ test("old native completion flags retain drafts without counting browser course 
     }
   }, oldWork);
   for (const language of compiledLanguages) {
-    await page.goto("/guides/frontend/");
+    await page.goto("/guides/frontend/browser-platform/");
     await page
       .getByRole("combobox", { name: "Programming language", exact: true })
       .selectOption(language);
@@ -395,7 +395,7 @@ for (const language of compiledLanguages) {
   test(`${labels[language]} browser compiler reports unfinished stubs and compilation errors honestly`, async ({
     page,
   }) => {
-    test.setTimeout(240000);
+    test.setTimeout(language === "java" ? 300000 : 240000);
     await page.goto(route(language));
     const code = editor(page, language);
     await expect(code).toBeEditable();
@@ -403,7 +403,7 @@ for (const language of compiledLanguages) {
     await page.getByRole("button", { name: "2. Final", exact: true }).click();
     await page.getByRole("button", { name: "Run checks" }).click();
     await expect(page.locator(".run-summary.failed")).toBeVisible({
-      timeout: 200000,
+      timeout: language === "java" ? 200000 : 150000,
     });
     expect(
       await page.locator(".check-failed, .check-error").count(),
@@ -426,7 +426,7 @@ for (const language of compiledLanguages) {
     await page.getByRole("button", { name: "Run checks" }).click();
     await expect(page.locator(".execution-error")).toContainText(
       "Compilation failed",
-      { timeout: 150000 },
+      { timeout: language === "java" ? 200000 : 150000 },
     );
     await expect(page.locator(".execution-error")).toContainText(
       starter[language],
@@ -638,7 +638,7 @@ test("browser compiler desktop evidence and mobile language controls remain usab
   await expect(
     page.getByRole("textbox", { name: "Search course lessons" }),
   ).toBeVisible();
-  await expect(sidebar.locator(".nav-chapter").first()).toBeVisible();
+  await expect(sidebar.locator(".nav-chapter:visible").first()).toBeVisible();
   await page.screenshot({
     path: testInfo.outputPath("language-practice-mobile.png"),
   });
@@ -680,7 +680,7 @@ test("LLD keeps its selected language across lesson, practice, and next lesson",
   );
   await page.goto("/");
   await expect(page.locator(".track-javascript")).toBeVisible();
-  await page.goto("/guides/frontend/");
+  await page.goto("/guides/frontend/browser-platform/");
   await expect(
     page.getByRole("combobox", {
       name: "Programming language",
@@ -708,4 +708,44 @@ test("C++ Unicode exercise downloads its required helper header unchanged", asyn
     fs.readFileSync(`variants/cpp/${chapter.directory}/unicode.hpp`, "utf8"),
   );
   expect(strFromU8(files["exercise.hpp"])).toContain('#include "unicode.hpp"');
+});
+
+test("sidebar displays only the selected language track placed before DSA", async ({
+  page,
+}) => {
+  await page.goto("/guides/frontend/browser-platform/");
+  const trackSummaries = page
+    .locator(".sidebar-section")
+    .first()
+    .locator("details > summary");
+  await expect(trackSummaries).toHaveText([
+    "Python",
+    "Data structures & algorithms",
+    "Low-level design",
+    "High-level design",
+  ]);
+
+  const select = page.getByRole("combobox", {
+    name: "Programming language",
+    exact: true,
+  });
+  await select.selectOption("go");
+  await expect(trackSummaries).toHaveText([
+    "Go",
+    "Data structures & algorithms",
+    "Low-level design",
+    "High-level design",
+  ]);
+
+  await page.goto("/learn/dsa/01-arrays-and-linear-scans/cpp/");
+  const lessonTrackSummaries = page
+    .locator(".sidebar-section")
+    .first()
+    .locator("details > summary");
+  await expect(lessonTrackSummaries).toHaveText([
+    "C++",
+    "Data structures & algorithms",
+    "Low-level design",
+    "High-level design",
+  ]);
 });

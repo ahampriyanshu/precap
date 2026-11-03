@@ -2,7 +2,7 @@ import curriculumJson from "@/curriculum.json";
 import guidesJson from "@/guides.json";
 import cheatsheetsJson from "@/cheatsheets.json";
 import { courses } from "@/lib/courses";
-import type { Track } from "@/lib/types";
+import type { Language, Track } from "@/lib/types";
 
 export interface NavChapter {
   id: string;
@@ -40,17 +40,14 @@ export interface SearchItem {
   searchText: string;
 }
 
-// Fixed order of tracks in the sidebar
-export const SIDEBAR_TRACKS: Track[] = [
-  "dsa",
-  "lld",
-  "hld",
-  "python",
-  "javascript",
-  "go",
-  "java",
-  "cpp",
-];
+// Core non-language tracks in the sidebar
+export const CORE_SIDEBAR_TRACKS: Track[] = ["dsa", "lld", "hld"];
+
+export function getSidebarTracks(language: Language): Track[] {
+  return [language, ...CORE_SIDEBAR_TRACKS];
+}
+
+export const SIDEBAR_TRACKS: Track[] = ["dsa", "lld", "hld"];
 
 // All chapters grouped by track
 export const navChaptersByTrack: Record<Track, NavChapter[]> = {

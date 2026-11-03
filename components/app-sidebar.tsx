@@ -6,9 +6,11 @@ import { Check, ChevronDown, X } from "lucide-react";
 import { Brand } from "./brand";
 import { LanguageSelect } from "./language-select";
 import { courses } from "@/lib/courses";
-import type { Chapter } from "@/lib/types";
+import { usePreferredLanguage } from "@/hooks/use-preferred-language";
+import { isLanguage } from "@/lib/languages";
+import type { Chapter, Language, Track } from "@/lib/types";
 import {
-  SIDEBAR_TRACKS,
+  getSidebarTracks,
   navChaptersByTrack,
   navGuides,
   navCheatsheets,
@@ -49,6 +51,22 @@ export function AppSidebar({
   setMenu,
   sidebarRef,
 }: AppSidebarProps) {
+  const { language } = usePreferredLanguage();
+  const effectiveLanguage: Language =
+    (lesson?.language && isLanguage(lesson.language)
+      ? (lesson.language as Language)
+      : null) ||
+    (preferredLanguage && isLanguage(preferredLanguage)
+      ? (preferredLanguage as Language)
+      : null) ||
+    (currentTrack && isLanguage(currentTrack)
+      ? (currentTrack as Language)
+      : null) ||
+    language ||
+    "python";
+
+  const sidebarTracks: Track[] = getSidebarTracks(effectiveLanguage);
+
   // Determine active group key
   let activeGroupKey = "";
   if (currentTrack) {
@@ -81,10 +99,10 @@ export function AppSidebar({
   const getChapterUrl = (chapter: NavChapter) => {
     if (
       (chapter.track === "dsa" || chapter.track === "lld") &&
-      preferredLanguage &&
-      preferredLanguage !== "python"
+      effectiveLanguage &&
+      effectiveLanguage !== "python"
     ) {
-      return `/learn/${chapter.track}/${chapter.slug}/${preferredLanguage}/`;
+      return `/learn/${chapter.track}/${chapter.slug}/${effectiveLanguage}/`;
     }
     return `/learn/${chapter.id}/`;
   };
@@ -131,7 +149,7 @@ export function AppSidebar({
           {/* Section 1: Tracks */}
           <div className="sidebar-section">
             <h2 className="guide-nav-label">Tracks</h2>
-            {SIDEBAR_TRACKS.map((track) => {
+            {sidebarTracks.map((track) => {
               const groupKey = `track:${track}`;
               const isOpen = !!openGroups[groupKey];
               const trackChapters = navChaptersByTrack[track] || [];
