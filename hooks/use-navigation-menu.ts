@@ -35,7 +35,9 @@ export function useNavigationMenu(defaultDesktopOpen = false) {
     if (!menu || !isMobile) return;
     const previousFocus = document.activeElement as HTMLElement | null;
     const sidebar = sidebarRef.current;
-    sidebar?.querySelector<HTMLButtonElement>("button")?.focus();
+    const timer = setTimeout(() => {
+      sidebar?.querySelector<HTMLButtonElement>("button")?.focus();
+    }, 0);
     const keyboard = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenu(false);
       if (event.key !== "Tab" || !sidebar) return;
@@ -54,6 +56,7 @@ export function useNavigationMenu(defaultDesktopOpen = false) {
     };
     document.addEventListener("keydown", keyboard);
     return () => {
+      clearTimeout(timer);
       document.removeEventListener("keydown", keyboard);
       if (previousFocus?.isConnected) previousFocus.focus();
     };

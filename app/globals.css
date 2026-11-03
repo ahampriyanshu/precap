@@ -552,15 +552,16 @@ input::placeholder {
   min-height: 0;
   overflow-y: auto;
   margin-left: 0;
-  transition:
-    margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0.25s;
   visibility: visible;
+  transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 30;
 }
 .sidebar.is-collapsed {
   margin-left: -280px;
   visibility: hidden;
+  transition:
+    margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s 0.25s;
 }
 .catalog-body .sidebar {
   position: sticky;
@@ -1769,16 +1770,17 @@ input::placeholder {
     z-index: 40;
     margin-left: 0;
     transform: translateX(0);
-    transition:
-      transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-      visibility 0.25s;
     visibility: visible;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
   }
   .sidebar.is-collapsed {
     transform: translateX(-100%);
     visibility: hidden;
     margin-left: 0;
+    transition:
+      transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s 0.25s;
   }
   .sidebar .sidebar-brand {
     display: flex;
