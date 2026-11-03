@@ -178,12 +178,12 @@ export function AppSidebar({
                           aria-current={isActive ? "page" : undefined}
                           onClick={() => setMenu(false)}
                         >
+                          <span>{chapter.title}</span>
                           {isComplete && (
                             <span className="nav-number is-complete">
                               <Check size={13} />
                             </span>
                           )}
-                          <span>{chapter.title}</span>
                         </Link>
                       );
                     })}

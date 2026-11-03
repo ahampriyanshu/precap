@@ -451,3 +451,38 @@ test("practice page uses neutral and grey colors without greenish or brownish ti
     .evaluate((e) => window.getComputedStyle(e).color);
   expect(cmGuttersColor).toBe("rgb(112, 112, 112)");
 });
+
+test("sidebar checkmark appears after the title without altering title text alignment", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      "python-dsa:work:v2:python/01-primitive-types",
+      JSON.stringify({ code: "# done", prototype: true, final: true }),
+    );
+  });
+  await page.goto(lesson(first));
+  const sidebar = page.locator(".sidebar");
+  await expect(sidebar).toBeVisible();
+
+  const completedChapter = sidebar.locator(".nav-chapter:has(.is-complete)");
+  await expect(completedChapter).toBeVisible();
+
+  const titleSpan = completedChapter.locator("span").first();
+  const checkmarkSpan = completedChapter.locator(".is-complete");
+
+  const titleBox = await titleSpan.boundingBox();
+  const checkmarkBox = await checkmarkSpan.boundingBox();
+
+  expect(checkmarkBox!.x).toBeGreaterThan(titleBox!.x);
+
+  const incompleteChapter = sidebar
+    .locator(".nav-chapter:not(:has(.is-complete))")
+    .first();
+  const incompleteTitleBox = await incompleteChapter
+    .locator("span")
+    .first()
+    .boundingBox();
+
+  expect(Math.abs(titleBox!.x - incompleteTitleBox!.x)).toBeLessThanOrEqual(1);
+});
