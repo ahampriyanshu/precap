@@ -140,7 +140,7 @@ export function AppSidebar({
         >
           {/* Section 1: Tracks */}
           <div className="sidebar-section">
-            <h2 className="guide-nav-label">Tracks</h2>
+            <h2 className="guide-nav-label">Interview Prep</h2>
             {sidebarTracks.map((track) => {
               const groupKey = `track:${track}`;
               const isOpen = !!openGroups[groupKey];
@@ -195,7 +195,7 @@ export function AppSidebar({
 
           {/* Section 2: Playlists */}
           <div className="sidebar-section">
-            <h2 className="guide-nav-label">Playlists</h2>
+            <h2 className="guide-nav-label">Engineering Bookshelf</h2>
             {navGuides.map((guide) => {
               const groupKey = `guide:${guide.slug}`;
               const isOpen = !!openGroups[groupKey];
