@@ -3,10 +3,12 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { SiteHeader } from "./site-header";
+import { AppSidebar } from "./app-sidebar";
 import { ConceptIllustration } from "./concept-illustration";
 import { hasConceptArt } from "@/lib/concept-art";
 import { useProgress } from "@/hooks/use-progress";
 import { usePreferredLanguage } from "@/hooks/use-preferred-language";
+import { useNavigationMenu } from "@/hooks/use-navigation-menu";
 import { guideUrl, cheatsheetUrl } from "@/lib/guide-utils";
 import type { Chapter, Guide, Cheatsheet, Track } from "@/lib/types";
 import { languageInfo, chapterForLanguage } from "@/lib/languages";
@@ -210,6 +212,7 @@ export function Catalog({
   cheatsheets: Cheatsheet[];
 }) {
   const [query, setQuery] = useState("");
+  const { menu, setMenu, sidebarRef, isMobile } = useNavigationMenu(false);
   const { language, setLanguage } = usePreferredLanguage();
   const practiceChapters = useMemo(
     () =>
@@ -226,11 +229,14 @@ export function Catalog({
   );
   const { completed, started } = useProgress(practiceChapters);
   const chooseLanguage = () => {
-    const select = document.querySelector<HTMLSelectElement>(
-      'select[aria-label="Programming language"]',
-    );
-    select?.scrollIntoView({ block: "center", behavior: "smooth" });
-    select?.focus();
+    setMenu(true);
+    setTimeout(() => {
+      const select = document.querySelector<HTMLSelectElement>(
+        'select[aria-label="Programming language"]',
+      );
+      select?.scrollIntoView({ block: "center", behavior: "smooth" });
+      select?.focus();
+    }, 100);
   };
   const term = query.trim().toLowerCase();
   const matchingChapters = practiceChapters.filter((chapter) =>
@@ -261,224 +267,246 @@ export function Catalog({
         Skip to topics
       </a>
       <SiteHeader
+        onMenuClick={() => setMenu(!menu)}
+        menuAriaLabel="Open curriculum navigation"
         query={query}
         onQueryChange={setQuery}
         searchAriaLabel="Search topics"
         searchPlaceholder="Find a topic or tool… (/)"
         showDropdown={false}
       />
-      <main className="catalog-main" id="main-content" tabIndex={-1}>
-        <section className="path-hero">
-          <div className="hero-copy">
-            <h1>Deadline Driven Preparation</h1>
-          </div>
-        </section>
-        <div id="courses" className="curriculum-container">
-          {term ? (
-            <section
-              className="catalog-search-results"
-              aria-label="Search results"
-            >
-              {!language && (
-                <p className="search-language-note">
-                  Choose a programming language above to include coding lessons.
-                </p>
-              )}
-              {[
-                ...new Set(matchingChapters.map((chapter) => chapter.track)),
-              ].map((track) => (
-                <section className={`search-course track-${track}`} key={track}>
-                  <h3>{courses[track].title}</h3>
-                  {matchingChapters
-                    .filter((chapter) => chapter.track === track)
-                    .map((chapter) => (
-                      <ChapterLink
-                        chapter={chapter}
-                        completed={completed}
-                        key={chapter.id}
-                      />
-                    ))}
-                </section>
-              ))}
-              {!!visibleGuides.length && (
-                <div className="guide-grid">
-                  {visibleGuides.map((guide) => (
-                    <GuideCard key={guide.slug} guide={guide} search />
-                  ))}
-                </div>
-              )}
-              <Sheets sheets={visibleSheets} />
-              {!matchingChapters.length &&
-                !visibleGuides.length &&
-                !visibleSheets.length && (
-                  <p className="search-empty" role="status">
-                    No matching topics. Try another topic, tool, or course name.
+      <div className="catalog-body">
+        <AppSidebar
+          chapters={chapters}
+          navigationLabel="Curriculum navigation"
+          menu={menu}
+          setMenu={setMenu}
+          sidebarRef={sidebarRef}
+          isMobile={isMobile}
+        />
+        <main
+          className="catalog-main"
+          id="main-content"
+          tabIndex={-1}
+          inert={isMobile && menu ? true : undefined}
+        >
+          <section className="path-hero">
+            <div className="hero-copy">
+              <h1>Deadline Driven Preparation</h1>
+            </div>
+          </section>
+          <div id="courses" className="curriculum-container">
+            {term ? (
+              <section
+                className="catalog-search-results"
+                aria-label="Search results"
+              >
+                {!language && (
+                  <p className="search-language-note">
+                    Choose a programming language above to include coding
+                    lessons.
                   </p>
                 )}
-            </section>
-          ) : (
-            <>
-              <ol
-                className="learning-path"
-                aria-label="Interview preparation path"
-              >
-                <li className="path-step">
-                  <div className="path-step-content">
-                    <ConceptIllustration
-                      concept="machine-coding"
-                      className="path-art"
-                    />
-                    <div className="path-step-heading">
-                      <h2>Machine coding</h2>
-                      <p>
-                        Refresh your language, then work through data structures
-                        and algorithms.
-                      </p>
-                    </div>
-                    {language ? (
-                      <div className="machine-courses">
-                        <Course
-                          track={language}
-                          items={items(language)}
-                          title={`${languageInfo[language].label} fundamentals`}
+                {[
+                  ...new Set(matchingChapters.map((chapter) => chapter.track)),
+                ].map((track) => (
+                  <section
+                    className={`search-course track-${track}`}
+                    key={track}
+                  >
+                    <h3>{courses[track].title}</h3>
+                    {matchingChapters
+                      .filter((chapter) => chapter.track === track)
+                      .map((chapter) => (
+                        <ChapterLink
+                          chapter={chapter}
                           completed={completed}
+                          key={chapter.id}
                         />
-                        <Course
-                          track="dsa"
-                          items={items("dsa")}
-                          title="Data structures & algorithms"
-                          completed={completed}
-                        />
+                      ))}
+                  </section>
+                ))}
+                {!!visibleGuides.length && (
+                  <div className="guide-grid">
+                    {visibleGuides.map((guide) => (
+                      <GuideCard key={guide.slug} guide={guide} search />
+                    ))}
+                  </div>
+                )}
+                <Sheets sheets={visibleSheets} />
+                {!matchingChapters.length &&
+                  !visibleGuides.length &&
+                  !visibleSheets.length && (
+                    <p className="search-empty" role="status">
+                      No matching topics. Try another topic, tool, or course
+                      name.
+                    </p>
+                  )}
+              </section>
+            ) : (
+              <>
+                <ol
+                  className="learning-path"
+                  aria-label="Interview preparation path"
+                >
+                  <li className="path-step">
+                    <div className="path-step-content">
+                      <ConceptIllustration
+                        concept="machine-coding"
+                        className="path-art"
+                      />
+                      <div className="path-step-heading">
+                        <h2>Machine coding</h2>
+                        <p>
+                          Refresh your language, then work through data
+                          structures and algorithms.
+                        </p>
                       </div>
-                    ) : (
-                      <button
-                        className="text-link path-choose"
-                        onClick={chooseLanguage}
-                      >
-                        Choose a language to start
-                      </button>
-                    )}
-                  </div>
-                </li>
-                <li className="path-step">
-                  <div className="path-step-content">
-                    <ConceptIllustration
-                      concept="system-basics"
-                      className="path-art"
-                    />
-                    <div className="path-step-heading">
-                      <h2>System design basics</h2>
-                      <p>
-                        Revisit the mechanisms that shape a distributed system
-                        before designing one.
-                      </p>
+                      {language ? (
+                        <div className="machine-courses">
+                          <Course
+                            track={language}
+                            items={items(language)}
+                            title={`${languageInfo[language].label} fundamentals`}
+                            completed={completed}
+                          />
+                          <Course
+                            track="dsa"
+                            items={items("dsa")}
+                            title="Data structures & algorithms"
+                            completed={completed}
+                          />
+                        </div>
+                      ) : (
+                        <button
+                          className="text-link path-choose"
+                          onClick={chooseLanguage}
+                        >
+                          Choose a language to start
+                        </button>
+                      )}
                     </div>
-                    <div className="path-course-actions">
-                      <Link
-                        className="button primary course-start"
-                        href={guideUrl("backend", systemDesignBasics[0].slug)}
-                      >
-                        Start
-                      </Link>
-                      <span>
-                        {systemDesignBasics.length} foundation lessons
-                      </span>
+                  </li>
+                  <li className="path-step">
+                    <div className="path-step-content">
+                      <ConceptIllustration
+                        concept="system-basics"
+                        className="path-art"
+                      />
+                      <div className="path-step-heading">
+                        <h2>System design basics</h2>
+                        <p>
+                          Revisit the mechanisms that shape a distributed system
+                          before designing one.
+                        </p>
+                      </div>
+                      <div className="path-course-actions">
+                        <Link
+                          className="button primary course-start"
+                          href={guideUrl("backend", systemDesignBasics[0].slug)}
+                        >
+                          Start
+                        </Link>
+                        <span>
+                          {systemDesignBasics.length} foundation lessons
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </li>
-                <li className="path-step">
-                  <div className="path-step-content">
-                    <ConceptIllustration
-                      concept="low-level-design"
-                      className="path-art"
-                    />
-                    <div className="path-step-heading">
-                      <h2>Low-level design</h2>
-                      <p>
-                        Turn requirements into objects, interfaces, and
-                        invariants that hold under change.
-                      </p>
+                  </li>
+                  <li className="path-step">
+                    <div className="path-step-content">
+                      <ConceptIllustration
+                        concept="low-level-design"
+                        className="path-art"
+                      />
+                      <div className="path-step-heading">
+                        <h2>Low-level design</h2>
+                        <p>
+                          Turn requirements into objects, interfaces, and
+                          invariants that hold under change.
+                        </p>
+                      </div>
+                      {language ? (
+                        <Course
+                          track="lld"
+                          items={items("lld")}
+                          title="Design exercises"
+                          completed={completed}
+                        />
+                      ) : (
+                        <button
+                          className="text-link path-choose"
+                          onClick={chooseLanguage}
+                        >
+                          Choose a language for LLD
+                        </button>
+                      )}
                     </div>
-                    {language ? (
+                  </li>
+                  <li className="path-step">
+                    <div className="path-step-content">
+                      <ConceptIllustration
+                        concept="high-level-design"
+                        className="path-art"
+                      />
+                      <div className="path-step-heading">
+                        <h2>High-level design</h2>
+                        <p>
+                          Draw service boundaries, data flows, and failure
+                          paths. Defend your tradeoffs.
+                        </p>
+                      </div>
                       <Course
-                        track="lld"
-                        items={items("lld")}
-                        title="Design exercises"
+                        track="hld"
+                        items={items("hld")}
+                        title="Architecture practice"
                         completed={completed}
                       />
-                    ) : (
-                      <button
-                        className="text-link path-choose"
-                        onClick={chooseLanguage}
-                      >
-                        Choose a language for LLD
-                      </button>
-                    )}
+                    </div>
+                  </li>
+                </ol>
+                <section id="guides" className="supplementary-section">
+                  <div className="section-heading">
+                    <div>
+                      <h2>The engineering bookshelf</h2>
+                    </div>
                   </div>
-                </li>
-                <li className="path-step">
-                  <div className="path-step-content">
-                    <ConceptIllustration
-                      concept="high-level-design"
-                      className="path-art"
-                    />
-                    <div className="path-step-heading">
-                      <h2>High-level design</h2>
-                      <p>
-                        Draw service boundaries, data flows, and failure paths.
-                        Defend your tradeoffs.
+                  <div className="guide-grid">
+                    {guides.map((guide) => (
+                      <GuideCard guide={guide} key={guide.slug} />
+                    ))}
+                  </div>
+                </section>
+                <section id="cheatsheets" className="path-cheatsheets">
+                  <div className="section-heading">
+                    <div>
+                      <h2>Tool cheatsheets</h2>
+                      <p className="section-description">
+                        Keep the commands close. Save your memory for the
+                        decisions.
                       </p>
                     </div>
-                    <Course
-                      track="hld"
-                      items={items("hld")}
-                      title="Architecture practice"
-                      completed={completed}
-                    />
                   </div>
-                </li>
-              </ol>
-              <section id="guides" className="supplementary-section">
-                <div className="section-heading">
-                  <div>
-                    <h2>The engineering bookshelf</h2>
-                  </div>
-                </div>
-                <div className="guide-grid">
-                  {guides.map((guide) => (
-                    <GuideCard guide={guide} key={guide.slug} />
-                  ))}
-                </div>
-              </section>
-              <section id="cheatsheets" className="path-cheatsheets">
-                <div className="section-heading">
-                  <div>
-                    <h2>Tool cheatsheets</h2>
-                    <p className="section-description">
-                      Keep the commands close. Save your memory for the
-                      decisions.
-                    </p>
-                  </div>
-                </div>
-                <Sheets sheets={cheatsheets} />
-              </section>
-            </>
-          )}
-        </div>
-        <footer className="catalog-footer">
-          <span>
-            made by{" "}
-            <a
-              href="https://ahampriyanshu.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ahampriyanshu
-            </a>
-          </span>
-          <span>Your code and progress stay in this browser.</span>
-        </footer>
-      </main>
+                  <Sheets sheets={cheatsheets} />
+                </section>
+              </>
+            )}
+          </div>
+          <footer className="catalog-footer">
+            <span>
+              made by{" "}
+              <a
+                href="https://ahampriyanshu.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ahampriyanshu
+              </a>
+            </span>
+            <span>Your code and progress stay in this browser.</span>
+          </footer>
+        </main>
+      </div>
     </div>
   );
 }

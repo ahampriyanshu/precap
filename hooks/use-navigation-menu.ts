@@ -1,11 +1,38 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-export function useNavigationMenu() {
-  const [menu, setMenu] = useState(false);
+export function useNavigationMenu(defaultDesktopOpen = false) {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth <= 1050;
+    }
+    return false;
+  });
+
+  const [menu, setMenu] = useState(() => {
+    if (typeof window !== "undefined" && window.innerWidth <= 1050) {
+      return false;
+    }
+    return defaultDesktopOpen;
+  });
+
   const sidebarRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
-    if (!menu) return;
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 1050;
+      setIsMobile(mobile);
+      if (mobile && defaultDesktopOpen) {
+        setMenu(false);
+      }
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [defaultDesktopOpen]);
+
+  useEffect(() => {
+    if (!menu || !isMobile) return;
     const previousFocus = document.activeElement as HTMLElement | null;
     const sidebar = sidebarRef.current;
     sidebar?.querySelector<HTMLButtonElement>("button")?.focus();
@@ -30,6 +57,7 @@ export function useNavigationMenu() {
       document.removeEventListener("keydown", keyboard);
       if (previousFocus?.isConnected) previousFocus.focus();
     };
-  }, [menu]);
-  return { menu, setMenu, sidebarRef };
+  }, [menu, isMobile]);
+
+  return { menu, setMenu, sidebarRef, isMobile };
 }

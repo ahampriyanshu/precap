@@ -20,7 +20,7 @@ export function LessonShell({
   practice: boolean;
   children: ReactNode;
 }) {
-  const { menu, setMenu, sidebarRef } = useNavigationMenu();
+  const { menu, setMenu, sidebarRef, isMobile } = useNavigationMenu(!practice);
   const { completed } = useProgress(chapters);
 
   return (
@@ -32,7 +32,7 @@ export function LessonShell({
       </a>
 
       <SiteHeader
-        onMenuClick={() => setMenu(true)}
+        onMenuClick={() => setMenu(!menu)}
         menuAriaLabel="Open lesson navigation"
         searchAriaLabel="Search course lessons"
       />
@@ -50,9 +50,15 @@ export function LessonShell({
           menu={menu}
           setMenu={setMenu}
           sidebarRef={sidebarRef}
+          isMobile={isMobile}
         />
 
-        <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
+        <main
+          className="studio"
+          inert={isMobile && menu ? true : undefined}
+          id="main-panel"
+          tabIndex={-1}
+        >
           {!practice && (
             <div className="studio-header">
               <div className="studio-breadcrumb">

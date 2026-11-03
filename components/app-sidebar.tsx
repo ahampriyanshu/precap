@@ -34,6 +34,7 @@ export interface AppSidebarProps {
   menu: boolean;
   setMenu: (open: boolean) => void;
   sidebarRef: RefObject<HTMLElement | null>;
+  isMobile?: boolean;
 }
 
 export function AppSidebar({
@@ -51,7 +52,10 @@ export function AppSidebar({
   menu,
   setMenu,
   sidebarRef,
+  isMobile,
 }: AppSidebarProps) {
+  const isDialog =
+    isMobile ?? (typeof window !== "undefined" && window.innerWidth <= 1050);
   const { language } = usePreferredLanguage();
   const effectiveLanguage: Language =
     (lesson?.language && isLanguage(lesson.language)
@@ -119,9 +123,9 @@ export function AppSidebar({
       )}
       <aside
         ref={sidebarRef}
-        className={`sidebar ${menu ? "is-open" : ""}`}
-        role={menu ? "dialog" : undefined}
-        aria-modal={menu || undefined}
+        className={`sidebar ${menu ? "is-open" : "is-collapsed"}`}
+        role={isDialog && menu ? "dialog" : undefined}
+        aria-modal={isDialog && menu ? true : undefined}
         aria-label={navigationLabel}
       >
         <div className="sidebar-brand">

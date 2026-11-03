@@ -22,7 +22,7 @@ export function GuideShell({
   cheatsheet?: Cheatsheet;
   children: ReactNode;
 }) {
-  const { menu, setMenu, sidebarRef } = useNavigationMenu();
+  const { menu, setMenu, sidebarRef, isMobile } = useNavigationMenu(true);
   const position = guide.parts.findIndex((part) => part.slug === partSlug);
   const part = guide.parts[position];
   const navigationLabel = cheatsheet
@@ -36,7 +36,7 @@ export function GuideShell({
       </a>
 
       <SiteHeader
-        onMenuClick={() => setMenu(true)}
+        onMenuClick={() => setMenu(!menu)}
         menuAriaLabel={`Open ${navigationLabel.toLowerCase()}`}
         searchAriaLabel="Search course lessons"
       />
@@ -50,9 +50,15 @@ export function GuideShell({
           menu={menu}
           setMenu={setMenu}
           sidebarRef={sidebarRef}
+          isMobile={isMobile}
         />
 
-        <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
+        <main
+          className="studio"
+          inert={isMobile && menu ? true : undefined}
+          id="main-panel"
+          tabIndex={-1}
+        >
           <div className="studio-header">
             <div className="studio-breadcrumb">
               <Link href="/">Home</Link>

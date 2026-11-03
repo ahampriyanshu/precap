@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SiteHeader } from "@/components/site-header";
-import { LanguageSelect } from "@/components/language-select";
+import { PlaylistShell } from "@/components/playlist-shell";
 import { ConceptIllustration } from "@/components/concept-illustration";
 import { hasConceptArt } from "@/lib/concept-art";
 import { guides } from "@/lib/guides";
@@ -41,100 +40,93 @@ export default async function PlaylistPage({ params }: Props) {
     ...new Set(guide.parts.map((part) => part.module || "The curriculum")),
   ];
   return (
-    <div className="catalog playlist-index">
-      <a className="skip-link" href="#main-content">
-        Skip to curriculum
-      </a>
-      <SiteHeader searchAriaLabel="Search course lessons" />
-      <main className="catalog-main" id="main-content" tabIndex={-1}>
-        <header className="playlist-intro">
-          <div className="playlist-intro-copy">
-            <p className="intro-kicker">
-              {guide.slug === "last-mile-prep"
-                ? `${modules.length} modules`
-                : guide.moduleLabel === "Track"
-                  ? `${modules.length} tracks`
-                  : "Engineering curriculum"}{" "}
-              · {guide.parts.length} lessons
-            </p>
-            <h1>{guide.title}</h1>
-            <p className="intro-copy">{guide.description}</p>
-            <div className="playlist-intro-actions">
-              <Link
-                className="text-link"
-                href={guideUrl(guide.slug, guide.parts[0].slug)}
-              >
-                Start with {guide.parts[0].title}
-              </Link>
-              <LanguageSelect />
-            </div>
-          </div>
-          {hasConceptArt(guide.slug) && (
-            <ConceptIllustration concept={guide.slug} />
-          )}
-        </header>
-        <div className="playlist-layout">
-          <nav className="module-index" aria-label="Modules">
-            <p>In this playlist</p>
-            {modules.map((module, index) => (
-              <a key={module} href={`#module-${index + 1}`}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                {module}
-              </a>
-            ))}
-          </nav>
-          <div className="playlist-modules">
-            {modules.map((module, index) => (
-              <section
-                className="playlist-module"
-                id={`module-${index + 1}`}
-                key={module}
-                aria-labelledby={`module-title-${index + 1}`}
-              >
-                <p className="module-number">
-                  {guide.moduleLabel || "Module"} {index + 1}
-                </p>
-                <h2 id={`module-title-${index + 1}`}>{module}</h2>
-                <ol>
-                  {guide.parts
-                    .filter(
-                      (part) => (part.module || "The curriculum") === module,
-                    )
-                    .map((part) => (
-                      <li key={part.slug}>
-                        <Link href={guideUrl(guide.slug, part.slug)}>
-                          <span className="lesson-index-number">
-                            {String(guide.parts.indexOf(part) + 1).padStart(
-                              2,
-                              "0",
-                            )}
-                          </span>
-                          <span>
-                            <h3>{part.title}</h3>
-                            <p>{part.description}</p>
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                </ol>
-              </section>
-            ))}
+    <PlaylistShell currentGuide={slug}>
+      <header className="playlist-intro">
+        <div className="playlist-intro-copy">
+          <p className="intro-kicker">
+            {guide.slug === "last-mile-prep"
+              ? `${modules.length} modules`
+              : guide.moduleLabel === "Track"
+                ? `${modules.length} tracks`
+                : "Engineering curriculum"}{" "}
+            · {guide.parts.length} lessons
+          </p>
+          <h1>{guide.title}</h1>
+          <p className="intro-copy">{guide.description}</p>
+          <div className="playlist-intro-actions">
+            <Link
+              className="text-link"
+              href={guideUrl(guide.slug, guide.parts[0].slug)}
+            >
+              Start with {guide.parts[0].title}
+            </Link>
           </div>
         </div>
-        <footer className="catalog-footer">
-          <Link href="/#guides">All playlists</Link>
-          <span>
-            made by{" "}
-            <a
-              href="https://ahampriyanshu.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ahampriyanshu
+        {hasConceptArt(guide.slug) && (
+          <ConceptIllustration concept={guide.slug} />
+        )}
+      </header>
+      <div className="playlist-layout">
+        <nav className="module-index" aria-label="Modules">
+          <p>In this playlist</p>
+          {modules.map((module, index) => (
+            <a key={module} href={`#module-${index + 1}`}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              {module}
             </a>
-          </span>
-        </footer>
-      </main>
-    </div>
+          ))}
+        </nav>
+        <div className="playlist-modules">
+          {modules.map((module, index) => (
+            <section
+              className="playlist-module"
+              id={`module-${index + 1}`}
+              key={module}
+              aria-labelledby={`module-title-${index + 1}`}
+            >
+              <p className="module-number">
+                {guide.moduleLabel || "Module"} {index + 1}
+              </p>
+              <h2 id={`module-title-${index + 1}`}>{module}</h2>
+              <ol>
+                {guide.parts
+                  .filter(
+                    (part) => (part.module || "The curriculum") === module,
+                  )
+                  .map((part) => (
+                    <li key={part.slug}>
+                      <Link href={guideUrl(guide.slug, part.slug)}>
+                        <span className="lesson-index-number">
+                          {String(guide.parts.indexOf(part) + 1).padStart(
+                            2,
+                            "0",
+                          )}
+                        </span>
+                        <span>
+                          <h3>{part.title}</h3>
+                          <p>{part.description}</p>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+              </ol>
+            </section>
+          ))}
+        </div>
+      </div>
+      <footer className="catalog-footer">
+        <Link href="/#guides">All playlists</Link>
+        <span>
+          made by{" "}
+          <a
+            href="https://ahampriyanshu.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ahampriyanshu
+          </a>
+        </span>
+      </footer>
+    </PlaylistShell>
   );
 }
