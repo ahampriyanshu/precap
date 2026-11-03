@@ -70,7 +70,7 @@ test("HLD diagrams autosave by lesson, export, and track explicit self-review", 
     page.locator(".cm-editor, .run-toolbar, .results-panel"),
   ).toHaveCount(0);
   await expect(
-    page.getByRole("button", { name: "Run checks", exact: true }),
+    page.getByRole("button", { name: "Submit", exact: true }),
   ).toHaveCount(0);
   const review = page.getByRole("button", {
     name: "Mark reviewed",

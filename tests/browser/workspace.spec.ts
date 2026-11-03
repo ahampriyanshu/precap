@@ -71,7 +71,14 @@ test("topic search, clear GC content, saved code, Python failures and reset", as
   await page.goto(practice(first));
   const editor = page.getByRole("textbox", { name: "Python code editor" });
   await expect(editor).toBeEditable();
-  await page.getByRole("button", { name: "Run checks" }).click();
+  await expect(page.locator(".stage-picker")).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: /1\. Prototype|2\. Final/ }),
+  ).toHaveCount(0);
+  await expect(
+    page.locator(".results-header .results-header-actions .submit-button"),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".run-summary.failed")).toBeVisible({
     timeout: 90000,
   });
@@ -120,7 +127,7 @@ test("LLD is discoverable and teaches the design before opening browser practice
   await expect(page).toHaveURL(practice(lld));
   const editor = page.getByRole("textbox", { name: "Python code editor" });
   await expect(editor).toBeEditable();
-  await page.getByRole("button", { name: "Run checks" }).click();
+  await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".run-summary.failed")).toBeVisible({
     timeout: 90000,
   });
@@ -181,7 +188,7 @@ test("HLD is discoverable and opens an architecture canvas after the lesson", as
     page.getByRole("region", { name: "Design brief", exact: true }),
   ).toContainText("Design brief");
   await expect(
-    page.getByRole("button", { name: "Run checks", exact: true }),
+    page.getByRole("button", { name: "Submit", exact: true }),
   ).toHaveCount(0);
 });
 
@@ -191,7 +198,7 @@ test("CPU-bound code can be stopped without blocking the editor", async ({
   await page.goto(practice(first));
   const editor = page.getByRole("textbox", { name: "Python code editor" });
   await editor.fill("while True: pass");
-  await page.getByRole("button", { name: "Run checks" }).click();
+  await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".running-placeholder")).toContainText(
     "Running checks",
     { timeout: 90000 },
@@ -207,7 +214,7 @@ test("native concurrency has downloads and explicit local completion", async ({
   page,
 }) => {
   await page.goto(practice(native));
-  await expect(page.getByRole("button", { name: "Run checks" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Submit" })).toHaveCount(0);
   await expect(page.locator(".native-panel")).toContainText(
     "native threads or processes",
   );

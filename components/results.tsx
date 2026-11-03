@@ -17,6 +17,7 @@ export function Results({
   report,
   output,
   error,
+  actions,
 }: {
   language?: string;
   message?: string;
@@ -24,6 +25,7 @@ export function Results({
   report: Report | null;
   output: string;
   error: string;
+  actions?: React.ReactNode;
 }) {
   const [tab, setTab] = useState<"checks" | "output">("checks");
   useEffect(() => {
@@ -64,9 +66,14 @@ export function Results({
             Console{output && <span className="output-dot" />}
           </button>
         </div>
-        {report && (
-          <span className="result-duration">{report.duration.toFixed(2)}s</span>
-        )}
+        <div className="results-header-actions">
+          {report && (
+            <span className="result-duration">
+              {report.duration.toFixed(2)}s
+            </span>
+          )}
+          {actions}
+        </div>
       </div>
       <div
         className="results-body"

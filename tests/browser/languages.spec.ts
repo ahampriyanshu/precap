@@ -156,9 +156,7 @@ test("drafts stay isolated and every shared language offers browser execution", 
     if (language !== "python") await selectLanguage(page, language);
     await editor(page, language).fill(draft(language));
     await expect(page.locator(".editor-status")).toContainText("Saved locally");
-    await expect(
-      page.getByRole("button", { name: "Run checks" }),
-    ).toBeEnabled();
+    await expect(page.getByRole("button", { name: "Submit" })).toBeEnabled();
     await expect(page.locator(".native-panel")).toHaveCount(0);
   }
   for (const language of [...languages].reverse()) {
@@ -178,7 +176,7 @@ test("drafts stay isolated and every shared language offers browser execution", 
   await expect(page.locator(".editor-status")).toContainText("Saved locally");
   await page.reload();
   await expect(editor(page, "go")).toContainText("edited browser draft");
-  await expect(page.getByRole("button", { name: "Run checks" })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Submit" })).toBeEnabled();
   await expect(
     page.getByRole("button", {
       name: /Mark complete after local tests|Completed locally/,
@@ -256,9 +254,7 @@ test("old native completion flags retain drafts without counting browser course 
     await expect(editor(page, language)).toContainText(
       `preserved ${labels[language]} fundamentals draft`,
     );
-    await expect(
-      page.getByRole("button", { name: "Run checks" }),
-    ).toBeEnabled();
+    await expect(page.getByRole("button", { name: "Submit" })).toBeEnabled();
     await expect(
       page.locator(
         ".sidebar-list .guide-nav-group[open] .nav-number.is-complete",
@@ -280,8 +276,7 @@ test("JavaScript stubs fail honestly and syntax errors never mark completion", a
 }) => {
   await page.goto(route("javascript"));
   await expect(editor(page, "javascript")).toBeEditable();
-  await page.getByRole("button", { name: "2. Final", exact: true }).click();
-  await page.getByRole("button", { name: "Run checks" }).click();
+  await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".run-summary.failed")).toBeVisible();
   expect(
     await page.locator(".check-failed, .check-error").count(),
@@ -293,7 +288,7 @@ test("JavaScript stubs fail honestly and syntax errors never mark completion", a
     ),
   ).toBe(false);
   await editor(page, "javascript").fill("export function broken( {\n");
-  await page.getByRole("button", { name: "Run checks" }).click();
+  await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".execution-error")).toContainText("exercise.mjs");
   await expect(page.locator(".run-summary.passed")).toHaveCount(0);
   expect(
@@ -364,7 +359,7 @@ test("JavaScript CPU work can be stopped and a subsequent run starts fresh", asy
   const code = editor(page, "javascript");
   await expect(code).toBeEditable();
   await code.fill("while (true) {}\n");
-  await page.getByRole("button", { name: "Run checks" }).click();
+  await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".running-placeholder")).toContainText(
     "Running checks",
   );
@@ -378,7 +373,7 @@ test("JavaScript CPU work can be stopped and a subsequent run starts fresh", asy
     "globalThis.__freshProbe=(globalThis.__freshProbe??0)+1; console.log('fresh probe',globalThis.__freshProbe); export function prototype(){throw Error('deliberate test failure');} export function solve(){throw Error('deliberate test failure');}\n",
   );
   for (let run = 0; run < 2; run++) {
-    await page.getByRole("button", { name: "Run checks" }).click();
+    await page.getByRole("button", { name: "Submit" }).click();
     await expect(page.locator(".run-summary.failed")).toBeVisible();
     await page.getByRole("tab", { name: /Console/ }).click();
     await expect(page.locator(".console-output")).toContainText(
@@ -400,8 +395,7 @@ for (const language of compiledLanguages) {
     const code = editor(page, language);
     await expect(code).toBeEditable();
     await expect(page.locator(".native-panel")).toHaveCount(0);
-    await page.getByRole("button", { name: "2. Final", exact: true }).click();
-    await page.getByRole("button", { name: "Run checks" }).click();
+    await page.getByRole("button", { name: "Submit" }).click();
     await expect(page.locator(".run-summary.failed")).toBeVisible({
       timeout: language === "java" ? 200000 : 150000,
     });
@@ -423,7 +417,7 @@ for (const language of compiledLanguages) {
         cpp: "#pragma once\nthis is not valid C++;\n",
       }[language],
     );
-    await page.getByRole("button", { name: "Run checks" }).click();
+    await page.getByRole("button", { name: "Submit" }).click();
     await expect(page.locator(".execution-error")).toContainText(
       "Compilation failed",
       { timeout: language === "java" ? 200000 : 150000 },
@@ -488,11 +482,10 @@ for (const language of compiledLanguages) {
       await expect(page.locator(".editor-status")).toContainText(
         "Saved locally",
       );
-      await page.getByRole("button", { name: "2. Final", exact: true }).click();
       const requested = context.waitForEvent("request", (request) =>
         request.url().endsWith(`/runtimes/${language}/adapter.mjs`),
       );
-      await page.getByRole("button", { name: "Run checks" }).click();
+      await page.getByRole("button", { name: "Submit" }).click();
       await requested;
       await expect(page.locator(".running-placeholder")).toContainText(
         /Loading/,
@@ -511,7 +504,7 @@ for (const language of compiledLanguages) {
       releaseLoad();
       await firstSettled;
       await expect(page.locator(".run-summary")).toHaveCount(0);
-      await page.getByRole("button", { name: "Run checks" }).click();
+      await page.getByRole("button", { name: "Submit" }).click();
       await expect(page.locator(".run-summary.failed")).toBeVisible();
       await expect(page.locator(".check-failed summary")).toHaveText(
         "lifecycle recovery probe 1",
@@ -542,17 +535,14 @@ for (const language of compiledLanguages) {
     await page.goto(route(language));
     await expect(editor(page, language)).toBeEditable();
     await expect(page.locator(".native-panel")).toHaveCount(0);
-    await expect(
-      page.getByRole("button", { name: "Run checks" }),
-    ).toBeEnabled();
+    await expect(page.getByRole("button", { name: "Submit" })).toBeEnabled();
     await expect(page.locator(".editor-status")).toContainText(
       `${labels[language]} · runs on your device`,
     );
     await editor(page, language).fill(draft(language));
-    await page.getByRole("button", { name: "2. Final", exact: true }).click();
     await expect(
-      page.getByRole("button", { name: "2. Final", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
+      page.getByRole("button", { name: /1\. Prototype|2\. Final/ }),
+    ).toHaveCount(0);
     const promise = page.waitForEvent("download");
     await page
       .getByRole("button", { name: "Download exercise", exact: true })
@@ -599,7 +589,7 @@ test("legacy Python and HLD routes keep their original editor and diagram flows"
     .getByRole("link", { name: "Open design canvas", exact: true })
     .click();
   await expect(page.locator(".excalidraw")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Run checks" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Submit" })).toHaveCount(0);
 });
 
 test("browser compiler desktop evidence and mobile language controls remain usable", async ({
@@ -608,7 +598,7 @@ test("browser compiler desktop evidence and mobile language controls remain usab
   await page.goto(route("java"));
   await expect(editor(page, "java")).toBeEditable();
   await expect(page.locator(".results-panel")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Run checks" })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Submit" })).toBeEnabled();
   await page.screenshot({ path: testInfo.outputPath("language-practice.png") });
   await page.setViewportSize({ width: 390, height: 844 });
   await page
@@ -673,7 +663,7 @@ test("LLD keeps its selected language across lesson, practice, and next lesson",
     `/learn/${first.directory}/javascript/practice/`,
   );
   await expect(editor(page, "javascript")).toBeEditable();
-  await page.getByRole("button", { name: "Run checks" }).click();
+  await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.locator(".run-summary.failed")).toBeVisible();
   await expect(page.locator(".check-row pre").first()).toContainText(
     "Not implemented",

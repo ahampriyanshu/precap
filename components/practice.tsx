@@ -39,7 +39,7 @@ export function Practice({ lesson }: { lesson: Lesson }) {
   const info = languageInfo[language];
   const question = split.collapsed !== "question";
   const editorVisible = split.collapsed !== "editor";
-  const [stage, setStage] = useState<Stage>("prototype");
+  const stage: Stage = "final";
   const [file, setFile] = useState<"exercise" | "tests">("exercise");
   const [hydrated, setHydrated] = useState(false);
   const [saved, setSaved] = useState(true);
@@ -56,7 +56,6 @@ export function Practice({ lesson }: { lesson: Lesson }) {
     if (stored) {
       workRef.current = stored;
       setWork(stored);
-      if (stored.prototype) setStage("final");
     }
     setHydrated(true);
   }, [lesson.id]);
@@ -77,14 +76,19 @@ export function Practice({ lesson }: { lesson: Lesson }) {
   );
   const onReport = useCallback(
     (report: Report, testedStage: Stage) =>
-      update({ ...workRef.current, [testedStage]: report.passed }),
+      update({
+        ...workRef.current,
+        [testedStage]: report.passed,
+        final: report.passed,
+        prototype: report.passed,
+      }),
     [update],
   );
   const runner = useRunner(onReport);
   const onRun = useCallback(() => {
     if (hydrated && !runner.busy && !lesson.native)
-      runner.run(lesson, workRef.current.code, stage);
-  }, [hydrated, runner.busy, runner.run, lesson, stage]);
+      runner.run(lesson, workRef.current.code, "final");
+  }, [hydrated, runner.busy, runner.run, lesson]);
   const edit = (code: string) => {
     if (code !== workRef.current.code) {
       runner.clear();
@@ -230,46 +234,6 @@ export function Practice({ lesson }: { lesson: Lesson }) {
             </div>
           </div>
         </div>
-        <div className="run-toolbar">
-          <div
-            className="stage-picker"
-            role="group"
-            aria-label="Implementation stage"
-          >
-            {(["prototype", "final"] as Stage[]).map((value) => (
-              <button
-                disabled={runner.busy}
-                aria-pressed={stage === value}
-                className={stage === value ? "selected" : ""}
-                key={value}
-                onClick={() => {
-                  runner.clear();
-                  setStage(value);
-                }}
-              >
-                {work[value] && <Check size={12} />}
-                {value === "prototype" ? "1. Prototype" : "2. Final"}
-              </button>
-            ))}
-          </div>
-          {lesson.native ? (
-            <span className="native-tag">Local {info.label} required</span>
-          ) : runner.busy ? (
-            <button className="button stop-button" onClick={runner.stop}>
-              <Square size={11} fill="currentColor" />
-              Stop
-            </button>
-          ) : (
-            <button
-              className="button run-button"
-              disabled={!hydrated}
-              onClick={onRun}
-            >
-              <Play size={12} fill="currentColor" />
-              Run checks<kbd>⌘ ↵</kbd>
-            </button>
-          )}
-        </div>
         <div className="code-area">
           <div className="code-editor-frame" hidden={file !== "exercise"}>
             <CodeEditor
@@ -298,7 +262,7 @@ export function Practice({ lesson }: { lesson: Lesson }) {
                 </p>
               </div>
             </div>
-            <code>{info.command.replaceAll("$STAGE", stage)}</code>
+            <code>{info.command.replaceAll("$STAGE", "final")}</code>
             <div className="native-actions">
               <button
                 className="button primary"
@@ -335,6 +299,29 @@ export function Practice({ lesson }: { lesson: Lesson }) {
             report={runner.report}
             output={runner.output}
             error={runner.error}
+            actions={
+              runner.busy ? (
+                <button
+                  className="button stop-button"
+                  onClick={runner.stop}
+                  aria-label="Stop"
+                >
+                  <Square size={11} fill="currentColor" aria-hidden="true" />
+                  Stop
+                </button>
+              ) : (
+                <button
+                  className="button run-button submit-button"
+                  disabled={!hydrated}
+                  onClick={onRun}
+                  aria-label="Submit"
+                  title="Submit (⌘ ↵)"
+                >
+                  <Play size={12} fill="currentColor" aria-hidden="true" />
+                  Submit<kbd>⌘ ↵</kbd>
+                </button>
+              )
+            }
           />
         )}
         {language === "go" &&
