@@ -299,10 +299,6 @@ export function AppSidebar({
             <ThemeToggle />
           </div>
         </div>
-
-        <div className="sidebar-footer">
-          Your progress saves in this browser.
-        </div>
       </aside>
     </>
   );
