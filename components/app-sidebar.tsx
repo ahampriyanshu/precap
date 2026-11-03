@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Check, ChevronDown, X } from "lucide-react";
 import { Brand } from "./brand";
 import { LanguageSelect } from "./language-select";
+import { ThemeToggle } from "./theme-toggle";
 import { courses } from "@/lib/courses";
 import { usePreferredLanguage } from "@/hooks/use-preferred-language";
 import { isLanguage } from "@/lib/languages";
@@ -289,11 +290,14 @@ export function AppSidebar({
         </nav>
 
         <div className="sidebar-language">
-          <LanguageSelect
-            lesson={lesson}
-            chapters={chapters}
-            practice={practice}
-          />
+          <div className="sidebar-language-row">
+            <LanguageSelect
+              lesson={lesson}
+              chapters={chapters}
+              practice={practice}
+            />
+            <ThemeToggle />
+          </div>
         </div>
 
         <div className="sidebar-footer">

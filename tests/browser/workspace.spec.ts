@@ -497,3 +497,57 @@ test("sidebar checkmark appears after the title without altering title text alig
 
   expect(Math.abs(titleBox!.x - incompleteTitleBox!.x)).toBeLessThanOrEqual(1);
 });
+
+test("theme toggle in sidebar switches between light and dark theme and updates text editor theme", async ({
+  page,
+}) => {
+  await page.goto(lesson(first));
+  const sidebar = page.locator(".sidebar");
+  await expect(sidebar).toBeVisible();
+
+  // Next to the language selector in the sidebar
+  const langSelect = sidebar.locator(".sidebar-language .language-select");
+  const themeToggle = sidebar.locator(".sidebar-language .theme-toggle-button");
+  await expect(langSelect).toBeVisible();
+  await expect(themeToggle).toBeVisible();
+
+  // Initial theme is light
+  await expect(page.locator("html")).not.toHaveAttribute("data-theme", "dark");
+  await expect(themeToggle).toHaveAttribute(
+    "aria-label",
+    "Switch to dark theme",
+  );
+
+  // Toggle to dark theme
+  await themeToggle.click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(themeToggle).toHaveAttribute(
+    "aria-label",
+    "Switch to light theme",
+  );
+
+  // Navigate to practice page to check code editor dark contrast theme
+  await page.goto(practice(first));
+  await page.waitForSelector(".cm-content");
+
+  const darkGutterBg = await page
+    .locator(".cm-gutters")
+    .first()
+    .evaluate((e) => window.getComputedStyle(e).backgroundColor);
+  expect(darkGutterBg).toBe("rgb(13, 17, 23)");
+
+  // Toggle back to light theme via mobile/desktop navigation
+  const practiceSidebar = page.locator(".sidebar");
+  if (!(await practiceSidebar.isVisible())) {
+    await page.getByRole("button", { name: "Open lesson navigation" }).click();
+  }
+  const toggleInPractice = page.locator(".sidebar .theme-toggle-button");
+  await toggleInPractice.click();
+  await expect(page.locator("html")).not.toHaveAttribute("data-theme", "dark");
+
+  const lightGutterBg = await page
+    .locator(".cm-gutters")
+    .first()
+    .evaluate((e) => window.getComputedStyle(e).backgroundColor);
+  expect(lightGutterBg).toBe("rgb(255, 255, 255)");
+});

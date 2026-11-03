@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { Excalidraw, serializeAsJSON, MainMenu } from "@excalidraw/excalidraw";
 import type { ExcalidrawProps } from "@excalidraw/excalidraw/types";
 import "@excalidraw/excalidraw/index.css";
+import { useTheme } from "@/hooks/use-theme";
 
 export default function DiagramCanvas({
   scene,
@@ -19,6 +20,7 @@ export default function DiagramCanvas({
   );
   const fingerprint = useRef<string | null>(null);
   const surface = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
   useEffect(() => {
     // Excalidraw's fixed menu trigger needs a name after its responsive UI mounts.
     const labelMenu = () => {
@@ -68,7 +70,7 @@ export default function DiagramCanvas({
         name={name}
         initialData={initialData}
         onChange={change}
-        theme="light"
+        theme={theme}
         handleKeyboardGlobally={false}
         validateEmbeddable={false}
         UIOptions={{
