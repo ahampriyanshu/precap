@@ -4,8 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Precap",
-    template: "%s · precap",
+    default: "o1on",
+    template: "%s · o1on",
   },
   description: "Deadline Driven Preparation",
   icons: { icon: "/icon.svg" },

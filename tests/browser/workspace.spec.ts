@@ -57,7 +57,7 @@ test("topic search, clear GC content, saved code, Python failures and reset", as
   page,
 }) => {
   await page.goto("/");
-  await expect(page.getByRole("link", { name: "precap home" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "o1on home" })).toBeVisible();
   await page.keyboard.press("/");
   const search = page.getByRole("textbox", { name: "Search topics" });
   await expect(search).toBeFocused();

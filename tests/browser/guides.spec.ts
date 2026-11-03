@@ -67,7 +67,7 @@ test("playlist indexes expose grouped curricula and representative lessons remai
     for (const part of [guide.parts[0], guide.parts.at(-1)!]) {
       const route = `/guides/${guide.slug}/${part.slug}/`;
       await page.goto(route);
-      await expect(page).toHaveTitle(`${part.title} · precap`);
+      await expect(page).toHaveTitle(`${part.title} · o1on`);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(
         part.title,
       );
