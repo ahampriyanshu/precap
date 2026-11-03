@@ -690,7 +690,7 @@ input::placeholder {
   flex-direction: column;
 }
 .studio-header {
-  height: 62px;
+  height: 52px;
   padding: 0 28px;
   border-bottom: 1px solid var(--line);
   display: flex;
@@ -698,29 +698,59 @@ input::placeholder {
   justify-content: space-between;
   gap: 15px;
   flex-shrink: 0;
+  background: #ffffff;
 }
 .studio-breadcrumb {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 12px;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
   color: var(--muted);
   min-width: 0;
+  flex: 1;
 }
 .breadcrumb-slash {
-  color: #7b7b7b;
+  color: #888888;
+  font-size: 13px;
 }
 .breadcrumb-title {
+  color: var(--ink);
+  font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.studio-breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.studio-breadcrumb a:hover {
+  color: var(--ink);
+}
+.skip-to-challenge,
 .back-to-lesson {
-  display: flex;
-  gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  display: inline-flex;
   align-items: center;
-  color: var(--accent);
+  gap: 6px;
+  transition: all 0.15s ease;
   white-space: nowrap;
+  flex-shrink: 0;
+}
+.skip-to-challenge:hover,
+.back-to-lesson:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
 }
 .chapter-pager {
   display: flex;
@@ -1741,16 +1771,12 @@ input::placeholder {
     line-height: 1.7;
   }
   .studio-header {
-    height: 57px;
-    padding-inline: 13px;
+    height: 50px;
+    padding-inline: 16px;
   }
   .studio-breadcrumb {
-    gap: 9px;
-    font-size: 11px;
-  }
-  .breadcrumb-title,
-  .breadcrumb-slash {
-    display: none;
+    gap: 6px;
+    font-size: 12px;
   }
   .chapter-pager {
     gap: 5px;
@@ -2679,10 +2705,12 @@ input::placeholder {
   }
   .studio-header {
     gap: 10px;
+    padding-inline: 12px;
   }
-  .studio-header .chapter-pager,
-  .studio-header .reference-header-link {
-    display: none;
+  .skip-to-challenge,
+  .back-to-lesson {
+    font-size: 11px;
+    padding: 5px 10px;
   }
   .navbar-search-wrapper {
     flex: 0 1 130px;

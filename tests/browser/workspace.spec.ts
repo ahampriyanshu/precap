@@ -380,3 +380,36 @@ test("divider resizes, remembers width, and collapses either pane without losing
   await page.getByRole("button", { name: "Restore question pane" }).click();
   await expect(editor).toContainText("preserved while resizing");
 });
+
+test("lesson renders breadcrumb and skip to challenge button in studio-header below top navbar", async ({
+  page,
+}) => {
+  await page.goto(lesson(first));
+  const studioHeader = page.locator(".studio > .studio-header");
+  await expect(studioHeader).toBeVisible();
+
+  // Breadcrumb on the left
+  const breadcrumb = studioHeader.locator(".studio-breadcrumb");
+  await expect(breadcrumb).toContainText("Python");
+  await expect(breadcrumb).toContainText("Primitive data types");
+  await expect(breadcrumb.locator(".breadcrumb-slash")).toHaveCount(2);
+
+  // Skip to challenge button on the right
+  const skipBtn = studioHeader.getByRole("link", { name: "Skip to challenge" });
+  await expect(skipBtn).toBeVisible();
+  await expect(skipBtn).toHaveAttribute("href", practice(first));
+
+  // Clicking skip navigates to practice
+  await skipBtn.click();
+  await expect(page).toHaveURL(practice(first));
+
+  // Practice shows Back to lesson in studio-header
+  const practiceStudioHeader = page.locator(".studio > .studio-header");
+  await expect(practiceStudioHeader).toBeVisible();
+  const backBtn = practiceStudioHeader.getByRole("link", {
+    name: "Back to lesson",
+  });
+  await expect(backBtn).toBeVisible();
+  await backBtn.click();
+  await expect(page).toHaveURL(lesson(first));
+});

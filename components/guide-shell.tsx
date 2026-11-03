@@ -39,19 +39,6 @@ export function GuideShell({
         onMenuClick={() => setMenu(true)}
         menuAriaLabel={`Open ${navigationLabel.toLowerCase()}`}
         searchAriaLabel="Search course lessons"
-        breadcrumb={
-          <>
-            {cheatsheet ? (
-              <span>Cheatsheets</span>
-            ) : (
-              <Link href={`/guides/${guide.slug}/`}>{guide.title}</Link>
-            )}
-            <span className="breadcrumb-slash">/</span>
-            <span className="breadcrumb-title">
-              {cheatsheet?.title || part?.title || ""}
-            </span>
-          </>
-        }
       />
 
       <div className="workspace-body">
@@ -66,6 +53,20 @@ export function GuideShell({
         />
 
         <main className="studio" inert={menu} id="main-panel" tabIndex={-1}>
+          <div className="studio-header">
+            <div className="studio-breadcrumb">
+              <span className="breadcrumb-slash">/</span>
+              {cheatsheet ? (
+                <span>Cheatsheets</span>
+              ) : (
+                <Link href={`/guides/${guide.slug}/`}>{guide.title}</Link>
+              )}
+              <span className="breadcrumb-slash">/</span>
+              <span className="breadcrumb-title">
+                {cheatsheet?.title || part?.title || ""}
+              </span>
+            </div>
+          </div>
           {children}
         </main>
       </div>
