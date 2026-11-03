@@ -43,6 +43,7 @@ export function LanguageSelect({
           if (!isLanguage(value)) return;
           setLanguage(value);
           if (!lesson || lesson.practiceKind === "diagram") return;
+          if (!isLanguage(lesson.track) && !isSharedTrack(lesson.track)) return;
           const target = isSharedTrack(lesson.track)
             ? value === "python"
               ? lesson.baseId

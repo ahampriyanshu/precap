@@ -170,6 +170,7 @@ test("foundation links use real lessons and language changes preserve noncoding 
   page,
 }) => {
   await page.goto("/");
+  await expect(page.locator(".brand").first()).toHaveText("o1on");
   const startButton = page.locator(
     '.path-step:has-text("System design basics") .course-start',
   );
@@ -183,11 +184,23 @@ test("foundation links use real lessons and language changes preserve noncoding 
     .getByRole("combobox", { name: "Programming language", exact: true })
     .selectOption("go");
   await expect(page).toHaveURL("/guides/backend/requests-and-protocols/");
+  const guideFundamentalsDetails = page.locator(
+    '.sidebar details:has(summary:has-text("Language Fundamentals"))',
+  );
+  if (await guideFundamentalsDetails.count()) {
+    await expect(guideFundamentalsDetails).not.toHaveAttribute("open");
+  }
   await page.goto("/learn/hld/01-url-shortener/");
   await page
     .getByRole("combobox", { name: "Programming language", exact: true })
     .selectOption("java");
   await expect(page).toHaveURL("/learn/hld/01-url-shortener/");
+  const hldFundamentalsDetails = page.locator(
+    '.sidebar details:has(summary:has-text("Language Fundamentals"))',
+  );
+  if (await hldFundamentalsDetails.count()) {
+    await expect(hldFundamentalsDetails).not.toHaveAttribute("open");
+  }
   await page.goto("/learn/go/01-types-zero-values-and-control/practice/");
   const selectPracticeJava = page.getByRole("combobox", {
     name: "Programming language",
