@@ -75,10 +75,12 @@ test("topic search, clear GC content, saved code, Python failures and reset", as
   await expect(
     page.getByRole("button", { name: /1\. Prototype|2\. Final/ }),
   ).toHaveCount(0);
-  await expect(
-    page.locator(".results-header .results-header-actions .submit-button"),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Submit" }).click();
+  const submitBtn = page.locator(
+    ".results-header .results-header-actions .submit-button",
+  );
+  await expect(submitBtn).toBeVisible();
+  await expect(submitBtn).toHaveText("Submit");
+  await submitBtn.click();
   await expect(page.locator(".run-summary.failed")).toBeVisible({
     timeout: 90000,
   });
@@ -550,4 +552,51 @@ test("theme toggle in sidebar switches between light and dark theme and updates 
     .first()
     .evaluate((e) => window.getComputedStyle(e).backgroundColor);
   expect(lightGutterBg).toBe("rgb(255, 255, 255)");
+});
+
+test("icon buttons apply hover styles in light and dark themes", async ({
+  page,
+}) => {
+  await page.goto(practice(first));
+
+  const downloadBtn = page.getByRole("button", { name: "Download exercise" });
+  const resetBtn = page.getByRole("button", { name: "Reset starter code" });
+  await expect(downloadBtn).toBeVisible();
+  await expect(resetBtn).toBeVisible();
+
+  // Hover in light mode
+  await downloadBtn.hover();
+  await expect
+    .poll(async () =>
+      downloadBtn.evaluate((e) => window.getComputedStyle(e).backgroundColor),
+    )
+    .toBe("rgb(240, 240, 240)");
+
+  // Toggle dark mode
+  await page.evaluate(() =>
+    document.documentElement.setAttribute("data-theme", "dark"),
+  );
+
+  // Hover in dark mode
+  await downloadBtn.hover();
+  await expect
+    .poll(async () =>
+      downloadBtn.evaluate((e) => window.getComputedStyle(e).backgroundColor),
+    )
+    .toBe("rgb(33, 38, 45)");
+
+  await resetBtn.hover();
+  await expect
+    .poll(async () =>
+      resetBtn.evaluate((e) => window.getComputedStyle(e).backgroundColor),
+    )
+    .toBe("rgb(33, 38, 45)");
+
+  const navOpen = page.getByRole("button", { name: "Open lesson navigation" });
+  await navOpen.hover();
+  await expect
+    .poll(async () =>
+      navOpen.evaluate((e) => window.getComputedStyle(e).backgroundColor),
+    )
+    .toBe("rgb(33, 38, 45)");
 });

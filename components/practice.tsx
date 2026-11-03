@@ -14,7 +14,6 @@ import {
   Download,
   FileCode2,
   LoaderCircle,
-  Play,
   RotateCcw,
   Square,
 } from "lucide-react";
@@ -315,10 +314,9 @@ export function Practice({ lesson }: { lesson: Lesson }) {
                   disabled={!hydrated}
                   onClick={onRun}
                   aria-label="Submit"
-                  title="Submit (⌘ ↵)"
+                  title="Submit"
                 >
-                  <Play size={12} fill="currentColor" aria-hidden="true" />
-                  Submit<kbd>⌘ ↵</kbd>
+                  Submit
                 </button>
               )
             }
