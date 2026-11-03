@@ -134,14 +134,6 @@ export function AppSidebar({
           </button>
         </div>
 
-        <div className="sidebar-language">
-          <LanguageSelect
-            lesson={lesson}
-            chapters={chapters}
-            practice={practice}
-          />
-        </div>
-
         <nav
           className="sidebar-list guide-navigation"
           aria-label={navigationLabel}
@@ -153,7 +145,9 @@ export function AppSidebar({
               const groupKey = `track:${track}`;
               const isOpen = !!openGroups[groupKey];
               const trackChapters = navChaptersByTrack[track] || [];
-              const trackTitle = courses[track]?.title || track;
+              const trackTitle = isLanguage(track)
+                ? "Language Fundamentals"
+                : courses[track]?.title || track;
 
               return (
                 <details
@@ -293,6 +287,14 @@ export function AppSidebar({
             </details>
           </div>
         </nav>
+
+        <div className="sidebar-language">
+          <LanguageSelect
+            lesson={lesson}
+            chapters={chapters}
+            practice={practice}
+          />
+        </div>
 
         <div className="sidebar-footer">
           Your progress saves in this browser.

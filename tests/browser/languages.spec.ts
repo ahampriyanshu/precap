@@ -719,7 +719,7 @@ test("sidebar displays only the selected language track placed before DSA", asyn
     .first()
     .locator("details > summary");
   await expect(trackSummaries).toHaveText([
-    "Python",
+    "Language Fundamentals",
     "Data structures & algorithms",
     "Low-level design",
     "High-level design",
@@ -731,7 +731,7 @@ test("sidebar displays only the selected language track placed before DSA", asyn
   });
   await select.selectOption("go");
   await expect(trackSummaries).toHaveText([
-    "Go",
+    "Language Fundamentals",
     "Data structures & algorithms",
     "Low-level design",
     "High-level design",
@@ -743,9 +743,15 @@ test("sidebar displays only the selected language track placed before DSA", asyn
     .first()
     .locator("details > summary");
   await expect(lessonTrackSummaries).toHaveText([
-    "C++",
+    "Language Fundamentals",
     "Data structures & algorithms",
     "Low-level design",
     "High-level design",
   ]);
+
+  // Language selector is placed at the bottom of the sidebar
+  const sidebar = page.locator(".sidebar");
+  const navBox = await sidebar.locator(".sidebar-list").boundingBox();
+  const langBox = await sidebar.locator(".sidebar-language").boundingBox();
+  expect(langBox!.y).toBeGreaterThan(navBox!.y);
 });
