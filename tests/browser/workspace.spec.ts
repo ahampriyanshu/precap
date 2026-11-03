@@ -407,13 +407,17 @@ test("lesson renders breadcrumb and skip to challenge button in studio-header be
   await skipBtn.click();
   await expect(page).toHaveURL(practice(first));
 
-  // Practice shows Back to lesson in studio-header
+  // Practice does not render studio-header (removed second header)
   const practiceStudioHeader = page.locator(".studio > .studio-header");
-  await expect(practiceStudioHeader).toBeVisible();
-  const backBtn = practiceStudioHeader.getByRole("link", {
-    name: "Back to lesson",
-  });
+  await expect(practiceStudioHeader).toHaveCount(0);
+
+  // Back to lesson is located in problem-heading pane-actions with question-toggle styling
+  const backBtn = page.locator(
+    ".problem-heading .pane-actions .back-to-lesson",
+  );
   await expect(backBtn).toBeVisible();
+  await expect(backBtn).toHaveClass(/question-toggle/);
+  await expect(backBtn).toHaveAttribute("href", lesson(first));
   await backBtn.click();
   await expect(page).toHaveURL(lesson(first));
 });

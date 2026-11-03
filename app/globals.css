@@ -735,8 +735,7 @@ input::placeholder {
 .studio-breadcrumb a:hover {
   color: var(--ink);
 }
-.skip-to-challenge,
-.back-to-lesson {
+.skip-to-challenge {
   font-family: var(--sans);
   font-size: 13px;
   font-weight: 500;
@@ -753,8 +752,7 @@ input::placeholder {
   white-space: nowrap;
   flex-shrink: 0;
 }
-.skip-to-challenge:hover,
-.back-to-lesson:hover {
+.skip-to-challenge:hover {
   background: #000000;
   color: #ffffff;
   border-color: #000000;
@@ -2714,8 +2712,7 @@ input::placeholder {
     gap: 10px;
     padding-inline: 12px;
   }
-  .skip-to-challenge,
-  .back-to-lesson {
+  .skip-to-challenge {
     font-size: 11px;
     padding: 5px 10px;
   }

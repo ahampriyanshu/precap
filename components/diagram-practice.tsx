@@ -1,7 +1,9 @@
 "use client";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useState } from "react";
 import {
+  ArrowLeft,
   Check,
   Download,
   PanelLeftClose,
@@ -89,6 +91,15 @@ export function DiagramPractice({ lesson }: { lesson: Lesson }) {
               {canvasVisible ? "Hide canvas" : "Show canvas"}
             </span>
           </button>
+          <Link
+            className="text-link question-toggle back-to-lesson"
+            href={`/learn/${lesson.id}/`}
+            aria-label="Back to lesson"
+            title="Back to lesson"
+          >
+            <ArrowLeft size={16} />
+            <span className="pane-toggle-label">Back to lesson</span>
+          </Link>
         </div>
       </div>
       {question && (
