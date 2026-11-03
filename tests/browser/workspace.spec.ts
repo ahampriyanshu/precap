@@ -417,3 +417,37 @@ test("lesson renders breadcrumb and skip to challenge button in studio-header be
   await backBtn.click();
   await expect(page).toHaveURL(lesson(first));
 });
+
+test("practice page uses neutral and grey colors without greenish or brownish tints", async ({
+  page,
+}) => {
+  await page.goto(practice(first));
+  await page.waitForSelector(".cm-content");
+
+  const headingBg = await page
+    .locator(".problem-heading")
+    .evaluate((e) => window.getComputedStyle(e).backgroundColor);
+  expect(headingBg).toBe("rgb(250, 250, 250)");
+
+  const editorHeaderBg = await page
+    .locator(".editor-header")
+    .evaluate((e) => window.getComputedStyle(e).backgroundColor);
+  expect(editorHeaderBg).toBe("rgb(250, 250, 250)");
+
+  const codingPanelBg = await page
+    .locator(".coding-panel")
+    .evaluate((e) => window.getComputedStyle(e).backgroundColor);
+  expect(codingPanelBg).toBe("rgb(255, 255, 255)");
+
+  const cmEditorColor = await page
+    .locator(".cm-editor")
+    .first()
+    .evaluate((e) => window.getComputedStyle(e).color);
+  expect(cmEditorColor).toBe("rgb(17, 17, 17)");
+
+  const cmGuttersColor = await page
+    .locator(".cm-gutters")
+    .first()
+    .evaluate((e) => window.getComputedStyle(e).color);
+  expect(cmGuttersColor).toBe("rgb(112, 112, 112)");
+});
