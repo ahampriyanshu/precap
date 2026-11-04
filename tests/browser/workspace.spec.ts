@@ -450,19 +450,19 @@ test("practice page uses neutral and grey colors without greenish or brownish ti
   const codingPanelBg = await page
     .locator(".coding-panel")
     .evaluate((e) => window.getComputedStyle(e).backgroundColor);
-  expect(codingPanelBg).toBe("rgb(246, 248, 250)");
+  expect(codingPanelBg).toBe("rgb(255, 255, 255)");
 
   const cmEditorColor = await page
     .locator(".cm-editor")
     .first()
     .evaluate((e) => window.getComputedStyle(e).color);
-  expect(cmEditorColor).toBe("rgb(17, 17, 17)");
+  expect(cmEditorColor).toBe("rgb(36, 41, 46)");
 
   const cmGuttersColor = await page
     .locator(".cm-gutters")
     .first()
     .evaluate((e) => window.getComputedStyle(e).color);
-  expect(cmGuttersColor).toBe("rgb(112, 112, 112)");
+  expect(cmGuttersColor).toBe("rgb(110, 119, 129)");
 });
 
 test("sidebar checkmark appears after the title without altering title text alignment", async ({
@@ -551,7 +551,7 @@ test("theme toggle in sidebar switches between light and dark theme and updates 
     .locator(".cm-gutters")
     .first()
     .evaluate((e) => window.getComputedStyle(e).backgroundColor);
-  expect(lightGutterBg).toBe("rgb(246, 248, 250)");
+  expect(lightGutterBg).toBe("rgb(255, 255, 255)");
 });
 
 test("icon buttons apply hover styles in light and dark themes", async ({

@@ -1341,7 +1341,7 @@ input::placeholder {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: #f6f8fa;
+  background: #ffffff;
 }
 .editor-header {
   display: flex;
@@ -4299,6 +4299,9 @@ input::placeholder {
 }
 [data-theme="dark"] .coding-panel {
   background: #0d1117;
+}
+[data-theme="dark"] .cm-gutters {
+  background-color: #0d1117 !important;
 }
 [data-theme="dark"] .editor-header {
   background: #161b22;
