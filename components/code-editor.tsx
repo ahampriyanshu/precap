@@ -10,8 +10,15 @@ import { languageInfo } from "@/lib/languages";
 import type { Language } from "@/lib/types";
 const syntax = { python, javascript, go, java, cpp };
 import { EditorView, keymap } from "@codemirror/view";
-import { githubLight, githubDarkInit } from "@uiw/codemirror-theme-github";
+import { githubDarkInit } from "@uiw/codemirror-theme-github";
+import { draculaInit } from "@uiw/codemirror-theme-dracula";
 import { useTheme } from "@/hooks/use-theme";
+
+const draculaTheme = draculaInit({
+  settings: {
+    gutterForeground: "#90b6b4",
+  },
+});
 
 const githubDark = githubDarkInit({
   settings: {
@@ -85,7 +92,7 @@ export default function CodeEditor({
       readOnly={readOnly}
       editable={!readOnly}
       height="100%"
-      theme={isDark ? githubDark : githubLight}
+      theme={isDark ? githubDark : draculaTheme}
       extensions={extensions}
       basicSetup={{
         syntaxHighlighting: false,

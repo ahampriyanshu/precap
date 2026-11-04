@@ -1341,7 +1341,10 @@ input::placeholder {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: #282a36;
+}
+.cm-gutters {
+  background-color: #282a36 !important;
 }
 .editor-header {
   display: flex;
@@ -1722,6 +1725,7 @@ input::placeholder {
   justify-content: space-between;
   gap: 10px;
   padding: 0 22px;
+  background: #fafafa;
   font: 10px var(--mono);
   color: #646464;
   border-top: 1px solid var(--line);
