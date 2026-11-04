@@ -450,7 +450,7 @@ test("practice page uses neutral and grey colors without greenish or brownish ti
   const codingPanelBg = await page
     .locator(".coding-panel")
     .evaluate((e) => window.getComputedStyle(e).backgroundColor);
-  expect(codingPanelBg).toBe("rgb(255, 255, 255)");
+  expect(codingPanelBg).toBe("rgb(246, 248, 250)");
 
   const cmEditorColor = await page
     .locator(".cm-editor")
@@ -551,7 +551,7 @@ test("theme toggle in sidebar switches between light and dark theme and updates 
     .locator(".cm-gutters")
     .first()
     .evaluate((e) => window.getComputedStyle(e).backgroundColor);
-  expect(lightGutterBg).toBe("rgb(255, 255, 255)");
+  expect(lightGutterBg).toBe("rgb(246, 248, 250)");
 });
 
 test("icon buttons apply hover styles in light and dark themes", async ({

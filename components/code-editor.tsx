@@ -35,7 +35,7 @@ const darkHighlighting = HighlightStyle.define([
 const lightTheme = EditorView.theme({
   "&": {
     height: "100%",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f6f8fa",
     color: "#111111",
     fontSize: "13px",
   },
@@ -47,13 +47,13 @@ const lightTheme = EditorView.theme({
   ".cm-content": { padding: "24px 0", caretColor: "#111111" },
   ".cm-line": { padding: "0 22px 0 12px" },
   ".cm-gutters": {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f6f8fa",
     color: "#707070",
     border: "none",
     minWidth: "45px",
   },
   ".cm-activeLineGutter": { color: "#111111", backgroundColor: "transparent" },
-  ".cm-selectionBackground": { backgroundColor: "#e5e5e5 !important" },
+  ".cm-selectionBackground": { backgroundColor: "#dbe9f9 !important" },
   "&.cm-focused": { outline: "none" },
   ".cm-foldGutter": { color: "#707070" },
 });

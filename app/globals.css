@@ -1341,7 +1341,7 @@ input::placeholder {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: #f6f8fa;
 }
 .editor-header {
   display: flex;
