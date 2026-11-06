@@ -7,11 +7,11 @@ import { codeKey, type CodeHighlights } from "@/lib/code-theme";
 export function Content({
   markdown,
   anchors = false,
-  highlights,
+  highlights = {},
 }: {
   markdown: string;
   anchors?: boolean;
-  highlights: CodeHighlights;
+  highlights?: CodeHighlights;
 }) {
   return (
     <div className="prose">

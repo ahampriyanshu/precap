@@ -1,0 +1,92 @@
+{
+  "caseStudies": [
+    {
+      "slug": "discord-mongodb-cassandra",
+      "company": "Discord",
+      "title": "Moving billions of messages from MongoDB to Cassandra",
+      "description": "How Discord escaped MongoDB tail-latency degradation by rethinking their message data model around Cassandra partition semantics.",
+      "year": 2017,
+      "tag": "migration",
+      "keywords": ["nosql", "cassandra", "mongodb", "partitioning", "tail latency", "messaging"],
+      "relatedGuide": { "slug": "backend", "part": "replication-partitioning-and-identifiers" },
+      "relatedHld": "09-chat-system"
+    },
+    {
+      "slug": "twitter-fanout",
+      "company": "Twitter",
+      "title": "From fanout-on-write to hybrid delivery",
+      "description": "How Twitter's news feed moved away from pre-computing timelines for all followers as accounts reached millions of followers.",
+      "year": 2013,
+      "tag": "scale",
+      "keywords": ["fanout", "news feed", "cache", "celebrity problem", "timeline", "redis"],
+      "relatedGuide": { "slug": "backend", "part": "caches-and-invalidation" },
+      "relatedHld": "10-news-feed"
+    },
+    {
+      "slug": "cloudflare-bgp-leak",
+      "company": "Cloudflare",
+      "title": "The BGP leak that took down Cloudflare",
+      "description": "How a single misconfigured route advertisement propagated globally and what Cloudflare changed about their route filtering and BGP safety nets.",
+      "year": 2019,
+      "tag": "outage",
+      "keywords": ["bgp", "routing", "anycast", "incident", "network", "postmortem"],
+      "relatedGuide": { "slug": "backend", "part": "requests-and-protocols" },
+      "relatedHld": null
+    },
+    {
+      "slug": "slack-message-storm",
+      "company": "Slack",
+      "title": "The Slack message storm incident",
+      "description": "How a feedback loop between presence updates and reconnecting clients took down Slack and what changes in their notification and connection handling prevented recurrence.",
+      "year": 2015,
+      "tag": "outage",
+      "keywords": ["websocket", "presence", "thundering herd", "incident", "reconnection", "backoff"],
+      "relatedGuide": { "slug": "backend", "part": "concurrency-and-backpressure" },
+      "relatedHld": "08-notification-service"
+    },
+    {
+      "slug": "netflix-chaos-engineering",
+      "company": "Netflix",
+      "title": "Building resilience with Chaos Monkey",
+      "description": "How Netflix made reliability a continuous practice by deliberately injecting failures into production, and what this revealed about their dependency assumptions.",
+      "year": 2011,
+      "tag": "reliability",
+      "keywords": ["chaos engineering", "resilience", "fault tolerance", "circuit breaker", "dependency", "netflix"],
+      "relatedGuide": { "slug": "backend", "part": "dependency-failures-and-idempotency" },
+      "relatedHld": null
+    },
+    {
+      "slug": "shopify-pods",
+      "company": "Shopify",
+      "title": "The Pods architecture: sharding by tenant",
+      "description": "How Shopify decomposed a single Rails monolith into isolated per-merchant shards to achieve independent failure domains and predictable tenant resource limits.",
+      "year": 2018,
+      "tag": "architecture",
+      "keywords": ["sharding", "multi-tenancy", "monolith", "rails", "pods", "isolation"],
+      "relatedGuide": { "slug": "backend", "part": "replication-partitioning-and-identifiers" },
+      "relatedHld": null
+    },
+    {
+      "slug": "github-mysql-sharding",
+      "company": "GitHub",
+      "title": "Sharding GitHub's MySQL infrastructure",
+      "description": "How GitHub moved from a single MySQL primary to a sharded topology to handle write throughput at scale while keeping query patterns compatible.",
+      "year": 2016,
+      "tag": "migration",
+      "keywords": ["mysql", "sharding", "database", "write throughput", "schema migration"],
+      "relatedGuide": { "slug": "backend", "part": "storage-indexes-and-query-plans" },
+      "relatedHld": "04-distributed-key-value-store"
+    },
+    {
+      "slug": "amazon-soa",
+      "company": "Amazon",
+      "title": "Jeff Bezos's API mandate and the SOA migration",
+      "description": "How Amazon's internal mandate that all teams expose data only through service interfaces reshaped their monolith into an ecosystem of independent services.",
+      "year": 2002,
+      "tag": "architecture",
+      "keywords": ["microservices", "soa", "api", "monolith", "decomposition", "bezos mandate"],
+      "relatedGuide": { "slug": "backend", "part": "service-boundaries-and-evolution" },
+      "relatedHld": null
+    }
+  ]
+}

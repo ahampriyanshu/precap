@@ -1,16 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useState } from "react";
-import {
-  ArrowLeft,
-  Check,
-  Download,
-  PanelLeftClose,
-  PanelLeftOpen,
-  PanelRightClose,
-  PanelRightOpen,
-} from "lucide-react";
+import { Check, Download } from "lucide-react";
 import { Content } from "./content";
 import { PracticeDivider } from "./practice-divider";
 import { usePracticeSplit } from "@/hooks/use-practice-split";
@@ -56,52 +47,6 @@ export function DiagramPractice({ lesson }: { lesson: Lesson }) {
       className={`practice-flow diagram-flow ${question ? "" : "question-hidden"} ${canvasVisible ? "" : "editor-hidden"} ${split.dragging ? "is-resizing" : ""}`}
       style={{ gridTemplateColumns: split.columns }}
     >
-      <div className="problem-heading">
-        <h1>Design: {lesson.title}</h1>
-        <div className="pane-actions">
-          <button
-            className="text-link question-toggle"
-            aria-label={question ? "Hide brief" : "Show brief"}
-            aria-expanded={question}
-            aria-controls="practice-question"
-            onClick={split.toggleQuestion}
-          >
-            {question ? (
-              <PanelLeftClose size={16} />
-            ) : (
-              <PanelLeftOpen size={16} />
-            )}
-            <span className="pane-toggle-label">
-              {question ? "Hide brief" : "Show brief"}
-            </span>
-          </button>
-          <button
-            className="text-link question-toggle"
-            aria-label={canvasVisible ? "Hide canvas" : "Show canvas"}
-            aria-expanded={canvasVisible}
-            aria-controls="practice-editor"
-            onClick={split.toggleEditor}
-          >
-            {canvasVisible ? (
-              <PanelRightClose size={16} />
-            ) : (
-              <PanelRightOpen size={16} />
-            )}
-            <span className="pane-toggle-label">
-              {canvasVisible ? "Hide canvas" : "Show canvas"}
-            </span>
-          </button>
-          <Link
-            className="text-link question-toggle back-to-lesson"
-            href={`/learn/${lesson.id}/`}
-            aria-label="Back to lesson"
-            title="Back to lesson"
-          >
-            <ArrowLeft size={16} />
-            <span className="pane-toggle-label">Back to lesson</span>
-          </Link>
-        </div>
-      </div>
       {question && (
         <section
           className="problem-panel"

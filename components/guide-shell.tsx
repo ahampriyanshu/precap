@@ -2,8 +2,8 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { Menu } from "lucide-react";
 import { AppSidebar } from "./app-sidebar";
-import { SiteHeader } from "./site-header";
 import { useNavigationMenu } from "@/hooks/use-navigation-menu";
 import type { Guide, Cheatsheet } from "@/lib/types";
 
@@ -35,11 +35,14 @@ export function GuideShell({
         Skip to {cheatsheet ? "cheatsheet" : "guide"}
       </a>
 
-      <SiteHeader
-        onMenuClick={() => setMenu(!menu)}
-        menuAriaLabel={`Open ${navigationLabel.toLowerCase()}`}
-        searchAriaLabel="Search course lessons"
-      />
+      <button
+        type="button"
+        className="mobile-sidebar-toggle"
+        onClick={() => setMenu(!menu)}
+        aria-label={`Open ${navigationLabel.toLowerCase()}`}
+      >
+        <Menu size={20} />
+      </button>
 
       <div className="workspace-body">
         <AppSidebar

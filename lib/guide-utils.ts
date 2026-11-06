@@ -28,3 +28,7 @@ export function guideSections(markdown: string) {
     return { title, id: headingId(title) };
   });
 }
+
+export function caseStudyUrl(slug: string) {
+  return `/case-studies/${slug}/`;
+}

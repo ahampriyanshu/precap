@@ -82,3 +82,17 @@ export type SavedWork = {
 };
 export type RunState =
   "idle" | "loading" | "compiling" | "running" | "done" | "stopped" | "error";
+
+export type CaseStudyTag = "outage" | "migration" | "scale" | "architecture" | "reliability";
+
+export type CaseStudy = {
+  slug: string;
+  company: string;
+  title: string;
+  description: string;
+  year: number;
+  tag: CaseStudyTag;
+  keywords: string[];
+  relatedGuide: { slug: string; part: string } | null;
+  relatedHld: string | null;
+};

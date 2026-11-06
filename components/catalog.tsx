@@ -1,185 +1,13 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Check } from "lucide-react";
-import { SiteHeader } from "./site-header";
-import { AppSidebar } from "./app-sidebar";
-import { ConceptIllustration } from "./concept-illustration";
-import { hasConceptArt } from "@/lib/concept-art";
-import { useProgress } from "@/hooks/use-progress";
-import { usePreferredLanguage } from "@/hooks/use-preferred-language";
-import { useNavigationMenu } from "@/hooks/use-navigation-menu";
-import { guideUrl, cheatsheetUrl } from "@/lib/guide-utils";
-import type { Chapter, Guide, Cheatsheet, Track } from "@/lib/types";
-import { languageInfo, chapterForLanguage } from "@/lib/languages";
+import { O1onMark } from "./o1on-mark";
+import { ThemeToggle } from "./theme-toggle";
+import type { Chapter, Guide, Cheatsheet, CaseStudy } from "@/lib/types";
+import { guideUrl, cheatsheetUrl, caseStudyUrl } from "@/lib/guide-utils";
 import { courses } from "@/lib/courses";
-import { systemDesignBasics } from "@/lib/learning-path";
 import { TechLogo } from "./tech-logo";
 
-function ChapterLink({
-  chapter,
-  completed,
-}: {
-  chapter: Chapter;
-  completed: Set<string>;
-}) {
-  return (
-    <Link className="catalog-chapter" href={`/learn/${chapter.id}/`}>
-      <span
-        className={`chapter-number ${completed.has(chapter.id) ? "is-complete" : ""}`}
-      >
-        {completed.has(chapter.id) ? <Check size={13} /> : chapter.number}
-      </span>
-      <span>
-        <strong>{chapter.title}</strong>
-        <small>{chapter.concept}</small>
-      </span>
-      {chapter.native && (
-        <span className="local-badge">
-          Local {languageInfo[chapter.language || "python"].label}
-        </span>
-      )}
-    </Link>
-  );
-}
-function Course({
-  items,
-  completed,
-  title,
-  track,
-}: {
-  items: Chapter[];
-  completed: Set<string>;
-  title: string;
-  track: Track;
-}) {
-  if (!items.length) return null;
-  const done = items.filter((chapter) => completed.has(chapter.id)).length;
-  const resume =
-    items.find((chapter) => !completed.has(chapter.id)) || items[0];
-  const sections = [...new Set(items.map((chapter) => chapter.section))];
-  return (
-    <article className={`path-course track-${track}`}>
-      <div className="path-course-heading">
-        <h3>{title}</h3>
-      </div>
-      {track !== "lld" && track !== "hld" && (
-        <p>{courses[track].description}</p>
-      )}
-      <div className="path-course-actions">
-        <Link
-          className="button primary course-start"
-          href={`/learn/${resume.id}/`}
-        >
-          {done ? "Resume" : "Start"}
-        </Link>
-        <span
-          role="progressbar"
-          aria-label={`${title} progress`}
-          aria-valuenow={done}
-          aria-valuemin={0}
-          aria-valuemax={items.length}
-        >
-          {done} of {items.length} {track === "hld" ? "reviewed" : "completed"}
-        </span>
-      </div>
-    </article>
-  );
-}
-const guideTopics: Record<string, { title: string; moduleIndex: number }[]> = {
-  frontend: [
-    { title: "Browser foundations", moduleIndex: 1 },
-    { title: "Application architecture", moduleIndex: 2 },
-    { title: "Rendering and delivery", moduleIndex: 3 },
-  ],
-  backend: [
-    { title: "Requests and execution", moduleIndex: 1 },
-    { title: "Data and correctness", moduleIndex: 3 },
-    { title: "Architecture and operations", moduleIndex: 6 },
-  ],
-  devops: [
-    { title: "Processes and hosts", moduleIndex: 1 },
-    { title: "Artifacts and infrastructure", moduleIndex: 2 },
-    { title: "Orchestration and delivery", moduleIndex: 3 },
-  ],
-  "last-mile-prep": [
-    { title: "Incident Triage", moduleIndex: 1 },
-    { title: "Product Management", moduleIndex: 2 },
-    { title: "Telemetry & Observability", moduleIndex: 3 },
-  ],
-};
-
-function GuideCard({
-  guide,
-  search = false,
-}: {
-  guide: Guide;
-  search?: boolean;
-}) {
-  const tracks =
-    guide.slug === "last-mile-prep" || guide.moduleLabel === "Track"
-      ? [...new Set(guide.parts.map((part) => part.module).filter(Boolean))]
-      : [];
-  const topics =
-    guideTopics[guide.slug] ||
-    [...new Set(guide.parts.map((part) => part.module).filter(Boolean))]
-      .slice(0, 3)
-      .map((mod, i) => ({ title: mod, moduleIndex: i + 1 }));
-  const modules = [
-    ...new Set(guide.parts.map((part) => part.module).filter(Boolean)),
-  ];
-  const moduleLabel = guide.moduleLabel === "Track" ? "Track" : "Module";
-
-  return (
-    <article
-      className={`guide-card ${tracks.length && !search ? "guide-card-tracks" : ""}`}
-    >
-      {!search && hasConceptArt(guide.slug) && (
-        <div className="guide-card-visual">
-          <ConceptIllustration concept={guide.slug} className="playlist-art" />
-        </div>
-      )}
-      <div className="guide-card-body">
-        {!search && (
-          <div className="playlist-meta">
-            {modules.length} {moduleLabel}
-            {modules.length === 1 ? "" : "s"} · {guide.parts.length} lessons
-          </div>
-        )}
-        <h3>
-          <Link className="playlist-open" href={`/guides/${guide.slug}/`}>
-            {guide.title}
-          </Link>
-        </h3>
-        {search && <p className="guide-search-desc">{guide.description}</p>}
-        {!search && (
-          <ul className="guide-track-list" aria-label={`${guide.title} topics`}>
-            {topics.map((topic) => (
-              <li key={topic.title}>
-                <Link
-                  href={`/guides/${guide.slug}/#module-${topic.moduleIndex}`}
-                >
-                  <span>{topic.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-        {search && (
-          <ol className="guide-parts search-parts">
-            {guide.parts.map((part) => (
-              <li key={part.slug}>
-                <Link href={guideUrl(guide.slug, part.slug)}>
-                  <span className="guide-part-title">{part.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ol>
-        )}
-      </div>
-    </article>
-  );
-}
 function Sheets({ sheets }: { sheets: Cheatsheet[] }) {
   return (
     <div className="cheatsheet-list">
@@ -206,307 +34,727 @@ export function Catalog({
   chapters,
   guides,
   cheatsheets,
+  caseStudies,
 }: {
   chapters: Chapter[];
   guides: Guide[];
   cheatsheets: Cheatsheet[];
+  caseStudies: CaseStudy[];
 }) {
   const [query, setQuery] = useState("");
-  const { menu, setMenu, sidebarRef, isMobile } = useNavigationMenu(false);
-  const { language, setLanguage } = usePreferredLanguage();
-  const practiceChapters = useMemo(
-    () =>
-      chapters
-        .filter(
-          (chapter) =>
-            chapter.track === "hld" ||
-            (!!language && [language, "dsa", "lld"].includes(chapter.track)),
-        )
-        .map((chapter) =>
-          language ? chapterForLanguage(chapter, language) : chapter,
-        ),
-    [chapters, language],
-  );
-  const { completed, started } = useProgress(practiceChapters);
-  const chooseLanguage = () => {
-    setMenu(true);
-    setTimeout(() => {
-      const select = document.querySelector<HTMLSelectElement>(
-        'select[aria-label="Programming language"]',
-      );
-      select?.scrollIntoView({ block: "center", behavior: "smooth" });
-      select?.focus();
-    }, 100);
-  };
   const term = query.trim().toLowerCase();
-  const matchingChapters = practiceChapters.filter((chapter) =>
-    `${courses[chapter.track].title} ${chapter.title} ${chapter.concept}`
+
+  const matchingChapters = chapters.filter((chapter) =>
+    `${courses[chapter.track]?.title || chapter.track} ${chapter.title} ${chapter.concept}`
       .toLowerCase()
       .includes(term),
   );
+
   const visibleGuides = guides
     .map((guide) => ({
       ...guide,
       parts: guide.parts.filter((part) =>
-        `${guide.title} ${guide.description} ${part.module || ""} ${part.title} ${part.description} ${part.keywords.join(" ")}`
+        `${guide.title} ${guide.description} ${part.module || ""} ${part.title} ${part.description} ${part.keywords?.join(" ") || ""}`
           .toLowerCase()
           .includes(term),
       ),
     }))
     .filter((guide) => guide.parts.length);
+
   const visibleSheets = cheatsheets.filter((sheet) =>
-    `${sheet.title} ${sheet.description} ${sheet.keywords.join(" ")}`
+    `${sheet.title} ${sheet.description} ${sheet.keywords?.join(" ") || ""}`
       .toLowerCase()
       .includes(term),
   );
-  const items = (track: Track) =>
-    practiceChapters.filter((chapter) => chapter.track === track);
+
+  const visibleCaseStudies = caseStudies.filter((cs) =>
+    `${cs.company} ${cs.title} ${cs.description} ${cs.tag} ${cs.keywords.join(" ")}`
+      .toLowerCase()
+      .includes(term),
+  );
+
+  const hasSearchResults =
+    matchingChapters.length > 0 ||
+    visibleGuides.length > 0 ||
+    visibleSheets.length > 0 ||
+    visibleCaseStudies.length > 0;
+
   return (
-    <div className="catalog path-catalog">
-      <a className="skip-link" href="#main-content">
-        Skip to topics
-      </a>
-      <SiteHeader
-        onMenuClick={() => setMenu(!menu)}
-        menuAriaLabel="Open curriculum navigation"
-        query={query}
-        onQueryChange={setQuery}
-        searchAriaLabel="Search topics"
-        searchPlaceholder="Find a topic or tool… (/)"
-        showDropdown={false}
-      />
-      <div className="catalog-body">
-        <AppSidebar
-          chapters={chapters}
-          navigationLabel="Curriculum navigation"
-          menu={menu}
-          setMenu={setMenu}
-          sidebarRef={sidebarRef}
-          isMobile={isMobile}
-        />
-        <main
-          className="catalog-main"
-          id="main-content"
-          tabIndex={-1}
-          inert={isMobile && menu ? true : undefined}
-        >
-          <section className="path-hero">
-            <div className="hero-copy">
-              <h1>Deadline Driven Preparation</h1>
+    <div className="home-page">
+      <header className="home-header">
+        <Link className="home-logo" href="/" aria-label="o1on home">
+          <O1onMark size={20} className="home-logo-mark" />
+          <span>o1on</span>
+        </Link>
+        <div className="home-header-right">
+          <label className="home-search-label">
+            <span className="home-search-icon" aria-hidden="true">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-4-4" />
+              </svg>
+            </span>
+            <input
+              className="home-search-input"
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search lessons"
+              aria-label="Search lessons"
+            />
+          </label>
+          <ThemeToggle />
+        </div>
+      </header>
+      {term ? (
+        <main className="home-search-section">
+          <div className="home-search-header">
+            <h2>Search results for &ldquo;{query}&rdquo;</h2>
+            <button
+              type="button"
+              className="home-clear-btn"
+              onClick={() => setQuery("")}
+            >
+              Clear search
+            </button>
+          </div>
+
+          {!hasSearchResults ? (
+            <p className="search-empty" role="status">
+              No matching lessons found for &ldquo;{query}&rdquo;.
+            </p>
+          ) : (
+            <section
+              className="catalog-search-results"
+              aria-label="Search results"
+            >
+              {[
+                ...new Set(matchingChapters.map((chapter) => chapter.track)),
+              ].map((track) => (
+                <section className={`search-course track-${track}`} key={track}>
+                  <h3>{courses[track]?.title || track}</h3>
+                  {matchingChapters
+                    .filter((chapter) => chapter.track === track)
+                    .map((chapter) => (
+                      <Link
+                        key={chapter.id}
+                        className="catalog-chapter"
+                        href={`/learn/${chapter.id}/`}
+                      >
+                        <span className="chapter-number">{chapter.number}</span>
+                        <span>
+                          <strong>{chapter.title}</strong>
+                          <small>{chapter.concept}</small>
+                        </span>
+                      </Link>
+                    ))}
+                </section>
+              ))}
+
+              {!!visibleGuides.length && (
+                <div className="guide-grid">
+                  {visibleGuides.map((guide) => (
+                    <article key={guide.slug} className="guide-card">
+                      <div className="guide-card-body">
+                        <h3>
+                          <Link
+                            className="playlist-open"
+                            href={`/guides/${guide.slug}/`}
+                          >
+                            {guide.title}
+                          </Link>
+                        </h3>
+                        <p className="guide-search-desc">{guide.description}</p>
+                        <ol className="guide-parts search-parts">
+                          {guide.parts.map((part) => (
+                            <li key={part.slug}>
+                              <Link href={guideUrl(guide.slug, part.slug)}>
+                                <span className="guide-part-title">
+                                  {part.title}
+                                </span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+
+              {!!visibleSheets.length && <Sheets sheets={visibleSheets} />}
+
+              {!!visibleCaseStudies.length && (
+                <div className="case-study-grid search-case-studies">
+                  {visibleCaseStudies.map((cs) => (
+                    <article key={cs.slug} className="case-study-card">
+                      <div className="case-study-card-meta">
+                        <span className="case-study-company">{cs.company}</span>
+                        <span className={`case-study-tag tag-${cs.tag}`}>
+                          {cs.tag}
+                        </span>
+                        <span className="case-study-year">{cs.year}</span>
+                      </div>
+                      <h3 className="case-study-card-title">{cs.title}</h3>
+                      <p className="case-study-card-desc">{cs.description}</p>
+                      <Link
+                        className="case-study-card-link"
+                        href={caseStudyUrl(cs.slug)}
+                      >
+                        Read case study →
+                      </Link>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
+        </main>
+      ) : (
+        <main className="home-content">
+          <section className="home-hero">
+            <h1 className="home-title">
+              Deadline driven{" "}
+              <span className="home-highlight">preparation</span>
+            </h1>
+            <ul className="home-bullets">
+              <li className="home-bullet-item">
+                <span className="home-bullet-square" />
+                <span>One path, in order</span>
+              </li>
+              <li className="home-bullet-item">
+                <span className="home-bullet-square" />
+                <span>Your code and progress stay in this browser</span>
+              </li>
+              <li className="home-bullet-item">
+                <span className="home-bullet-square" />
+                <span>Pick a stage and start</span>
+              </li>
+            </ul>
+          </section>
+
+          <section id="path" className="home-path">
+            <div className="home-route">
+              {/* Card 1: Machine coding */}
+              <Link
+                className="home-card"
+                href="/learn/python/01-primitive-types/"
+              >
+                <div className="home-card-visual">
+                  <svg
+                    width="68"
+                    height="68"
+                    viewBox="0 0 120 120"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      x="10"
+                      y="18"
+                      width="92"
+                      height="72"
+                      rx="10"
+                      fill="var(--white, #fff)"
+                    />
+                    <path d="M10 36H102" />
+                    <circle
+                      cx="22"
+                      cy="27"
+                      r="2.5"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <circle
+                      cx="32"
+                      cy="27"
+                      r="2.5"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <circle
+                      cx="42"
+                      cy="27"
+                      r="2.5"
+                      fill="currentColor"
+                      stroke="none"
+                    />
+                    <path d="M38 52L26 63l12 11M74 52l12 11-12 11M60 48l-8 30" />
+                  </svg>
+                </div>
+                <h3 className="home-card-title">Machine coding</h3>
+                <p className="home-card-desc">
+                  Python fundamentals, then data structures and algorithms.
+                </p>
+                <div className="home-card-modules">
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      Python fundamentals
+                    </span>
+                    <span className="home-card-module-count">20 lessons</span>
+                  </div>
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      Data structures &amp; algorithms
+                    </span>
+                    <span className="home-card-module-count">28 lessons</span>
+                  </div>
+                </div>
+                <div className="home-card-footer">
+                  <span className="home-card-meta">2 modules · [Y] hrs</span>
+                  <span className="home-start-btn">
+                    Start
+                    <svg
+                      className="home-arrow"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
+
+              {/* Card 2: Production engineering */}
+              <Link className="home-card" href="/guides/frontend/">
+                <div className="home-card-visual">
+                  <svg
+                    width="68"
+                    height="68"
+                    viewBox="0 0 120 120"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <g transform="translate(0 11)">
+                      <rect
+                        x="16"
+                        y="0"
+                        width="88"
+                        height="28"
+                        rx="7"
+                        fill="var(--white, #fff)"
+                      />
+                      <circle
+                        cx="28"
+                        cy="10"
+                        r="2.5"
+                        fill="currentColor"
+                        stroke="none"
+                      />
+                      <circle
+                        cx="37"
+                        cy="10"
+                        r="2.5"
+                        fill="currentColor"
+                        stroke="none"
+                      />
+                      <path d="M28 20h40M76 20h16" />
+                      <path d="M60 28V40M55 35l5 5 5-5" />
+                      <rect
+                        x="16"
+                        y="40"
+                        width="88"
+                        height="28"
+                        rx="7"
+                        fill="var(--white, #fff)"
+                      />
+                      <path d="M28 54h40" />
+                      <circle
+                        cx="90"
+                        cy="54"
+                        r="4"
+                        fill="currentColor"
+                        stroke="none"
+                      />
+                      <path d="M60 68V80M55 75l5 5 5-5" />
+                      <rect
+                        x="16"
+                        y="80"
+                        width="88"
+                        height="28"
+                        rx="7"
+                        fill="var(--ink, #000)"
+                      />
+                      <rect
+                        x="28"
+                        y="88"
+                        width="12"
+                        height="12"
+                        rx="2"
+                        fill="var(--white, #fff)"
+                        stroke="none"
+                      />
+                      <rect
+                        x="46"
+                        y="88"
+                        width="12"
+                        height="12"
+                        rx="2"
+                        fill="var(--white, #fff)"
+                        stroke="none"
+                      />
+                      <rect
+                        x="64"
+                        y="88"
+                        width="12"
+                        height="12"
+                        rx="2"
+                        fill="var(--white, #fff)"
+                        stroke="none"
+                      />
+                      <rect
+                        x="82"
+                        y="88"
+                        width="12"
+                        height="12"
+                        rx="2"
+                        fill="var(--white, #fff)"
+                        stroke="none"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <h3 className="home-card-title">Production engineering</h3>
+                <p className="home-card-desc">
+                  Frontend, backend, and DevOps as they run in production.
+                </p>
+                <div className="home-card-modules">
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      Frontend engineering
+                    </span>
+                    <span className="home-card-module-count">15 lessons</span>
+                  </div>
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      Backend engineering
+                    </span>
+                    <span className="home-card-module-count">17 lessons</span>
+                  </div>
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">DevOps</span>
+                    <span className="home-card-module-count">13 lessons</span>
+                  </div>
+                </div>
+                <div className="home-card-footer">
+                  <span className="home-card-meta">3 modules · [Y] hrs</span>
+                  <span className="home-start-btn">
+                    Start
+                    <svg
+                      className="home-arrow"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
+
+              {/* Card 3: System design */}
+              <Link
+                className="home-card"
+                href="/guides/backend/requests-and-protocols/"
+              >
+                <div className="home-card-visual">
+                  <svg
+                    width="68"
+                    height="68"
+                    viewBox="0 0 120 120"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <g transform="translate(0 12)">
+                      <path d="M60 26V40M22 40H98M22 40V52M60 40V52M98 40V52" />
+                      <rect
+                        x="34"
+                        y="0"
+                        width="52"
+                        height="26"
+                        rx="7"
+                        fill="var(--ink, #000)"
+                      />
+                      <path
+                        d="M46 10h28M46 17h16"
+                        stroke="var(--white, #fff)"
+                        strokeWidth="2.5"
+                      />
+                      <rect
+                        x="6"
+                        y="52"
+                        width="32"
+                        height="30"
+                        rx="6"
+                        fill="var(--white, #fff)"
+                      />
+                      <path d="M14 63h16M14 72h10" />
+                      <rect
+                        x="44"
+                        y="52"
+                        width="32"
+                        height="30"
+                        rx="6"
+                        fill="var(--white, #fff)"
+                      />
+                      <path d="M52 63h16M52 72h16" />
+                      <path
+                        d="M84 62c0-4 6-6 14-6s14 2 14 6v14c0 4-6 6-14 6s-14-2-14-6z"
+                        fill="var(--white, #fff)"
+                      />
+                      <path d="M84 62c0 4 6 6 14 6s14-2 14-6" />
+                      <circle
+                        cx="60"
+                        cy="40"
+                        r="3.5"
+                        fill="currentColor"
+                        stroke="none"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <h3 className="home-card-title">System design</h3>
+                <p className="home-card-desc">
+                  System design basics, low-level design, and high-level design.
+                </p>
+                <div className="home-card-modules">
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      System design basics
+                    </span>
+                    <span className="home-card-module-count">8 lessons</span>
+                  </div>
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      Low-level design
+                    </span>
+                    <span className="home-card-module-count">15 lessons</span>
+                  </div>
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      High-level design
+                    </span>
+                    <span className="home-card-module-count">15 lessons</span>
+                  </div>
+                </div>
+                <div className="home-card-footer">
+                  <span className="home-card-meta">3 modules · [Y] hrs</span>
+                  <span className="home-start-btn">
+                    Start
+                    <svg
+                      className="home-arrow"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
+
+              {/* Card 4: HM round */}
+              <Link className="home-card" href="/guides/last-mile-prep/">
+                <div className="home-card-visual">
+                  <svg
+                    width="68"
+                    height="68"
+                    viewBox="0 0 120 120"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M24 14h58a14 14 0 0 1 14 14v30a14 14 0 0 1-14 14H44L26 88V72h-2A14 14 0 0 1 10 58V28A14 14 0 0 1 24 14z"
+                      fill="var(--white, #fff)"
+                    />
+                    <circle cx="53" cy="34" r="9" />
+                    <path d="M34 62c2-12 10-16 19-16s17 4 19 16" />
+                    <rect
+                      x="58"
+                      y="62"
+                      width="58"
+                      height="46"
+                      rx="14"
+                      fill="var(--white, #fff)"
+                      stroke="none"
+                    />
+                    <path
+                      d="M72 66h30a12 12 0 0 1 12 12v12a12 12 0 0 1-12 12H94l-12 10V102h-10A12 12 0 0 1 60 90V78A12 12 0 0 1 72 66z"
+                      fill="var(--ink, #000)"
+                    />
+                    <path d="M76 84l7 7 13-14" stroke="var(--white, #fff)" />
+                  </svg>
+                </div>
+                <h3 className="home-card-title">HM round</h3>
+                <p className="home-card-desc">
+                  The last mile before the hiring manager conversation.
+                </p>
+                <div className="home-card-modules">
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      Incident triage
+                    </span>
+                    <span className="home-card-module-count">3 lessons</span>
+                  </div>
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      Product management
+                    </span>
+                    <span className="home-card-module-count">4 lessons</span>
+                  </div>
+                  <div className="home-card-module-item">
+                    <span className="home-card-module-square" />
+                    <span className="home-card-module-title">
+                      Telemetry &amp; observability
+                    </span>
+                    <span className="home-card-module-count">3 lessons</span>
+                  </div>
+                </div>
+                <div className="home-card-footer">
+                  <span className="home-card-meta">3 modules · [Y] hrs</span>
+                  <span className="home-start-btn">
+                    Start
+                    <svg
+                      className="home-arrow"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
             </div>
           </section>
-          <div id="courses" className="curriculum-container">
-            {term ? (
-              <section
-                className="catalog-search-results"
-                aria-label="Search results"
-              >
-                {!language && (
-                  <p className="search-language-note">
-                    Choose a programming language above to include coding
-                    lessons.
-                  </p>
-                )}
-                {[
-                  ...new Set(matchingChapters.map((chapter) => chapter.track)),
-                ].map((track) => (
-                  <section
-                    className={`search-course track-${track}`}
-                    key={track}
+
+          <section
+            id="cheatsheets"
+            className="path-cheatsheets home-cheatsheets"
+          >
+            <div className="section-heading">
+              <h2>Technologies</h2>
+              <p className="section-description">
+                Keep the commands close. Save your memory for the decisions.
+              </p>
+            </div>
+            <Sheets sheets={cheatsheets} />
+          </section>
+
+          <section
+            id="case-studies"
+            className="supplementary-section home-case-studies"
+          >
+            <div className="section-heading">
+              <h2>Case Studies</h2>
+              <p className="section-description">
+                Real incidents and architectural decisions. See how the
+                tradeoffs play out under load.
+              </p>
+            </div>
+            <div className="case-study-grid">
+              {caseStudies.slice(0, 4).map((cs) => (
+                <article key={cs.slug} className="case-study-card">
+                  <div className="case-study-card-meta">
+                    <span className="case-study-company">{cs.company}</span>
+                    <span className={`case-study-tag tag-${cs.tag}`}>
+                      {cs.tag}
+                    </span>
+                    <span className="case-study-year">{cs.year}</span>
+                  </div>
+                  <h3 className="case-study-card-title">{cs.title}</h3>
+                  <p className="case-study-card-desc">{cs.description}</p>
+                  <Link
+                    className="case-study-card-link"
+                    href={caseStudyUrl(cs.slug)}
                   >
-                    <h3>{courses[track].title}</h3>
-                    {matchingChapters
-                      .filter((chapter) => chapter.track === track)
-                      .map((chapter) => (
-                        <ChapterLink
-                          chapter={chapter}
-                          completed={completed}
-                          key={chapter.id}
-                        />
-                      ))}
-                  </section>
-                ))}
-                {!!visibleGuides.length && (
-                  <div className="guide-grid">
-                    {visibleGuides.map((guide) => (
-                      <GuideCard key={guide.slug} guide={guide} search />
-                    ))}
-                  </div>
-                )}
-                <Sheets sheets={visibleSheets} />
-                {!matchingChapters.length &&
-                  !visibleGuides.length &&
-                  !visibleSheets.length && (
-                    <p className="search-empty" role="status">
-                      No matching topics. Try another topic, tool, or course
-                      name.
-                    </p>
-                  )}
-              </section>
-            ) : (
-              <>
-                <ol
-                  className="learning-path"
-                  aria-label="Interview preparation path"
-                >
-                  <li className="path-step">
-                    <div className="path-step-content">
-                      <ConceptIllustration
-                        concept="machine-coding"
-                        className="path-art"
-                      />
-                      <div className="path-step-heading">
-                        <h2>Machine coding</h2>
-                        <p>
-                          Refresh your language, then work through data
-                          structures and algorithms.
-                        </p>
-                      </div>
-                      {language ? (
-                        <div className="machine-courses">
-                          <Course
-                            track={language}
-                            items={items(language)}
-                            title={`${languageInfo[language].label} fundamentals`}
-                            completed={completed}
-                          />
-                          <Course
-                            track="dsa"
-                            items={items("dsa")}
-                            title="Data structures & algorithms"
-                            completed={completed}
-                          />
-                        </div>
-                      ) : (
-                        <button
-                          className="text-link path-choose"
-                          onClick={chooseLanguage}
-                        >
-                          Choose a language to start
-                        </button>
-                      )}
-                    </div>
-                  </li>
-                  <li className="path-step">
-                    <div className="path-step-content">
-                      <ConceptIllustration
-                        concept="system-basics"
-                        className="path-art"
-                      />
-                      <div className="path-step-heading">
-                        <h2>System design basics</h2>
-                        <p>
-                          Revisit the mechanisms that shape a distributed system
-                          before designing one.
-                        </p>
-                      </div>
-                      <div className="path-course-actions">
-                        <Link
-                          className="button primary course-start"
-                          href={guideUrl("backend", systemDesignBasics[0].slug)}
-                        >
-                          Start
-                        </Link>
-                        <span>
-                          {systemDesignBasics.length} foundation lessons
-                        </span>
-                      </div>
-                    </div>
-                  </li>
-                  <li className="path-step">
-                    <div className="path-step-content">
-                      <ConceptIllustration
-                        concept="low-level-design"
-                        className="path-art"
-                      />
-                      <div className="path-step-heading">
-                        <h2>Low-level design</h2>
-                        <p>
-                          Turn requirements into objects, interfaces, and
-                          invariants that hold under change.
-                        </p>
-                      </div>
-                      {language ? (
-                        <Course
-                          track="lld"
-                          items={items("lld")}
-                          title="Design exercises"
-                          completed={completed}
-                        />
-                      ) : (
-                        <button
-                          className="text-link path-choose"
-                          onClick={chooseLanguage}
-                        >
-                          Choose a language for LLD
-                        </button>
-                      )}
-                    </div>
-                  </li>
-                  <li className="path-step">
-                    <div className="path-step-content">
-                      <ConceptIllustration
-                        concept="high-level-design"
-                        className="path-art"
-                      />
-                      <div className="path-step-heading">
-                        <h2>High-level design</h2>
-                        <p>
-                          Draw service boundaries, data flows, and failure
-                          paths. Defend your tradeoffs.
-                        </p>
-                      </div>
-                      <Course
-                        track="hld"
-                        items={items("hld")}
-                        title="Architecture practice"
-                        completed={completed}
-                      />
-                    </div>
-                  </li>
-                </ol>
-                <section id="guides" className="supplementary-section">
-                  <div className="section-heading">
-                    <div>
-                      <h2>The engineering bookshelf</h2>
-                    </div>
-                  </div>
-                  <div className="guide-grid">
-                    {guides.map((guide) => (
-                      <GuideCard guide={guide} key={guide.slug} />
-                    ))}
-                  </div>
-                </section>
-                <section id="cheatsheets" className="path-cheatsheets">
-                  <div className="section-heading">
-                    <div>
-                      <h2>Tool cheatsheets</h2>
-                      <p className="section-description">
-                        Keep the commands close. Save your memory for the
-                        decisions.
-                      </p>
-                    </div>
-                  </div>
-                  <Sheets sheets={cheatsheets} />
-                </section>
-              </>
-            )}
-          </div>
-          <footer className="catalog-footer">
-            <span>
-              made by{" "}
-              <a
-                href="https://ahampriyanshu.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                ahampriyanshu
-              </a>
-            </span>
-            <span>Your code and progress stay in this browser.</span>
-          </footer>
+                    Read case study →
+                  </Link>
+                </article>
+              ))}
+            </div>
+            <div className="section-view-all">
+              <Link href="/case-studies/" className="view-all-link">
+                View all case studies →
+              </Link>
+            </div>
+          </section>
         </main>
-      </div>
+      )}
+
+      <footer className="home-footer">
+        <span>
+          made by{" "}
+          <a
+            href="https://ahampriyanshu.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ahampriyanshu
+          </a>
+        </span>
+        <span>Your code and progress stay in this browser.</span>
+      </footer>
     </div>
   );
 }

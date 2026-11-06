@@ -15,9 +15,10 @@ import {
   navChaptersByTrack,
   navGuides,
   navCheatsheets,
+  navCaseStudies,
   type NavChapter,
 } from "@/lib/navigation-data";
-import { cheatsheetUrl, guideUrl } from "@/lib/guide-utils";
+import { cheatsheetUrl, guideUrl, caseStudyUrl } from "@/lib/guide-utils";
 
 export interface AppSidebarProps {
   lesson?: Chapter;
@@ -28,6 +29,7 @@ export interface AppSidebarProps {
   currentGuide?: string;
   currentPart?: string;
   currentCheatsheet?: string;
+  currentCaseStudy?: string;
   preferredLanguage?: string | null;
   completedSet?: Set<string>;
   navigationLabel?: string;
@@ -46,6 +48,7 @@ export function AppSidebar({
   currentGuide,
   currentPart,
   currentCheatsheet,
+  currentCaseStudy,
   preferredLanguage,
   completedSet,
   navigationLabel = "Curriculum navigation",
@@ -80,6 +83,8 @@ export function AppSidebar({
     activeGroupKey = `guide:${currentGuide}`;
   } else if (currentCheatsheet) {
     activeGroupKey = "cheatsheets";
+  } else if (currentCaseStudy) {
+    activeGroupKey = "case-studies";
   }
 
   // Only the active group is open by default; everything else is collapsed
@@ -285,6 +290,47 @@ export function AppSidebar({
                       onClick={() => setMenu(false)}
                     >
                       <span>{sheet.title}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </details>
+          </div>
+
+          {/* Section 4: Case Studies */}
+          <div className="sidebar-section">
+            <h2 className="guide-nav-label">Case Studies</h2>
+            <details
+              className="guide-nav-group chapter-group"
+              open={!!openGroups["case-studies"]}
+            >
+              <summary
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleGroup("case-studies");
+                }}
+              >
+                <span>Case Studies</span>
+                <ChevronDown size={14} className="summary-chevron" />
+              </summary>
+              <div className="guide-nav-group-items">
+                {navCaseStudies.map((cs) => {
+                  const isActive = currentCaseStudy === cs.slug;
+
+                  return (
+                    <Link
+                      key={cs.slug}
+                      className={`nav-chapter ${isActive ? "active" : ""}`}
+                      href={caseStudyUrl(cs.slug)}
+                      aria-current={isActive ? "page" : undefined}
+                      onClick={() => setMenu(false)}
+                    >
+                      <span>
+                        {cs.company} —{" "}
+                        {cs.title.length > 40
+                          ? cs.title.slice(0, 40) + "…"
+                          : cs.title}
+                      </span>
                     </Link>
                   );
                 })}

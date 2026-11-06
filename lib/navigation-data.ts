@@ -1,8 +1,16 @@
 import curriculumJson from "@/curriculum.json";
 import guidesJson from "@/guides.json";
 import cheatsheetsJson from "@/cheatsheets.json";
+import caseStudiesJson from "@/case-studies.json";
 import { courses } from "@/lib/courses";
 import type { Language, Track } from "@/lib/types";
+
+export interface NavCaseStudy {
+  slug: string;
+  company: string;
+  title: string;
+  tag: string;
+}
 
 export interface NavChapter {
   id: string;
@@ -107,6 +115,16 @@ export const navCheatsheets: NavCheatsheet[] = cheatsheetsJson.cheatsheets.map(
   }),
 );
 
+// All case studies in fixed order
+export const navCaseStudies: NavCaseStudy[] = caseStudiesJson.caseStudies.map(
+  (cs) => ({
+    slug: cs.slug,
+    company: cs.company,
+    title: cs.title,
+    tag: cs.tag,
+  }),
+);
+
 // Global search index for navbar search
 export const searchItems: SearchItem[] = [
   // Tracks
@@ -147,5 +165,13 @@ export const searchItems: SearchItem[] = [
     url: `/cheatsheets/${c.slug}/`,
     searchText:
       `${c.title} cheatsheet ${c.description} ${(c.keywords || []).join(" ")}`.toLowerCase(),
+  })),
+  // Case Studies
+  ...caseStudiesJson.caseStudies.map((cs) => ({
+    title: cs.title,
+    category: "Case Study",
+    url: `/case-studies/${cs.slug}/`,
+    searchText:
+      `${cs.company} ${cs.title} ${cs.description} ${cs.tag} ${cs.keywords.join(" ")}`.toLowerCase(),
   })),
 ];

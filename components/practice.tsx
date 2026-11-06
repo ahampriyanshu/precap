@@ -1,17 +1,12 @@
 "use client";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  ArrowLeft,
   Check,
   CheckCheck,
-  PanelLeftClose,
-  PanelLeftOpen,
-  PanelRightClose,
-  PanelRightOpen,
   Code2,
   Download,
+  FileCheck2,
   FileCode2,
   LoaderCircle,
   RotateCcw,
@@ -32,8 +27,31 @@ const CodeEditor = dynamic(() => import("./code-editor"), {
   loading: () => <div className="editor-loading">Loading editor…</div>,
 });
 
+function splitPracticeContent(markdown: string, lesson: Lesson) {
+  const regex =
+    /\n\s*(Run (?:`?[a-z0-9_\-\.]+ main|from this (?:lesson )?directory)[\s\S]*)$/i;
+  const match = markdown.match(regex);
+  if (match) {
+    return {
+      questionMarkdown: markdown.slice(0, match.index).trim(),
+      localInstructions: match[1].trim(),
+    };
+  }
+  return {
+    questionMarkdown: markdown.trim(),
+    localInstructions:
+      lesson.language === "python" || !lesson.language
+        ? `Run \`python main.py --stage prototype\` first, then \`python main.py --stage final\`.\nThe default stage is \`final\`. Edit \`${lesson.starterFilename}\`; leave the tests in \`${lesson.testFilename || "main.py"}\` unchanged.`
+        : `Run tests locally for ${lesson.starterFilename} with the test harness in ${lesson.testFilename || "main"}.`,
+  };
+}
+
 export function Practice({ lesson }: { lesson: Lesson }) {
   const split = usePracticeSplit();
+  const { questionMarkdown, localInstructions } = splitPracticeContent(
+    lesson.practice,
+    lesson,
+  );
   const language = lesson.language || "python";
   const info = languageInfo[language];
   const question = split.collapsed !== "question";
@@ -101,54 +119,6 @@ export function Practice({ lesson }: { lesson: Lesson }) {
       className={`practice-flow ${question ? "" : "question-hidden"} ${editorVisible ? "" : "editor-hidden"} ${split.dragging ? "is-resizing" : ""}`}
       style={{ gridTemplateColumns: split.columns }}
     >
-      <div className="problem-heading">
-        <h1>Practice: {lesson.title}</h1>
-        <div className="pane-actions">
-          <button
-            className="text-link question-toggle"
-            aria-label={question ? "Hide question" : "Show question"}
-            title={question ? "Hide question" : "Show question"}
-            aria-expanded={question}
-            aria-controls="practice-question"
-            onClick={split.toggleQuestion}
-          >
-            {question ? (
-              <PanelLeftClose size={16} />
-            ) : (
-              <PanelLeftOpen size={16} />
-            )}
-            <span className="pane-toggle-label">
-              {question ? "Hide question" : "Show question"}
-            </span>
-          </button>
-          <button
-            className="text-link question-toggle"
-            aria-label={editorVisible ? "Hide editor" : "Show editor"}
-            title={editorVisible ? "Hide editor" : "Show editor"}
-            aria-expanded={editorVisible}
-            aria-controls="practice-editor"
-            onClick={split.toggleEditor}
-          >
-            {editorVisible ? (
-              <PanelRightClose size={16} />
-            ) : (
-              <PanelRightOpen size={16} />
-            )}
-            <span className="pane-toggle-label">
-              {editorVisible ? "Hide editor" : "Show editor"}
-            </span>
-          </button>
-          <Link
-            className="text-link question-toggle back-to-lesson"
-            href={`/learn/${lesson.id}/`}
-            aria-label="Back to lesson"
-            title="Back to lesson"
-          >
-            <ArrowLeft size={16} />
-            <span className="pane-toggle-label">Back to lesson</span>
-          </Link>
-        </div>
-      </div>
       {question && (
         <section
           className="problem-panel"
@@ -156,7 +126,7 @@ export function Practice({ lesson }: { lesson: Lesson }) {
           aria-label="Exercise question"
           tabIndex={0}
         >
-          <Content markdown={lesson.practice} highlights={lesson.highlights} />
+          <Content markdown={questionMarkdown} highlights={lesson.highlights} />
         </section>
       )}
       <PracticeDivider split={split} />
@@ -185,7 +155,8 @@ export function Practice({ lesson }: { lesson: Lesson }) {
               aria-selected={file === "tests"}
               onClick={() => setFile("tests")}
             >
-              Tests<span className="readonly-tag">read only</span>
+              <FileCheck2 size={14} />
+              Tests
             </button>
           </div>
           <div className="editor-actions">
@@ -298,6 +269,7 @@ export function Practice({ lesson }: { lesson: Lesson }) {
             report={runner.report}
             output={runner.output}
             error={runner.error}
+            localInstructions={localInstructions}
             actions={
               runner.busy ? (
                 <button

@@ -8,6 +8,7 @@ import {
   Terminal,
   X,
 } from "lucide-react";
+import { Content } from "./content";
 import type { Report, RunState } from "@/lib/types";
 
 export function Results({
@@ -18,6 +19,7 @@ export function Results({
   output,
   error,
   actions,
+  localInstructions,
 }: {
   language?: string;
   message?: string;
@@ -26,8 +28,9 @@ export function Results({
   output: string;
   error: string;
   actions?: React.ReactNode;
+  localInstructions?: string;
 }) {
-  const [tab, setTab] = useState<"checks" | "output">("checks");
+  const [tab, setTab] = useState<"checks" | "output" | "local">("checks");
   useEffect(() => {
     if (state === "loading") setTab("checks");
   }, [state]);
@@ -65,6 +68,15 @@ export function Results({
           >
             Console{output && <span className="output-dot" />}
           </button>
+          {localInstructions && (
+            <button
+              role="tab"
+              aria-selected={tab === "local"}
+              onClick={() => setTab("local")}
+            >
+              Run locally
+            </button>
+          )}
         </div>
         <div className="results-header-actions">
           {report && (
@@ -81,7 +93,17 @@ export function Results({
         tabIndex={0}
         aria-live="polite"
       >
-        {tab === "output" ? (
+        {tab === "local" && localInstructions ? (
+          <div className="local-run-body">
+            <div className="local-run-header">
+              <Terminal size={14} />
+              <span>How to run locally after downloading</span>
+            </div>
+            <div className="local-run-text">
+              <Content markdown={localInstructions} />
+            </div>
+          </div>
+        ) : tab === "output" ? (
           <pre className="console-output">
             {output || "Printed output will appear here."}
           </pre>

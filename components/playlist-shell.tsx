@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { Menu } from "lucide-react";
 import { AppSidebar } from "./app-sidebar";
-import { SiteHeader } from "./site-header";
 import { useNavigationMenu } from "@/hooks/use-navigation-menu";
 
 export function PlaylistShell({
@@ -19,11 +19,14 @@ export function PlaylistShell({
       <a className="skip-link" href="#main-content">
         Skip to curriculum
       </a>
-      <SiteHeader
-        onMenuClick={() => setMenu(!menu)}
-        menuAriaLabel="Open guide navigation"
-        searchAriaLabel="Search course lessons"
-      />
+      <button
+        type="button"
+        className="mobile-sidebar-toggle"
+        onClick={() => setMenu(!menu)}
+        aria-label="Open guide navigation"
+      >
+        <Menu size={20} />
+      </button>
       <div className="catalog-body">
         <AppSidebar
           currentGuide={currentGuide}

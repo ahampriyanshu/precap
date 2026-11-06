@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { type ReactNode } from "react";
+import { Menu } from "lucide-react";
 import { AppSidebar } from "./app-sidebar";
 import { SiteHeader } from "./site-header";
 import { useNavigationMenu } from "@/hooks/use-navigation-menu";
@@ -20,7 +21,7 @@ export function LessonShell({
   practice: boolean;
   children: ReactNode;
 }) {
-  const { menu, setMenu, sidebarRef, isMobile } = useNavigationMenu(!practice);
+  const { menu, setMenu, sidebarRef, isMobile } = useNavigationMenu(true);
   const { completed } = useProgress(chapters);
 
   return (
@@ -31,31 +32,45 @@ export function LessonShell({
         Skip to {practice ? "practice" : "lesson"}
       </a>
 
-      <SiteHeader
-        onMenuClick={() => setMenu(!menu)}
-        menuAriaLabel="Open lesson navigation"
-        searchAriaLabel="Search course lessons"
-      />
+      {practice ? (
+        <SiteHeader
+          backHref={`/learn/${lesson.id}/`}
+          title={lesson.title}
+          searchAriaLabel="Search course lessons"
+          showThemeToggle={true}
+        />
+      ) : (
+        <button
+          type="button"
+          className="mobile-sidebar-toggle"
+          onClick={() => setMenu(!menu)}
+          aria-label="Open lesson navigation"
+        >
+          <Menu size={20} />
+        </button>
+      )}
 
       <div className="workspace-body">
-        <AppSidebar
-          lesson={lesson}
-          chapters={chapters}
-          practice={practice}
-          currentTrack={lesson.track}
-          currentSlug={lesson.slug}
-          preferredLanguage={lesson.language}
-          completedSet={completed}
-          navigationLabel="Lesson navigation"
-          menu={menu}
-          setMenu={setMenu}
-          sidebarRef={sidebarRef}
-          isMobile={isMobile}
-        />
+        {!practice && (
+          <AppSidebar
+            lesson={lesson}
+            chapters={chapters}
+            practice={practice}
+            currentTrack={lesson.track}
+            currentSlug={lesson.slug}
+            preferredLanguage={lesson.language}
+            completedSet={completed}
+            navigationLabel="Lesson navigation"
+            menu={menu}
+            setMenu={setMenu}
+            sidebarRef={sidebarRef}
+            isMobile={isMobile}
+          />
+        )}
 
         <main
           className="studio"
-          inert={isMobile && menu ? true : undefined}
+          inert={isMobile && menu && !practice ? true : undefined}
           id="main-panel"
           tabIndex={-1}
         >
